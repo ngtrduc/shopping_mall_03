@@ -19,27 +19,28 @@ class User
     const STATUS_RETIRED      = 2; // Retired user.
 
     /**
-     * @ORM\OneToMany(targetEntity="\Application\Entity\Notification", mappedBy="users")
+     * @ORM\OneToMany(targetEntity="\Application\Entity\Notification", mappedBy="user")
      * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
      */
     protected $notifications;
     /**
-     * @ORM\OneToMany(targetEntity="\Application\Entity\Comment", mappedBy="users")
+     * @ORM\OneToMany(targetEntity="\Application\Entity\Comment", mappedBy="user")
      * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
      */
     protected $comments;
     /**
-     * @ORM\OneToMany(targetEntity="\Application\Entity\Order", mappedBy="users")
+     * @ORM\OneToMany(targetEntity="\Application\Entity\Order", mappedBy="user")
      * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
+     * @ORM\OrderBy({"status" = "ASC"})
      */
     protected $orders;
     /**
-     * @ORM\OneToMany(targetEntity="\Application\Entity\Rate", mappedBy="users")
+     * @ORM\OneToMany(targetEntity="\Application\Entity\Rate", mappedBy="user")
      * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
      */
     protected $rates;
     /**
-     * @ORM\OneToMany(targetEntity="\Application\Entity\Message", mappedBy="users")
+     * @ORM\OneToMany(targetEntity="\Application\Entity\Message", mappedBy="user")
      * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
      */
     protected $messages;

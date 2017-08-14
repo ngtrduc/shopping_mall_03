@@ -11,7 +11,7 @@ use Application\Entity\OrderItem;
 class Order
 {
     /**
-     * @ORM\OneToMany(targetEntity="\Application\Entity\OrderItem", mappedBy="orders")
+     * @ORM\OneToMany(targetEntity="\Application\Entity\OrderItem", mappedBy="order")
      * @ORM\JoinColumn(name="id", referencedColumnName="order_id")
      */
     protected $order_items;

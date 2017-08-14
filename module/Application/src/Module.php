@@ -41,8 +41,8 @@ class Module
         $serviceManager = $application->getServiceManager();
 
         $viewModel = $event->getViewModel();
-        $categoryManager = $serviceManager->get('Application\Service\CategoryManager');
-        $viewModel->categories_for_nav_bar = $categoryManager->categories_for_nav_bar();
+        //$categoryManager = $serviceManager->get('Application\Service\CategoryManager');
+        //$viewModel->categories_for_nav_bar = $categoryManager->categories_for_nav_bar();
         $sessionContainer = new Container('UserLogin');
 
         if (isset($sessionContainer->id)) {

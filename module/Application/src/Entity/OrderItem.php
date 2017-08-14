@@ -10,32 +10,31 @@ use Doctrine\ORM\Mapping as ORM;
 class OrderItem
 {
     /**
-     * @ORM\ManyToOne(targetEntity="\Application\Entity\Product_image", inversedBy="order_items")
-     * @ORM\JoinColumn(name="product_image_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="\Application\Entity\Product")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
-    protected $product_image;
+    protected $product;
     /*
-     * Returns associated product_image.
-     * @return \Application\Entity\Product_image
+     * Returns associated product.
+     * @return \Application\Entity\Product
      */
-    public function getProductImage() 
+    public function getProduct() 
     {
-        return $this->product_image;
+        return $this->product;
     }
       
     /**
-     * Sets associated product_image.
-     * @param \Application\Entity\Product_image $product_image
+     * Sets associated product.
+     * @param \Application\Entity\Product $product
      */
-    public function setProductImage($product_image) 
+    public function setProduct($product) 
     {
-        $this->product_image = $product_image;
-        $product_image->addOrderItem($this);
+        $this->product = $product;
     }
 
     /**
      * @ORM\ManyToOne(targetEntity="\Application\Entity\Order", inversedBy="order_items")
-     * @ORM\JoinColumn(name="product_image_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="order_id", referencedColumnName="id")
      */
     protected $order;
     /*
