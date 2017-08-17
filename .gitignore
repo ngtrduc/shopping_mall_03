@@ -2,14 +2,14 @@
 ### ZendFramework template
 # Composer files
 composer.phar
-vendor/
+#vendor/
 .vagrant/
 .idea/
-phpunit.xml
+#phpunit.xml
 
 # Local configs
-config/autoload/*.local.php
-config/development.config.php
+#config/autoload/*.local.php
+#config/development.config.php
 
 # Binary gettext files
 *.mo
@@ -24,21 +24,20 @@ temp/
 !data/cache/.gitkeep
 
 #Doctrine 2
-data/DoctrineORMModule/Proxy/
-data/DoctrineORMModule/cache/
+#data/DoctrineORMModule/Proxy/
+#data/DoctrineORMModule/cache/
 
 
 # Legacy ZF1
-demos/
+#demos/
 extras/documentation
 
 # Bower
-public/assets
+#public/assets
 
 autorun.rb
 #composer.lock
-composer.lock
 #image
-public/img/products
+#public/img/products
 public/img/captcha/*.png
 

@@ -19,16 +19,17 @@
             <?php } ?>
         </div>
         <div class="comment-form">
-            <?= $this->form()->openTag($comment_form); ?>
-            <input class="hidden" id="product-id" value="<?php echo $product->getID() ?>">
-            <div class="form-group">
-                <?= $this->formElement($comment_form->get('comment')); ?>
-            </div>
-            <?= $this->form()->closeTag($comment_form); ?>
-            <div class="form-group">
-                <button class="btn btn-primary" id="submitbutton">Save</button>
-            </div>
-            
+            <?php if ($user_id != null) { ?>
+                <?= $this->form()->openTag($comment_form); ?>
+                <input class="hidden" id="product-id" value="<?php echo $product->getID() ?>">
+                <div class="form-group">
+                    <?= $this->formElement($comment_form->get('comment')); ?>
+                </div>
+                <?= $this->form()->closeTag($comment_form); ?>
+                <div class="form-group">
+                    <button class="btn btn-primary" id="submitbutton">Save</button>
+                </div>
+            <?php } ?>
         </div>
     </div>
 </div>

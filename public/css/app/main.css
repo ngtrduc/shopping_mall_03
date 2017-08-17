@@ -604,7 +604,16 @@ input:focus {
 }
 
 #flash-message {
-    margin-top: 15px;
+    position:fixed;
+    bottom:60px;
+    width:120%;
+    z-index:105;
+    text-align:center;
+    font-weight:normal;
+    font-size:14px;
+    font-weight:bold;
+    color:white;
+    padding:5px;
 }
 
 #submitbutton {
