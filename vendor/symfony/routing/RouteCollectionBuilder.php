@@ -55,34 +55,27 @@ class RouteCollectionBuilder
      * @param string|null $prefix
      * @param string      $type
      *
-     * @return self
+     * @return RouteCollectionBuilder
      *
      * @throws FileLoaderLoadException
      */
     public function import($resource, $prefix = '/', $type = null)
     {
-        /** @var RouteCollection[] $collection */
-        $collections = $this->load($resource, $type);
+        /** @var RouteCollection $collection */
+        $collection = $this->load($resource, $type);
 
         // create a builder from the RouteCollection
         $builder = $this->createBuilder();
-
-        foreach ($collections as $collection) {
-            if (null === $collection) {
-                continue;
-            }
-
-            foreach ($collection->all() as $name => $route) {
-                $builder->addRoute($route, $name);
-            }
-
-            foreach ($collection->getResources() as $resource) {
-                $builder->addResource($resource);
-            }
-
-            // mount into this builder
-            $this->mount($prefix, $builder);
+        foreach ($collection->all() as $name => $route) {
+            $builder->addRoute($route, $name);
         }
+
+        foreach ($collection->getResources() as $resource) {
+            $builder->addResource($resource);
+        }
+
+        // mount into this builder
+        $this->mount($prefix, $builder);
 
         return $builder;
     }
@@ -108,7 +101,7 @@ class RouteCollectionBuilder
     /**
      * Returns a RouteCollectionBuilder that can be configured and then added with mount().
      *
-     * @return self
+     * @return RouteCollectionBuilder
      */
     public function createBuilder()
     {
@@ -208,7 +201,7 @@ class RouteCollectionBuilder
     }
 
     /**
-     * Sets an option that will be added to all embedded routes (unless that
+     * Sets an opiton that will be added to all embedded routes (unless that
      * option is already set).
      *
      * @param string $key
@@ -352,7 +345,7 @@ class RouteCollectionBuilder
      * @param mixed       $resource A resource
      * @param string|null $type     The resource type or null if unknown
      *
-     * @return RouteCollection[]
+     * @return RouteCollection
      *
      * @throws FileLoaderLoadException If no loader is found
      */
@@ -363,21 +356,17 @@ class RouteCollectionBuilder
         }
 
         if ($this->loader->supports($resource, $type)) {
-            $collections = $this->loader->load($resource, $type);
-
-            return is_array($collections) ? $collections : array($collections);
+            return $this->loader->load($resource, $type);
         }
 
         if (null === $resolver = $this->loader->getResolver()) {
-            throw new FileLoaderLoadException($resource, null, null, null, $type);
+            throw new FileLoaderLoadException($resource);
         }
 
         if (false === $loader = $resolver->resolve($resource, $type)) {
-            throw new FileLoaderLoadException($resource, null, null, null, $type);
+            throw new FileLoaderLoadException($resource);
         }
 
-        $collections = $loader->load($resource, $type);
-
-        return is_array($collections) ? $collections : array($collections);
+        return $loader->load($resource, $type);
     }
 }

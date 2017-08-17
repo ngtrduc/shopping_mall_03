@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit5154f5fece7580e07bf9fc34dfef0817
+class ComposerStaticInit7752c5674c60841b5c0898dc7a19ae21
 {
     public static $files = array (
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
@@ -18,10 +18,12 @@ class ComposerStaticInit5154f5fece7580e07bf9fc34dfef0817
             'Zend\\View\\' => 10,
             'Zend\\Validator\\' => 15,
             'Zend\\Uri\\' => 9,
+            'Zend\\Stratigility\\' => 18,
             'Zend\\Stdlib\\' => 12,
             'Zend\\Session\\' => 13,
             'Zend\\ServiceManager\\' => 20,
             'Zend\\Router\\' => 12,
+            'Zend\\Permissions\\Rbac\\' => 22,
             'Zend\\Paginator\\' => 15,
             'Zend\\Mvc\\Plugin\\Prg\\' => 20,
             'Zend\\Mvc\\Plugin\\Identity\\' => 25,
@@ -39,46 +41,49 @@ class ComposerStaticInit5154f5fece7580e07bf9fc34dfef0817
             'Zend\\Form\\' => 10,
             'Zend\\Filter\\' => 12,
             'Zend\\File\\' => 10,
+            'Zend\\Expressive\\Tooling\\' => 24,
+            'Zend\\Expressive\\Template\\' => 25,
+            'Zend\\Expressive\\Router\\' => 23,
+            'Zend\\Expressive\\' => 16,
             'Zend\\EventManager\\' => 18,
             'Zend\\Escaper\\' => 13,
+            'Zend\\Diactoros\\' => 15,
             'Zend\\Crypt\\' => 11,
             'Zend\\Config\\' => 12,
             'Zend\\ComponentInstaller\\' => 24,
             'Zend\\Code\\' => 10,
+            'Zend\\Captcha\\' => 13,
             'Zend\\Cache\\' => 11,
             'Zend\\Authentication\\' => 20,
             'ZF\\DevelopmentMode\\' => 19,
+            'ZF\\ComposerAutoloading\\' => 23,
         ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Component\\Yaml\\' => 23,
-            'Symfony\\Component\\Stopwatch\\' => 28,
             'Symfony\\Component\\Routing\\' => 26,
             'Symfony\\Component\\HttpKernel\\' => 29,
             'Symfony\\Component\\HttpFoundation\\' => 33,
-            'Symfony\\Component\\Finder\\' => 25,
-            'Symfony\\Component\\Filesystem\\' => 29,
             'Symfony\\Component\\EventDispatcher\\' => 34,
-            'Symfony\\Component\\DependencyInjection\\' => 38,
             'Symfony\\Component\\Debug\\' => 24,
             'Symfony\\Component\\Console\\' => 26,
-            'Symfony\\Component\\Config\\' => 25,
-            'Symfony\\Component\\ClassLoader\\' => 30,
-            'Symfony\\Component\\Cache\\' => 24,
-            'Symfony\\Bundle\\FrameworkBundle\\' => 31,
-            'Symfony\\Bridge\\Doctrine\\' => 24,
+            'Silex\\' => 6,
         ),
         'P' => 
         array (
-            'Psr\\SimpleCache\\' => 16,
             'Psr\\Log\\' => 8,
+            'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
-            'Psr\\Cache\\' => 10,
         ),
         'I' => 
         array (
+            'Interop\\Http\\ServerMiddleware\\' => 30,
             'Interop\\Container\\' => 18,
+        ),
+        'F' => 
+        array (
+            'Fig\\Http\\Message\\' => 17,
         ),
         'D' => 
         array (
@@ -87,9 +92,6 @@ class ComposerStaticInit5154f5fece7580e07bf9fc34dfef0817
             'Doctrine\\Common\\Cache\\' => 22,
             'Doctrine\\Common\\Annotations\\' => 28,
             'Doctrine\\Common\\' => 16,
-            'Doctrine\\Bundle\\FixturesBundle\\' => 31,
-            'Doctrine\\Bundle\\DoctrineCacheBundle\\' => 36,
-            'Doctrine\\Bundle\\DoctrineBundle\\' => 31,
         ),
         'A' => 
         array (
@@ -112,6 +114,10 @@ class ComposerStaticInit5154f5fece7580e07bf9fc34dfef0817
         array (
             0 => __DIR__ . '/..' . '/zendframework/zend-uri/src',
         ),
+        'Zend\\Stratigility\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-stratigility/src',
+        ),
         'Zend\\Stdlib\\' => 
         array (
             0 => __DIR__ . '/..' . '/zendframework/zend-stdlib/src',
@@ -127,6 +133,10 @@ class ComposerStaticInit5154f5fece7580e07bf9fc34dfef0817
         'Zend\\Router\\' => 
         array (
             0 => __DIR__ . '/..' . '/zendframework/zend-router/src',
+        ),
+        'Zend\\Permissions\\Rbac\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-permissions-rbac/src',
         ),
         'Zend\\Paginator\\' => 
         array (
@@ -196,6 +206,22 @@ class ComposerStaticInit5154f5fece7580e07bf9fc34dfef0817
         array (
             0 => __DIR__ . '/..' . '/zendframework/zend-file/src',
         ),
+        'Zend\\Expressive\\Tooling\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-expressive-tooling/src',
+        ),
+        'Zend\\Expressive\\Template\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-expressive-template/src',
+        ),
+        'Zend\\Expressive\\Router\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-expressive-router/src',
+        ),
+        'Zend\\Expressive\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-expressive/src',
+        ),
         'Zend\\EventManager\\' => 
         array (
             0 => __DIR__ . '/..' . '/zendframework/zend-eventmanager/src',
@@ -203,6 +229,10 @@ class ComposerStaticInit5154f5fece7580e07bf9fc34dfef0817
         'Zend\\Escaper\\' => 
         array (
             0 => __DIR__ . '/..' . '/zendframework/zend-escaper/src',
+        ),
+        'Zend\\Diactoros\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-diactoros/src',
         ),
         'Zend\\Crypt\\' => 
         array (
@@ -220,6 +250,10 @@ class ComposerStaticInit5154f5fece7580e07bf9fc34dfef0817
         array (
             0 => __DIR__ . '/..' . '/zendframework/zend-code/src',
         ),
+        'Zend\\Captcha\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-captcha/src',
+        ),
         'Zend\\Cache\\' => 
         array (
             0 => __DIR__ . '/..' . '/zendframework/zend-cache/src',
@@ -232,6 +266,10 @@ class ComposerStaticInit5154f5fece7580e07bf9fc34dfef0817
         array (
             0 => __DIR__ . '/..' . '/zfcampus/zf-development-mode/src',
         ),
+        'ZF\\ComposerAutoloading\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zfcampus/zf-composer-autoloading/src',
+        ),
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
@@ -239,10 +277,6 @@ class ComposerStaticInit5154f5fece7580e07bf9fc34dfef0817
         'Symfony\\Component\\Yaml\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/yaml',
-        ),
-        'Symfony\\Component\\Stopwatch\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/stopwatch',
         ),
         'Symfony\\Component\\Routing\\' => 
         array (
@@ -256,21 +290,9 @@ class ComposerStaticInit5154f5fece7580e07bf9fc34dfef0817
         array (
             0 => __DIR__ . '/..' . '/symfony/http-foundation',
         ),
-        'Symfony\\Component\\Finder\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/finder',
-        ),
-        'Symfony\\Component\\Filesystem\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/filesystem',
-        ),
         'Symfony\\Component\\EventDispatcher\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/event-dispatcher',
-        ),
-        'Symfony\\Component\\DependencyInjection\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/dependency-injection',
         ),
         'Symfony\\Component\\Debug\\' => 
         array (
@@ -280,45 +302,33 @@ class ComposerStaticInit5154f5fece7580e07bf9fc34dfef0817
         array (
             0 => __DIR__ . '/..' . '/symfony/console',
         ),
-        'Symfony\\Component\\Config\\' => 
+        'Silex\\' => 
         array (
-            0 => __DIR__ . '/..' . '/symfony/config',
-        ),
-        'Symfony\\Component\\ClassLoader\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/class-loader',
-        ),
-        'Symfony\\Component\\Cache\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/cache',
-        ),
-        'Symfony\\Bundle\\FrameworkBundle\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/framework-bundle',
-        ),
-        'Symfony\\Bridge\\Doctrine\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/doctrine-bridge',
-        ),
-        'Psr\\SimpleCache\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/simple-cache/src',
+            0 => __DIR__ . '/..' . '/silex/silex/src/Silex',
         ),
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
         ),
+        'Psr\\Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
         'Psr\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
         ),
-        'Psr\\Cache\\' => 
+        'Interop\\Http\\ServerMiddleware\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/cache/src',
+            0 => __DIR__ . '/..' . '/http-interop/http-middleware/src',
         ),
         'Interop\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/container-interop/container-interop/src/Interop/Container',
+        ),
+        'Fig\\Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fig/http-message-util/src',
         ),
         'Doctrine\\Instantiator\\' => 
         array (
@@ -339,18 +349,6 @@ class ComposerStaticInit5154f5fece7580e07bf9fc34dfef0817
         'Doctrine\\Common\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/common/lib/Doctrine/Common',
-        ),
-        'Doctrine\\Bundle\\FixturesBundle\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/doctrine/doctrine-fixtures-bundle',
-        ),
-        'Doctrine\\Bundle\\DoctrineCacheBundle\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/doctrine/doctrine-cache-bundle',
-        ),
-        'Doctrine\\Bundle\\DoctrineBundle\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/doctrine/doctrine-bundle',
         ),
         'Application\\' => 
         array (
@@ -373,6 +371,10 @@ class ComposerStaticInit5154f5fece7580e07bf9fc34dfef0817
             array (
                 0 => __DIR__ . '/..' . '/ocramius/proxy-manager/src',
             ),
+            'Pimple' => 
+            array (
+                0 => __DIR__ . '/..' . '/pimple/pimple/lib',
+            ),
         ),
         'D' => 
         array (
@@ -392,10 +394,6 @@ class ComposerStaticInit5154f5fece7580e07bf9fc34dfef0817
             array (
                 0 => __DIR__ . '/..' . '/doctrine/inflector/lib',
             ),
-            'Doctrine\\Common\\DataFixtures' => 
-            array (
-                0 => __DIR__ . '/..' . '/doctrine/data-fixtures/lib',
-            ),
             'Doctrine\\Common\\Collections\\' => 
             array (
                 0 => __DIR__ . '/..' . '/doctrine/collections/lib',
@@ -411,17 +409,12 @@ class ComposerStaticInit5154f5fece7580e07bf9fc34dfef0817
         ),
     );
 
-    public static $classMap = array (
-        'SqlFormatter' => __DIR__ . '/..' . '/jdorn/sql-formatter/lib/SqlFormatter.php',
-    );
-
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit5154f5fece7580e07bf9fc34dfef0817::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit5154f5fece7580e07bf9fc34dfef0817::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit5154f5fece7580e07bf9fc34dfef0817::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit5154f5fece7580e07bf9fc34dfef0817::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit7752c5674c60841b5c0898dc7a19ae21::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit7752c5674c60841b5c0898dc7a19ae21::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit7752c5674c60841b5c0898dc7a19ae21::$prefixesPsr0;
 
         }, null, ClassLoader::class);
     }
