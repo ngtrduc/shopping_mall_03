@@ -539,3 +539,35 @@
     font-weight: lighter;
     font-size: 14px;
 }
+
+/*home*/
+.home-content .card img {
+    max-height: 233px !important;
+    max-width: 188px !important;
+}
+
+/*category*/
+.category_list .card img {
+    max-height: 332px;
+}
+
+/*product*/
+.title-section {
+    font-weight: bold;
+}
+
+.title-section, .zonasPrenda, .clickToolTip {
+    padding-left: 20px;
+}
+
+.popup-content {
+    padding-top: 20px;
+}
+
+#listing-price.nosale {
+    font-size: 16px;
+}
+
+#listing-price.sale {
+    color: red;
+}
