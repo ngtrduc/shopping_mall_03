@@ -22,15 +22,15 @@
                                         </span>
                             </md-input-container>
 
-                            <md-input-container :class="[errors.has('order id') ? 'md-input-invalid' : '']">
-                                <label>Order Id</label>
-                                <md-input name="order id"
-                                          v-model="order_id"
-                                          v-validate="'required'">
+                            <md-input-container :class="[errors.has('phone number') ? 'md-input-invalid' : '']">
+                                <label>Phone number</label>
+                                <md-input name="phone number"
+                                          v-model="phone_number"
+                                          v-validate="'required|numeric'">
                                 </md-input>
                                 <span class="md-error"
-                                      v-show="errors.has('order id')">
-                                            {{ errors.first('order id') }}
+                                      v-show="errors.has('phone number')">
+                                            {{ errors.first('phone number') }}
                                         </span>
                             </md-input-container>
                         </md-card-content>

@@ -3,64 +3,38 @@ $(function () {
         el: '#track-order',
         data: {
             track_form: true,
-            order_id: '',
+            phone_number: '',
             email: '',
-            order: {},
+            orders: [],
         },
         methods: {
             tracking: function () {
-                let hasError = !this.order_id
+                let hasError = !this.phone_number
                     || !this.email
                     || this.errors.has('email')
-                    || this.errors.has('order id');
+                    || this.errors.has('phone number');
                 if (hasError) {
-                    Snackbar.pushMessage('You must write email and order id');
+                    Snackbar.pushMessage('You must fill email and phone number');
                 } else {
-                    this.fetchOrder(this.order_id);
-                    this.track_form = false;
+                    this.fetchOrder();
                 }
             },
             continueTrack: function () {
                 this.track_form = true;
             },
-            fetchOrder(id) {
-                let data = {
-                    created_at: (new Date()).toDateString(),
-                    items: [
-                        {
-                            id: 1,
-                            name: 'Cu cai 1',
-                            quantity: 1,
-                            color: 'Black',
-                            size: 'XL',
-                            price: 40,
-                            total: 40,
-                        },
-                        {
-                            id: 2,
-                            name: 'Cu cai 2',
-                            quantity: 1,
-                            color: 'Black',
-                            size: 'XL',
-                            price: 80,
-                            total: 80,
-                        },
-                    ],
-                    customer_detail: {
-                        full_name: 'Nguyen Phuc Long',
-                        email: 'admin@gmail.com',
-                        phone_number: '0123456789',
-                        address: 'No1 - Dai Co Viet - Hai Ba Trung - Ha Noi',
-                    },
-                    total_price: 120,
-                    status: 0,
-                };
+            fetchOrder() {
+                axios.post('/order/track', {
+                    phone_number: this.phone_number,
+                    email: this.email,
+                })
+                    .then(res => {
+                        console.log(res.data);
+                        this.orders = res.data;
+                        this.track_form = false;
+                    })
+                    .catch(err => {
 
-                if (id < 0) {
-                    data.error = 'Something went wrong :\">'
-                }
-
-                this.order = data;
+                    });
             },
         },
     });

@@ -22,6 +22,40 @@ class OrderController extends AbstractActionController
 
             $data = $this->getRequest()->getContent();
             $data = json_decode($data);
+
+            // find order by $data->email and $data->phone_number
+
+            $order = [
+                'id' => 1,
+                'created_at' => '',
+                'items' => [
+                    [
+                        'id' => 1,
+                        'name' => 'Cu cai 1',
+                        'quantity' => 1,
+                        'color' => 'Black',
+                        'size' => 'XL',
+                        'price' => 40,
+                        'total' => 40,
+                    ]
+                ],
+                'customer_detail' => [
+                    'full_name' => 'Nguyen Phuc Long',
+                    'email' => 'admin@gmail.com',
+                    'phone_number' => '0123456789',
+                    'address' => 'No1 - Dai Co Viet - Hai Ba Trung - Ha Noi',
+                ],
+                'total_price' => 120,
+                'status' => 0,
+            ];
+
+            $res = [
+                $order,
+                $order,
+            ];
+
+            $this->response->setContent(json_encode($res));
+            return $this->response;
         }
 
         $view = new ViewModel([

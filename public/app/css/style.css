@@ -272,10 +272,6 @@ nav.navbar.bootsnav ul.nav > li > a.signin {
     margin: 0;
 }
 
-.card img {
-    max-height: 332px;
-}
-
 .card-title {
     color: #444;
     font-size: 14px;

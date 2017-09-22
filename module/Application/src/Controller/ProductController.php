@@ -255,6 +255,9 @@ class ProductController extends AbstractActionController
             'sizes' => $sizes_each_color,
             'images' => $images_each_color,
             'intro' => $product->getIntro(),
+            'description' => $product->getDescription(),
+            'current_sale' => $product->getCurrentSale(),
+            'current_price' => $product->getCurrentPrice(),
         ];
 
         $this->response->setContent(json_encode($data));

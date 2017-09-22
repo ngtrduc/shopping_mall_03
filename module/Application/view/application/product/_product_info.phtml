@@ -22,7 +22,18 @@
 
         <div class="clearfix row">
             <div class="product_details">
-                <div id="listing-price">${{product.price}}</div>
+                <md-layout>
+                    <div id="listing-price"
+                         :class="[product.current_sale > 0 ? 'sale' : '']">
+                        ${{product.current_price}}
+                    </div>
+                    <div style="flex: 0.05"></div>
+                    <div id="listing-price"
+                         class="nosale"
+                         v-if="product.current_sale > 0">
+                        <del>${{ product.price }}</del>
+                    </div>
+                </md-layout>
 
                 <div id="item-stock">
                     <div class="item-stock">
