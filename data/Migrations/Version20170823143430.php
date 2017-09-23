@@ -50,21 +50,21 @@ class Version20170823143430 extends AbstractMigration
             'comment_product_id_fk'
             );
 
-        $table = $schema->getTable('messages');
-        $table->addForeignKeyConstraint(
-            'users',
-            ['user_id'],
-            ['id'],
-            [], 
-            'message_user_id_fk'
-            );
-        $table->addForeignKeyConstraint(
-            'chat_boxs',
-            ['chat_box_id'],
-            ['id'],
-            [],
-            'message_chat_box_id_fk'
-            );
+        // $table = $schema->getTable('messages');
+        // $table->addForeignKeyConstraint(
+        //     'users',
+        //     ['user_id'],
+        //     ['id'],
+        //     [], 
+        //     'message_user_id_fk'
+        //     );
+        // $table->addForeignKeyConstraint(
+        //     'chat_boxs',
+        //     ['chat_box_id'],
+        //     ['id'],
+        //     [],
+        //     'message_chat_box_id_fk'
+        //     );
 
 
         $table = $schema->getTable('products');
@@ -197,9 +197,9 @@ class Version20170823143430 extends AbstractMigration
         $table = $schema->getTable('products');
         $table->removeForeignKey('product_category_id_fk');
 
-        $table = $schema->getTable('messages');
-        $table->removeForeignKey('message_user_id_fk');
-        $table->removeForeignKey('message_chat_box_id_fk');
+        // $table = $schema->getTable('messages');
+        // $table->removeForeignKey('message_user_id_fk');
+        // $table->removeForeignKey('message_chat_box_id_fk');
 
         $table = $schema->getTable('comments');
         $table->removeForeignKey('comment_product_id_fk');

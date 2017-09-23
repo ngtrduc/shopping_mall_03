@@ -5,6 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\ArrayCollection;
 use Application\Entity\Product;
+use Application\Entity\ProductColorImage;
 use Application\Entity\Store;
 /**
  * @ORM\Entity

@@ -88,10 +88,23 @@ class ProductColorImage
     protected $color_id;
 
     /**
+     * @ORM\Column(name="count_sell")
+     */
+    protected $count_sell;
+    /**
      * @ORM\Column(name="date_created")
      */
     protected $date_created;
 
+    public function getCountSell() 
+    {
+        return $this->count_sell;
+    }
+
+    public function addCountSell() 
+    {
+        $this->count_sell = $this->count_sell + 1;
+    }
     // Returns ID of this post.
     public function getId() 
     {
