@@ -4,7 +4,7 @@
             <h2 class="home-content-title recently_viewed">Trending on Infini Shop</h2>
             <div class="clearfix">
                 <?php foreach ($bestSellProducts as $bestSellProduct) : ?>
-                    <div class="col-sm-2">
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
                         <div class="card clearfix">
                             <?php if ($bestSellProduct->getCurrentSale() > 0) { ?>
                                 <div class="badge badge-sale">Sale</div>
@@ -34,7 +34,7 @@
                 <h2 class="home-content-title">Sale</h2>
                 <div class="clearfix">
                     <?php foreach ($bestSaleProducts as $product) : ?>
-                        <div class="col-sm-2">
+                        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
                             <div class="card">
                                 <?php if ($product->getCurrentSale() > 0) { ?>
                                     <div class="badge badge-sale">Sale</div>
@@ -64,7 +64,7 @@
                 <h2 class="home-content-title">New on Infini Shop</h2>
                 <div class="clearfix">
                     <?php foreach ($newProducts as $product) : ?>
-                        <div class="col-sm-2 sm-2">
+                        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
                             <div class="card">
                                 <?php if ($product->getCurrentSale() > 0) { ?>
                                     <div class="badge badge-sale">Sale</div>

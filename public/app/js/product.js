@@ -6,7 +6,10 @@ $(function () {
             user_id: 1,
             user: {},
 
-            product: {},
+            product: {
+                comment: {},
+                review: {},
+            },
             selected_color: '',
             selected_size: '',
             selected_image: -1,

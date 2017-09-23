@@ -83,30 +83,42 @@ class HomeController extends AbstractActionController
 
     public function loaddistrictAction()
     {
-        $data = $this->params()->fromPost();
-        if ($data['province_id']) {
-            $province_id = $data['province_id'];
-            $province = $this->entityManager->getRepository(Province::class)
-                ->find($province_id);
-        } else {
-            $province_name = $data['province_name'];
-            $province = $this->entityManager->getRepository(Province::class)
-                ->findOneBy(array('name' => $province_name));;
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+
+            if (!$data['province_id'] && !$data['province_name']) {
+                $data = json_decode($this->getRequest()->getContent());
+                $data = [
+                    'province_name' => $data->province_name,
+                ];
+            }
+
+            if ($data['province_id']) {
+                $province_id = $data['province_id'];
+                $province = $this->entityManager->getRepository(Province::class)
+                    ->find($province_id);
+            } else {
+                $province_name = $data['province_name'];
+                $province = $this->entityManager->getRepository(Province::class)
+                    ->findOneBy(array('name' => $province_name));;
+            }
+
+            if ($province == null) {
+                $this->getResponse()->setStatusCode(404);
+                return;
+            }
+
+            $districts = $province->getDistricts();
+            foreach ($districts as $d) {
+                $districts_for_select[$d->getId()] = $d->getName();
+            }
+
+            $data_json = json_encode($districts_for_select);
+            $this->response->setContent($data_json);
+            return $this->response;
         }
 
-        if ($province == null) {
-            $this->getResponse()->setStatusCode(404);
-            return;
-        }
-
-        $districts = $province->getDistricts();
-        foreach ($districts as $d) {
-            $districts_for_select[$d->getId()] = $d->getName();
-        }
-
-        $data_json = json_encode($districts_for_select);
-        $this->response->setContent($data_json);
-        return $this->response;
+        return 'only post method accepted';
     }
 
     public function loadprovinceAction()
