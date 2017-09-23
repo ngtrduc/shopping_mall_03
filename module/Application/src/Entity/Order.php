@@ -119,6 +119,11 @@ class Order
     protected $phone;
 
     /**
+     * @ORM\Column(name="email")
+     */
+    protected $email;
+
+    /**
      * @ORM\Column(name="cost")
      */
     protected $cost;
@@ -163,6 +168,12 @@ class Order
     public function setStatus($status) 
     {
         $this->status = $status;
+        if($status == 3) {
+            $arr = $this->getProductCI();
+            foreach ($arr as $key => $pCI) {
+                $pCI->addCountSell();
+            }
+        }
     }
 
     public function getName() 
@@ -183,6 +194,16 @@ class Order
     public function setPhone($phone) 
     {
         $this->phone = $phone;
+    }
+
+    public function getEmail() 
+    {
+        return $this->email;
+    }
+
+    public function setEmail($email) 
+    {
+        $this->email = $email;
     }
 
 
@@ -234,5 +255,21 @@ class Order
     public function setDateCreated($date_created) 
     {
         $this->date_created = $date_created;
+    }
+
+    public function getProductCI()
+    {
+        $arr = [];
+        foreach ($this->order_items as $item) {
+            $productMaster = $this->getProductMaster();
+            $product = $productMaster->getProduct();
+            $color_id = $productMaster->getColorId();
+            foreach ($product->getProductColorImage as $pCI) {
+                if($pCI->getColorId() == $color_id) {
+                    $arr[$pCI->getId()] = $pCI; 
+                }
+            }
+        }
+        return $arr;
     }
 }

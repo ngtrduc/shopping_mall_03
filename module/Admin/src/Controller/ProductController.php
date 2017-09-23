@@ -208,7 +208,7 @@ class ProductController extends AbstractActionController
             $data = $this->params()->fromPost();
     
             $form->setData($data);
-
+            
             if ($form->isValid()) {
                 $data = $form->getData();
 

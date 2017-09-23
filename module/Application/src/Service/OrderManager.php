@@ -110,24 +110,23 @@ class OrderManager
         return $order;
     }
 
-    public function getOrder($order_id, $email) 
+    public function getOrder($order_id, $phone) 
     {
 
         $order = $this->entityManager->getRepository(Order::class)->find($order_id);
-        if ($email == $order->getEmail()) return null;
-        $orderItems = $order->getOderItems();
+        if ($phone == $order->getPhone()) return null;
+        $orderItems = $order->getOrderItems();
         $items = [];
         foreach ($orderItems as $orderItem) {
             $items[] = $orderItem->getInfo();
         }
         $address = $order->getAddress()->getInfo();
         $order = [
-                'id' => $oder_id,
+                'id' => $order_id,
                 'created_at' => $order->getDateCreated(),
                 'items' => $items,
                 'customer_detail' => [
                     'full_name' => $order->getName(),
-                    'email' => $order->getEmail(),
                     'phone_number' => $order->getPhone(),
                     'address' => $address['address'] . ' - ' . $address['district'] . ' - ' . $address['province'],
                 ],

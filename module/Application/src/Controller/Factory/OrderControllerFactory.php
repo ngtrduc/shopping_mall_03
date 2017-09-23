@@ -14,6 +14,7 @@ class OrderControllerFactory implements FactoryInterface
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $sessionContainer = $container->get('UserLogin');
         $orderManager = $container->get(OrderManager::class);
+        
         return new OrderController($entityManager, $sessionContainer, $orderManager);
     }
 }

@@ -41,6 +41,7 @@ class CartController extends AbstractActionController
      */
     public function viewAction()
     {
+        //var_dump($this->orderManager);die();
         $cookie = $this->getRequest()->getCookie('Cart', 'default');
         $cart_info = json_decode($cookie["Cart"]);
 

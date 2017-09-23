@@ -1,11 +1,9 @@
-insert into stores (name,address,phone,date_created) values ('FPT','Thanh Xuan,Ha Noi',0912593240,'2017-08-08');
-insert into stores (name,address,phone,date_created) values ('Lazada','Hoang Mai,Ha Noi',0912593240,'2017-08-08');
-insert into stores (name,address,phone,date_created) values ('Vietel','Hoang Mai,Ha Noi',0912593240,'2017-08-08');
-insert into stores (name,address,phone,date_created) values ('The gioi di dong','Hoang Mai,Ha Noi',0912593240,'2017-08-08');
-
-insert into reviews (product_id,user_id,rate,content,date_created) values (9,1,5,'ok','2017-08-08');
-insert into reviews (product_id,user_id,rate,content,date_created) values (2,1,5,'ok','2017-08-08');
-
+insert into provinces(id,name) values (1,'Ha Noi');
+insert into provinces(id,name) values (2,'Ho Chi Minh');
+insert into districts(province_id,name) values (1,'Hoan kiem ');
+insert into districts(province_id,name) values (1,'Hai Ba trung ');
+insert into districts(province_id,name) values (2,'Quan 1 ');
+insert into districts(province_id,name) values (2,'QUan 2 ');
 insert into categories (id,name,alias,description,parent_id,date_created) values (1,'Thời trang nam','thoi-trang-nam','Thời trang cho nam',0,'2017-08-16');
 insert into categories (id,name,alias,description,parent_id,date_created) values (2,'Thời trang nữ','thoi-trang-nu','Thời trang cho nữ',0,'2017-08-16');
 
@@ -53,8 +51,7 @@ insert into categories (id,name,alias,description,parent_id,date_created) values
 insert into categories (id,name,alias,description,parent_id,date_created) values (35,'Váy mặc ở nhà','vay-mac-o-nha','váy mặc ở nhà thời trang cho nữ',19,'2017-08-16');
 insert into categories (id,name,alias,description,parent_id,date_created) values (36,'Váy bầu','vay-bau','váy bà bầu thời trang cho nữ',19,'2017-08-16');
 
-insert into products (name,alias,price,intro,image,popular_level,quantity,size,description,category_id,store_id,date_created) values (
-'Thoi trang dep','thoi-trang-dep',100,'Thoi trang sieu dep tu shop infini','test.jpg',1,22,23,'thoi trang sieu ddsafp dafdafasfd',3,1,'2017-08-16');
+
 
 
 

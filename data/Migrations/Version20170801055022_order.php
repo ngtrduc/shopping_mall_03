@@ -21,6 +21,7 @@ class Version20170801055022_order extends AbstractMigration
         $table->addColumn('user_id', 'integer', ['notnull' => false]);
         $table->addColumn('name', 'text');        
         $table->addColumn('phone', 'text');
+        $table->addColumn('email', 'text', ['notnull' => false]);
         $table->addColumn('address_id', 'integer');
         $table->addColumn('number_of_items', 'integer');
         $table->addColumn('cost', 'integer');

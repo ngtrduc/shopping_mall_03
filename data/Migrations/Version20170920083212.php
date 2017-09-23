@@ -15,8 +15,7 @@ class Version20170920083212 extends AbstractMigration
      */
     public function up(Schema $schema)
     {
-        $schema->dropTable('messages');
-        $schema->dropTable('chat_boxs');
+        
 
         $table = $schema->createTable('messages');
         $table->addColumn('id', 'integer', ['autoincrement'=>true]);

@@ -97,6 +97,8 @@ class Product
     public function addSale($sale) 
     {
         $this->sales[] = $sale;
+        $current_price = (int)($this->getPrice()*(100 - $this->getCurrentSale())/100);
+        $this->setCurrentPrice($current_price); 
     }
 
     /**
@@ -221,6 +223,11 @@ class Product
      * @ORM\Column(name="price")
      */
     protected $price;
+
+    /**
+     * @ORM\Column(name="current_price")
+     */
+    protected $current_price;
 
     /**
      * @ORM\Column(name="intro")
@@ -396,9 +403,13 @@ class Product
         return max($arr);
     }
 
+    public function setCurrentPrice($current_price)
+    {
+        $this->current_price = $current_price;
+    }
     public function getCurrentPrice()
     {
-        return (int)($this->getPrice()*(100-$this->getCurrentSale())/100);
+        return $this->current_price;
     }
 
     public function getSizeAndImageEachColors()
@@ -408,7 +419,7 @@ class Product
         $size_and_images =[];
         // get Size each Color
         foreach ($product_masters as $pm){
-            
+            if (empty($size_and_images[$pm->getColorId()]))
             $size_and_images[$pm->getColorId()] = ['size'=>[], 'image' => ['0' => null,'1' => []]];
             array_push($size_and_images[$pm->getColorId()]['size'], $pm->getSizeId());
             
@@ -424,7 +435,7 @@ class Product
                 }
             }       
         }
-
+        
         return $size_and_images;
     }
 

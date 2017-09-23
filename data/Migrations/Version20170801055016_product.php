@@ -21,6 +21,7 @@ class Version20170801055016_product extends AbstractMigration
         $table->addColumn('name', 'text');
         $table->addColumn('alias', 'text', ['notnull' => false]);
         $table->addColumn('price', 'integer');
+        $table->addColumn('current_price', 'integer', ['notnull' => false]);
         $table->addColumn('intro', 'text');
         $table->addColumn('image', 'string', ['notnull' => false]);
         $table->addColumn('description', 'text', ['notnull' => false]);
