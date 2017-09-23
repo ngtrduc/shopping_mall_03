@@ -33,7 +33,7 @@
         ->prependFile($this->basePath('pages/home.js'))
         //->prependFile('http://shopping.app:8056/socket.io/socket.io.js')
         ->prependFile($this->basePath('js/vue-scroller.js'))
-
+        ->prependFile($this->basePath('app/js/speech.js'))
         ->prependFile($this->basePath('app/js/order.js'))
         ->prependFile($this->basePath('app/js/tracking.js'))
         ->prependFile($this->basePath('app/js/checkout.js'))
@@ -76,46 +76,76 @@
         <span style="color: #000;"><b>{{notifyMessage}}.</b></span>
         <md-button @click="notifyActionAdapter" style="color: #000;">{{ notifyAction }}</md-button>
     </md-snackbar>
-<!--     <div id="chatbox" v-if="isLogedIn">
-        <div class="chat_window" style="right: 10px">
-            <div class="top_menu" >
-                <div class="buttons">
-                    <div class="button close" @click="closeChatbox()"></div>
-                    <!--                    <div class="button minimize"></div>-->
-                    
-                    <!-- <div class="button maximize" @click="openChatbox()"></div>
-                </div>
-                <div class="title">{{ current_chatting_user }}</div>
-            </div>
-            <div v-if="!isChatBoxClosed">
-                <ul id="messages_list" class="messages" v-chat-scroll>
-                    <div v-for="message in messages" >
-                        <li class="message left appeared" v-if="message.sender_id != user.id" >
-                            <div class="avatar"></div>
-                            <div class="text_wrapper">
-                                <div class="text">{{ message.content }}</div>
-                            </div>
-                        </li>
-                        <li class="message right appeared" v-else>
-                            <div class="avatar"></div>
-                            <div class="text_wrapper">
-                                <div class="text">{{ message.content }}</div>
-                            </div>
-                        </li>
-                    </div>
-                </ul> -->
-                <!-- <div class="bottom_wrapper clearfix">
-                    <div class="message_input_wrapper">
-                        <input v-on:keyup.13="sendMessage()" class="message_input" v-model="text" placeholder="Type your message here..."/></div>
-                    <div class="send_message" @click="sendMessage()" >
-                        <div class="icon"></div>
-                        <div class="text">Send</div>
-                    </div>
-                </div> -->
-            </div>
-        </div> -->
 
+    <div id="speech2text"
+         class="speech-outer">
+        <md-layout md-gutter
+                   md-row
+                   md-vertical-align="center">
+            <md-layout>
+                <md-speed-dial md-open="hover" class="md-fab-bottom-left">
+                    <md-button class="md-fab record-button md-raised md-dense"
+                               :class="[is_record ? 'md-warn' : '']"
+                               @click.native="record"
+                               md-fab-trigger>
+                    </md-button>
+
+                    <md-button class="md-fab md-primary md-mini md-clean">
+                        <md-icon>settings</md-icon>
+                    </md-button>
+                </md-speed-dial>
+            </md-layout>
+            <md-layout>
+                <div class="result"
+                     v-show="show_result">
+                    <div class="content">
+                        {{ label }} {{ say }}
+                    </div>
+                </div>
+            </md-layout>
+        </md-layout>
     </div>
+
+
+    <!--    <div id="chatbox" v-if="isLogedIn">-->
+    <!--        <div class="chat_window" style="right: 10px">-->
+    <!--            <div class="top_menu" >-->
+    <!--                <div class="buttons">-->
+    <!--                    <div class="button close" @click="closeChatbox()"></div>-->
+    <!--                    <!--                    <div class="button minimize"></div>-->
+    <!--                    <div class="button maximize" @click="openChatbox()"></div>-->
+    <!--                </div>-->
+    <!--                <div class="title">{{ current_chatting_user }}</div>-->
+    <!--            </div>-->
+    <!--            <div v-if="!isChatBoxClosed">-->
+    <!--                <ul id="messages_list" class="messages" v-chat-scroll>-->
+    <!--                    <div v-for="message in messages" >-->
+    <!--                        <li class="message left appeared" v-if="message.sender_id != user.id" >-->
+    <!--                            <div class="avatar"></div>-->
+    <!--                            <div class="text_wrapper">-->
+    <!--                                <div class="text">{{ message.content }}</div>-->
+    <!--                            </div>-->
+    <!--                        </li>-->
+    <!--                        <li class="message right appeared" v-else>-->
+    <!--                            <div class="avatar"></div>-->
+    <!--                            <div class="text_wrapper">-->
+    <!--                                <div class="text">{{ message.content }}</div>-->
+    <!--                            </div>-->
+    <!--                        </li>-->
+    <!--                    </div>-->
+    <!--                </ul>-->
+    <!--                <div class="bottom_wrapper clearfix">-->
+    <!--                    <div class="message_input_wrapper">-->
+    <!--                        <input v-on:keyup.13="sendMessage()" class="message_input" v-model="text" placeholder="Type your message here..."/></div>-->
+    <!--                    <div class="send_message" @click="sendMessage()" >-->
+    <!--                        <div class="icon"></div>-->
+    <!--                        <div class="text">Send</div>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!---->
+    <!--    </div>-->
     <?php echo $this->inlineScript() ?>
 
 </div>

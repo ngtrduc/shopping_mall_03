@@ -28,64 +28,66 @@
                     </div>
                 <?php endforeach; ?>
             </div>
-        </div>
 
-        <div>
-            <h2 class="home-content-title">Sale</h2>
-            <div class="clearfix">
-                <?php foreach ($bestSaleProducts as $product) : ?>
-                    <div class="col-sm-2">
-                        <div class="card">
-                            <?php if ($product->getCurrentSale() > 0) { ?>
-                                <div class="badge badge-sale">Sale</div>
-                            <?php }; ?>
-                            <img class="card-img-top img-responsive"
-                                 src="<?= $this->basePath($product->getImage()) ?>"
-                                 onclick="location.href='/product/view/<?php echo $product->getId(); ?>';">
-                            <div class="card-block sm card-block-new"
-                                 onclick="location.href = '/product/view/<?php echo $product->getId(); ?>';">
-                                <p class="card-title"><?= $product->getName(); ?></p>
-                                <div class="clearfix">
+
+            <div>
+                <h2 class="home-content-title">Sale</h2>
+                <div class="clearfix">
+                    <?php foreach ($bestSaleProducts as $product) : ?>
+                        <div class="col-sm-2">
+                            <div class="card">
+                                <?php if ($product->getCurrentSale() > 0) { ?>
+                                    <div class="badge badge-sale">Sale</div>
+                                <?php }; ?>
+                                <img class="card-img-top img-responsive"
+                                     src="<?= $this->basePath($product->getImage()) ?>"
+                                     onclick="location.href='/product/view/<?php echo $product->getId(); ?>';">
+                                <div class="card-block sm card-block-new"
+                                     onclick="location.href = '/product/view/<?php echo $product->getId(); ?>';">
+                                    <p class="card-title"><?= $product->getName(); ?></p>
+                                    <div class="clearfix">
                                 <span class="card-shop-name pull-left">
                                     <a href="/category/view/<?php echo $product->getCategory()->getId(); ?>">
                                         <?php echo $product->getCategory()->getName(); ?>
                                     </a>
                                 </span>
-                                    <span class="card-price pull-right">$<?= $product->getCurrentPrice() ?></span>
+                                        <span class="card-price pull-right">$<?= $product->getCurrentPrice() ?></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                <?php endforeach; ?>
+                    <?php endforeach; ?>
+                </div>
             </div>
-        </div>
 
-        <div>
-            <h2 class="home-content-title">New on Infini Shop</h2>
-            <div class="clearfix">
-                <?php foreach ($newProducts as $product) : ?>
-                    <div class="col-sm-2 sm-2">
-                        <div class="card">
-                            <?php if ($product->getCurrentSale() > 0) { ?>
-                                <div class="badge badge-sale">Sale</div>
-                            <?php }; ?>
-                            <img class="card-img-top img-responsive" src="<?= $this->basePath($product->getImage()) ?>"
-                                 onclick="location.href = '/product/view/<?php echo $product->getId(); ?>';">
-                            <div class="card-block sm card-block-new"
-                                 onclick="location.href = '/product/view/<?php echo $product->getId(); ?>';">
-                                <p class="card-title"><?= $product->getName(); ?></p>
-                                <div class="clearfix">
+            <div>
+                <h2 class="home-content-title">New on Infini Shop</h2>
+                <div class="clearfix">
+                    <?php foreach ($newProducts as $product) : ?>
+                        <div class="col-sm-2 sm-2">
+                            <div class="card">
+                                <?php if ($product->getCurrentSale() > 0) { ?>
+                                    <div class="badge badge-sale">Sale</div>
+                                <?php }; ?>
+                                <img class="card-img-top img-responsive"
+                                     src="<?= $this->basePath($product->getImage()) ?>"
+                                     onclick="location.href = '/product/view/<?php echo $product->getId(); ?>';">
+                                <div class="card-block sm card-block-new"
+                                     onclick="location.href = '/product/view/<?php echo $product->getId(); ?>';">
+                                    <p class="card-title"><?= $product->getName(); ?></p>
+                                    <div class="clearfix">
                                 <span class="card-shop-name pull-left">
                                     <a href="/category/view/<?php echo $product->getCategory()->getId(); ?>">
                                         <?php echo $product->getCategory()->getName(); ?>
                                     </a>
                                 </span>
-                                    <span class="card-price pull-right">$<?= $product->getCurrentPrice() ?></span>
+                                        <span class="card-price pull-right">$<?= $product->getCurrentPrice() ?></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                <?php endforeach; ?>
+                    <?php endforeach; ?>
+                </div>
             </div>
         </div>
     </div>
