@@ -109,4 +109,32 @@ class OrderManager
         $this->entityManager->flush();
         return $order;
     }
+
+    public function getOrder($order_id, $email) 
+    {
+
+        $order = $this->entityManager->getRepository(Order::class)->find($order_id);
+        if ($email == $order->getEmail()) return null;
+        $orderItems = $order->getOderItems();
+        $items = [];
+        foreach ($orderItems as $orderItem) {
+            $items[] = $orderItem->getInfo();
+        }
+        $address = $order->getAddress()->getInfo();
+        $order = [
+                'id' => $oder_id,
+                'created_at' => $order->getDateCreated(),
+                'items' => $items,
+                'customer_detail' => [
+                    'full_name' => $order->getName(),
+                    'email' => $order->getEmail(),
+                    'phone_number' => $order->getPhone(),
+                    'address' => $address['address'] . ' - ' . $address['district'] . ' - ' . $address['province'],
+                ],
+                'total_price' => $order->getCost(),
+                'status' => $order->getStatus(),
+            ];
+
+        return $order;
+    }
 }

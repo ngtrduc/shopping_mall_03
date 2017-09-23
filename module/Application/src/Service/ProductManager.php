@@ -77,17 +77,18 @@ class ProductManager
     }
 
     public function addReview($product, $data)
-    {
+    {   
+        
         $user = $this->entityManager
             ->getRepository('Application\Entity\User')->find($data['user_id']);
         $review = new Review();
-        $review->setProduct($product);
+        
         $review->setUser($user);
         $review->setContent($data['content']);
         $review->setRate($data['rate']);
         $currentDate = date('Y-m-d H:i:s');
         $review->setDateCreated($currentDate);
-
+        $review->setProduct($product);
         // Add the entity to entity manager.
         $this->entityManager->persist($review);
 
@@ -161,74 +162,5 @@ class ProductManager
     }
 
 
-    public function getDataProductDetail($productId)
-    {
-        $data = [];
-        $product = $this->entityManager->getRepository(Product::class)->findOneById($productId);
-        $size_colors = $product->getSizeAndImageEachColors();
-        $data['id'] = $productId;
-        $data['name'] = $product->getName();
-        $data['price'] = $product->getCurrentPrice();
-        $data['rate_sum'] = $product->getRateSum();
-        $data['rate_count'] = $product->getRateCount();
-        $data['intro'] = $product->getIntro();
-
-
-        foreach ($size_colors as $key => $size_color) {
-            $data['colors'][] = $this->color[$key];
-            $data['sizes'][$this->color[$key]] = $size_color['size'];
-            $data['images'][$this->color[$key]][0] = $size_color['image'][0];
-            foreach ($size_color['image'][1] as $image) {
-                $data['images'][$this->color[$key]][] = $image;
-            }
-
-        }
-        // find review
-        $data['review']['size'] = 10;
-        $data['review']['page'] = 1;
-        $data['review']['total'] = $product->getRateCount();
-        $reviews = $product->getReviews();
-
-        for ($i = 0; $i < count($reviews); $i++) {
-            $item = [];
-            $item['id'] = $reviews[$i]->getId();
-            $item['rate'] = $reviews[$i]->getRate();
-            $item['user_name'] = 'Test';
-            $item['content'] = $reviews[$i]->getContent();
-            $item['date_created'] = $reviews[$i]->getDateCreated();
-            $item['province'] = 'Ha Noi';
-            $data['review']['items'][] = $item;
-
-        }
-        //find comment
-        $coments = $product->getComments();
-        $data['comment']['size'] = 10;
-        $data['comment']['page'] = 1;
-        $data['comment']['total'] = count($coments);
-
-
-        for ($i = 0; $i < count($comments); $i++) {
-            $item = [];
-            $commentId = $comments[$i]->getId();
-            $item['id'] = $commentId;
-            $item['user_id'] = 1;
-            $item['user_name'] = 'Test';
-            $item['content'] = $comments[$i]->getContent();
-            $replyComments = $this->entityManager->getRepository(Comment::class)
-                ->findBy(['parent_id' => $commentId], ['date_created' => 'DESC']);
-            foreach ($replyComments as $reply) {
-                $itemReply['id'] = $reply->getId();
-                $itemReply['user_id'] = 1;
-                $itemReply['user_name'] = "Admin";
-                $itemReply['content'] = $reply->getContent();
-                $item['replies'][] = $itemReply;
-            }
-
-            //$item['date_created'] = $comments[$i]->getDateCreated();
-            $data['comment']['items'][] = $item;
-
-        }
-
-        return $data;
-    }
+    
 }

@@ -5,6 +5,7 @@ namespace Application\Controller\Factory;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 use Application\Controller\OrderController;
+use Application\Service\OrderManager;
 
 class OrderControllerFactory implements FactoryInterface
 {
@@ -12,7 +13,7 @@ class OrderControllerFactory implements FactoryInterface
     {
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $sessionContainer = $container->get('UserLogin');
-
-        return new OrderController($entityManager, $sessionContainer);
+        $orderManager = $container->get(OrderManager::class);
+        return new OrderController($entityManager, $sessionContainer, $orderManager);
     }
 }

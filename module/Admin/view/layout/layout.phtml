@@ -32,7 +32,7 @@
 
     <?= $this->headScript()
         ->prependFile($this->basePath('pages/admin.js'))
-        ->prependFile('http://shopping.app:8056/socket.io/socket.io.js')
+        //->prependFile('http://shopping.app:8056/socket.io/socket.io.js')
         ->prependFile($this->basePath('js/vue-scroller.js'))
         ->prependFile($this->basePath('js/me.js'))
         ->prependFile($this->basePath('assets/bootstrap-fileinput/themes/explorer/theme.min.js'))
@@ -60,13 +60,16 @@
             <?= $this->content ?>
         </section>
     </div>
-    <div id="chatbox" v-if="isInited">
+<!--     <div id="chatbox" v-if="isInited">
         <div class="chat_window">
             <div class="top_menu">
                 <div class="buttons">
                     <div class="button close" @click="closeChatbox()"></div>
                     <!--                    <div class="button minimize"></div>-->
-                    <div class="button maximize" @click="openChatbox()"></div>
+
+        <!-- disable chat box-->
+
+                   <!--  <div class="button maximize" @click="openChatbox()"></div>
                 </div>
                 <div class="title">{{ current_chatting_user }}</div>
             </div>
@@ -98,10 +101,10 @@
                 </div>
             </div>
         </div>
-
-    </div>
-    <div id="chatlist" v-if="isInited">
-        <div class="chat_list">
+ -->
+    <!-- </div> -->
+    <!-- <div id="chatlist" v-if="isInited"> -->
+        <!-- <div class="chat_list">
             <div class="top_menu">
                 <div class="buttons">
                     <div class="button close" @click="closeChatList()"></div>
@@ -123,8 +126,9 @@
 
                 </ul>
             </div>
-        </div>
-    </div>
+        </div> -->
+    <!-- </div> --> -->
+    <!-- end disable chat box-->
     <?= $this->inlineScript() ?>
 </div>
 </body>

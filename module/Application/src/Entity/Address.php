@@ -78,4 +78,12 @@ class Address
     {
         $this->date_created = $date_created;
     }
+    public function getInfo()
+    {
+        return [
+            
+            'district' => $this->getDistrict()->getName(),
+            'address' => $this->getAddress()
+        ];
+    }
 }
