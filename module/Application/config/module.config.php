@@ -141,11 +141,12 @@ return [
             'category' => [
                 'type' => Segment::class,
                 'options' => [
-                    'route' => '/category[/:action[/:id[/:color]]]',
+                    'route' => '/category[/:action[/:id[/:color][?:order]]]',
                     'constraints' => [
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[a-zA-Z0-9_-]*',
                         'color' => '[a-zA-Z0-9_-]*',
+                        'order' => '[a-zA-Z0-9_-]*',
                     ],
                     'defaults' => [
                         'controller' => Controller\CategoryController::class,

@@ -16,26 +16,4 @@ class ProductRepository extends EntityRepository
      * @return Query
      */
 
-    public function findProductsByCategory($arr, $data = null)
-    {
-        $entityManager = $this->getEntityManager();
-
-        $queryBuilder = $entityManager->createQueryBuilder();
-        if ($data == null)
-        $queryBuilder->select('p')
-            ->from(Product::class, 'p')
-            ->join('p.category', 'c')
-            ->where('c.id IN(:arr)')
-            ->setParameter('arr', $arr);
-        else {
-            $queryBuilder->select('p')
-            ->from(Product::class, 'p')
-            ->join('p.category', 'c')
-            ->where('c.id IN(:arr)')
-            ->andWhere($queryBuilder->expr()->between('p.price', '?1', '?2'))
-            ->setParameters(['arr' => $arr, 1 => $data['price1'], 2 => $data['price2']]);
-        }
-        return $queryBuilder->getQuery();
-    }
-
 }

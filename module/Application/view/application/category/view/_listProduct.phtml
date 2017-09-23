@@ -3,33 +3,7 @@
     <div class="row clearfix">
         <ul>
             <?php foreach ($products as $product) { ?>
-                <?php if(method_exists($product,'getCategory')) { ?>
-
-                <li class="col-sm-4">
-                    <div class="card clearfix">
-                        <?php if ($product->getCurrentSale() > 0) { ?>
-                            <div class="badge badge-sale">Sale</div>
-                        <?php } ?>
-                        <img src="<?php echo $this->basePath($product->getImage()) ?>"
-                             class="img-responsive"
-                             onclick="location.href = '/product/view/<?php echo $product->getId(); ?>';">
-                        <div class="card-meta">
-                            <div class="card-title"
-                                 onclick="location.href = '/product/view/<?php echo $product->getId(); ?>';">
-                                <?php echo $product->getName(); ?>
-                            </div>
-                            <div class="clearfix">
-                                <div class="card-shop pull-left">
-                                    <a href="/category/view/<?php echo $product->getCategory()->getId(); ?>">
-                                        <?php echo $product->getCategory()->getName(); ?>
-                                    </a>
-                                </div>
-                                <div class="card-price pull-right">$<?php echo $product->getCurrentPrice(); ?></div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <?php } else { 
+                <?php
                     $productMain = $product->getProduct();
                     ?>
                 
@@ -60,7 +34,7 @@
                     </div>
                 </li>
 
-            <?php }} ?>
+            <?php } ?>
         </ul>
     </div>
     <div class="paginator">
