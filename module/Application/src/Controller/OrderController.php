@@ -10,10 +10,11 @@ class OrderController extends AbstractActionController
     private $entityManager;
     private $sessionContainer;
 
-    function __construct($entityManager, $sessionContainer)
+    function __construct($entityManager, $sessionContainer, $orderManager)
     {
         $this->entityManager = $entityManager;
         $this->sessionContainer = $sessionContainer;
+        $this->orderManager = $orderManager;
     }
 
     function trackAction()
@@ -48,6 +49,8 @@ class OrderController extends AbstractActionController
                 'total_price' => 120,
                 'status' => 0,
             ];
+            // return order by $order_id ; $email
+            //$order = $this->orderManager()->getOrder($order_id, $email);
 
             $res = [
                 $order,

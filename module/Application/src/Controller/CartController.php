@@ -81,7 +81,7 @@ class CartController extends AbstractActionController
             if (isset($sessionContainer->id)) {
                 $data_formated['user_id'] = $sessionContainer->id;
             }
-            $this->orderManager->addNewOrder($data_formated, $cart_info);
+            $order = $this->orderManager->addNewOrder($data_formated, $cart_info);
 
 
             $cookie = new \Zend\Http\Header\SetCookie(
@@ -95,7 +95,7 @@ class CartController extends AbstractActionController
             // response data
             $res = [
                 'status' => 'ok',
-                'order_id' => '12314kj',
+                'order_id' => $order->getId(),
             ];
 
             $this->response->setContent(json_encode($res));

@@ -115,6 +115,8 @@ class Product
     public function addReview($review) 
     {
         $this->reviews[] = $review;
+        $this->rate_sum = $this->rate_sum + $review->getRate();
+        $this->rate_count++;
     }
 
       

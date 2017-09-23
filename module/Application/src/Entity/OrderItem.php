@@ -134,5 +134,18 @@ class OrderItem
     {
         $this->cost = $cost;
     }
+    public function getInfo()
+    {
+        $pM = $this->getProductMaster();
+        return [
+            'id' => $this->getId(),
+            'name' => $pM->getProduct()->getName(),
+            'quantity' => $this->getQuantity(),
+            'color' => $pM->getColorInWord(),
+            'size' => $pM->getSizeInWord(),
+            'price' => (int)($this->getCost()/$this->getQuantity()),
+            'total' => $this->getCost(),
+        ];
+    }
     
 }
