@@ -14,6 +14,7 @@ class Address
      * @ORM\JoinColumn(name="district_id", referencedColumnName="id")
      */
     protected $district;
+    
        
     /*
      * Returns associated district.
@@ -29,6 +30,8 @@ class Address
         $this->district = $district;
         $district->addAddress($this);
     }
+
+    
 
     /**
      * @ORM\Id
@@ -81,7 +84,7 @@ class Address
     public function getInfo()
     {
         return [
-            
+            'province' => $this->getDistrict()->getProvince()->getName(),
             'district' => $this->getDistrict()->getName(),
             'address' => $this->getAddress()
         ];

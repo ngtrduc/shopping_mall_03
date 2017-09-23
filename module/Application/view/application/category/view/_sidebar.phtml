@@ -86,7 +86,7 @@ function in_list($categoryId, $listCategory)
             <h5>Filter by color</h5>
             <ul class="swatch">
                 <li>
-                    <a href="<?= $this->url('category', ['action' => 'view', 'id' => $category->getId(), 'color' => 'Red']) ?>" style="background-color: #f40b32;"></a>
+                    <a href="<?= $this->url('category', ['action' => 'view', 'id' => $category->getId(), 'color' => 'Red']) ?>" style="background-color: #ffffff;"></a>
                 </li>
                 <li>
                     <a href="<?= $this->url('category', ['action' => 'view', 'id' => $category->getId(), 'color' => 'Orange']) ?>" style="background-color: #ff7f00;"></a>
@@ -107,7 +107,10 @@ function in_list($categoryId, $listCategory)
                     <a href="<?= $this->url('category', ['action' => 'view', 'id' => $category->getId(), 'color' => 'Black']) ?>" style="background-color: #000000;"></a>
                 </li>
                 <li>
-                    <a href="<?= $this->url('category', ['action' => 'view', 'id' => $category->getId(), 'color' => null]) ?>" ><span class="glyphicon glyphicon-remove"></span></a>
+                    <a href="<?= $this->url('category', ['action' => 'view', 'id' => $category->getId(), 'color' => 'White']) ?>" style="background-color: #f40b32;"></a>
+                </li>
+                <li>
+                    <a href="<?= $this->url('category', ['action' => 'view', 'id' => $category->getId(), 'color' => null]) ?>" style="background-color: #ffffff;" ><span class="" >No</span></a>
                 </li>
             </ul>
         </div>

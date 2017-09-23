@@ -893,6 +893,10 @@ ul.properties li:before {
     padding: 0 6px;
 }
 
+.swatch {
+    background-color: #AAAAAA;
+    padding-left: 5px;
+}
 .swatch li {
     display: inline-block;
 }

@@ -6,13 +6,12 @@
         <!--        </div>-->
         <div class="dropdown pull-right">
             <span class="sort_by">Sort by: </span>
-            <select class="btn btn-default">
-                <option>Relevance</option>
-                <option>Price High to Low</option>
-                <option>Price Low to High</option>
-                <option>Popular</option>
-                <option>Best Selling</option>
-                <option>Newest Items</option>
+            <select class="btn btn-default" onchange="location='/category/view/<?php echo $category->getId() ?>' + this.value;">
+                <option>None</option>
+                <option value="?sort=htl">Price High to Low</option>
+                <option value="?sort=lth">Price Low to High</option>
+                
+                <option value="?sort=new">Newest Items</option>
             </select>
         </div>
     </div>

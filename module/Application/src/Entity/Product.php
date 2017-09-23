@@ -405,14 +405,13 @@ class Product
     {
         $product_masters = $this->getProductMasters();
         $product_color_images = $this->getProductColorImages();
-
+        $size_and_images =[];
         // get Size each Color
         foreach ($product_masters as $pm){
-            if ($size_and_images[$pm->getColorId()] == null) {
-                $size_and_images[$pm->getColorId()] = ['size'=>[], 'image' => ['0' => null,'1' => []]];
-            } else {
-                array_push($size_and_images[$pm->getColorId()]['size'], $pm->getSizeId());
-            }
+            
+            $size_and_images[$pm->getColorId()] = ['size'=>[], 'image' => ['0' => null,'1' => []]];
+            array_push($size_and_images[$pm->getColorId()]['size'], $pm->getSizeId());
+            
         };
 
         // get Image each Color

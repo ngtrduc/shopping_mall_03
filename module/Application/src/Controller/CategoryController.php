@@ -53,33 +53,41 @@ class CategoryController extends AbstractActionController
      */
     public function viewAction()
     {   
+
         $categoryId = $this->params()->fromRoute('id', -1);
         $colorName = $this->params()->fromRoute('color', -1);
         $arr = [];
         $arr = $this->categoryManager->arrCate($arr,$categoryId);
-        
+        $option =$_GET;
         $page = $this->params()->fromQuery('page', 1);
 
         $category = $this->entityManager->getRepository(category::class)->find($categoryId);
+
         if($this->getRequest()->isPost()){
             $data = $_POST;
-            $products = $this->entityManager->getRepository(Product::class)
+            $products = $this->entityManager->getRepository(ProductColorImage::class)
                 ->findProductsByCategory($arr,$data);
+
         } elseif ($colorName != -1) {
             $color = array_flip($this->color);
             $color_id = $color[$colorName];
             $products = $this->entityManager->getRepository(ProductColorImage::class)
                 ->findProductsByColor($arr,$color_id);
                 
+        } else if ($option != null){
+
+            $products = $this->entityManager->getRepository(ProductColorImage::class)
+                ->findProductsBySort($arr, $option);
+                
         } else {
-            $products = $this->entityManager->getRepository(Product::class)
+            $products = $this->entityManager->getRepository(ProductColorImage::class)
                 ->findProductsByCategory($arr);
         }
            
         $adapter = new DoctrineAdapter(new ORMPaginator($products, false));
         
         $paginator = new Paginator($adapter);
-        $paginator->setDefaultItemCountPerPage(2);                
+        $paginator->setDefaultItemCountPerPage(9);                
         $paginator->setCurrentPageNumber($page);
 
         $mainCategories = $this->categoryManager->mainCategories();
