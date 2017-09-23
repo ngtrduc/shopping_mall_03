@@ -98,7 +98,9 @@ class Product
     {
         $this->sales[] = $sale;
         $current_price = (int)($this->getPrice()*(100 - $this->getCurrentSale())/100);
-        $this->setCurrentPrice($current_price); 
+        $this->setCurrentPrice($current_price);
+        
+        
     }
 
     /**
@@ -308,6 +310,8 @@ class Product
     public function setPrice($price) 
     {
         $this->price = $price;
+        if ($this->getCurrentPrice == null) 
+            $this->setCurrentPrice($price);
     }
 
     public function getIntro() 
@@ -392,7 +396,7 @@ class Product
 
     public function getCurrentSale()
     {
-        $sales = $this->getSales();
+        $sales = $this->sales;
 
         $arr = [0];
         foreach ($sales as $sale) {

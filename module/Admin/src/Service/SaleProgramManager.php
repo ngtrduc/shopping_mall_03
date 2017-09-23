@@ -75,12 +75,13 @@ class SaleProgramManager
                 ->findOneById($data['products']['id'][$i]);
 
             $sale->setSaleProgram($saleProgram);
-            $sale->setProduct($product);
+            
             $sale->setSale($data['products']['sale'][$i]);
 
             $currentDate = date('Y-m-d H:i:s');
             $sale->setDateCreated($currentDate);
-
+            $sale->setProduct($product);
+            
             $this->entityManager->persist($sale);
         }            
 

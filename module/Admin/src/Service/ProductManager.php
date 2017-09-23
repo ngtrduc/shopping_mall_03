@@ -78,6 +78,7 @@ class ProductManager
         
         // create images for each color
         $i = 0;
+
         foreach ($imageUrls as $imageUrl) {
             $image = new Image();
             $image->setProductColorImage($product_color_image);
@@ -237,10 +238,13 @@ class ProductManager
     private function processImageUrl($imageUrls)
     {
         $i = 0;
+        if(is_string($imageUrls)) $imageUrls = [0 => $imageUrls];
+        
         foreach ($imageUrls as $imageUrl) {
             $Urls[$i] = ltrim($imageUrl, "public");
             $i++;
         }
+        
         return $Urls;
     }
 }

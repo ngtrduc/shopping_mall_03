@@ -192,6 +192,7 @@ class ProductForm extends Form {
         $this->setInputFilter($inputFilter);
         
         // Name
+        if ($this->scenario == 'create') {
         $inputFilter->add([
             'name'      => 'name',
             'required'  => true,
@@ -212,7 +213,7 @@ class ProductForm extends Form {
                 ],
                 ],
             ]); 
-
+        }
         // Add input for "description" field
         $inputFilter->add([
             'name'     => 'description',

@@ -60,15 +60,17 @@ class ProductColorImageRepository extends EntityRepository
             ->setParameter('arr', $arr); 
         switch ($option['sort']) {
             case 'htl':
-                $queryBuilder->orderBy('p.price', 'DESC');  
+                $queryBuilder->orderBy('p.current_price', 'DESC');  
                 break;
             case 'lth':
-                $queryBuilder->orderBy('p.price', 'ASC');  
+                $queryBuilder->orderBy('p.current_price', 'ASC');  
                 break; 
             case 'new':
                 $queryBuilder->orderBy('pm.date_created', 'DESC');  
                 break;
-            
+            case 'sell':
+                $queryBuilder->orderBy('pm.count_sell', 'DESC');  
+                break;
             default:
                 
                 break;

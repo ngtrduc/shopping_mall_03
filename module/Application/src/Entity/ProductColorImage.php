@@ -90,7 +90,7 @@ class ProductColorImage
     /**
      * @ORM\Column(name="count_sell")
      */
-    protected $count_sell;
+    protected $count_sell = 0;
     /**
      * @ORM\Column(name="date_created")
      */
