@@ -5,6 +5,8 @@
             <th>Name</th>
             <th>Image</th>
             <th>Price</th>
+            <th>Views</th>
+            <th>Number of Sells</th>
             <th>Colors</th>
             <th>Current Sale</th>
             <th>Category</th>
@@ -26,6 +28,8 @@
                 <img src="<?php echo $this->basePath($product->getImage()) ?>" class="image_product">
             </td>
             <td><?php echo $product->getPrice(); ?></td>
+            <td><?php echo $product->getViews(); ?></td>
+            <td><?php echo $product->getCountOfSells(); ?></td>
             <td>
                 <?php foreach ($product->getColorsInWord() as $c) { ?>
                         <i class="set-size-icon pull-right color-<?php echo $c ?>" >

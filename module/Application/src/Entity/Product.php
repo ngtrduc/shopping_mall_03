@@ -18,6 +18,7 @@ use Application\Entity\Sale;
 class Product
 {   
     const STATUS_PUBLISHED = 1;
+    const MAX_VIEWS = 2000000000;
      /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\Comment", mappedBy="product")
      * @ORM\JoinColumn(name="id", referencedColumnName="product_id")
@@ -252,6 +253,11 @@ class Product
     protected $status = 0;
 
     /**
+     * @ORM\Column(name="views")
+     */
+    protected $views = 0;
+
+    /**
      * @ORM\Column(name="popular_level")
      */
     protected $popular_level = 0;
@@ -352,6 +358,17 @@ class Product
     public function setStatus($status) 
     {
         $this->status = $status;
+    }
+
+    public function getViews() 
+    {
+        return $this->views;
+    }
+
+    public function addViews() 
+    {
+        if($this->getViews() < MAX_VIEWS)
+        $this->views = $this->views + 1;
     }
 
     public function getRateSum() 
@@ -475,5 +492,14 @@ class Product
         }
 
         return $mainComments;
+    }
+    public function getCountOfSells()
+    {
+        $sells = 0;
+        $product_color_images = $this->getProductColorImages();
+        foreach ($product_color_images as $pci) {
+            $sells = $sells + $pci->getCountSell(); 
+        }
+        return $sells;
     }
 }

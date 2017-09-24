@@ -357,6 +357,19 @@ class User
         $this->dateCreated = $date;
     }
 
+    public function getPay() 
+    {
+        $pay = 0;
+        $orders = $this->getOrders();
+        
+        foreach ($orders as $order) {
+            if($order->getStatus() == Order::STATUS_COMPLETED) {
+                $pay = $pay + $order->getCost();
+            }
+        }
+        return $pay;
+    }
+
     public function getData()
     {
         return [

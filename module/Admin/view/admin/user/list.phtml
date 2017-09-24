@@ -13,6 +13,7 @@
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Address</th>
+                            <th>Payment</th>
                             <th>Orders</th>
                         </tr>
                     </thead>
@@ -28,6 +29,7 @@
                                 <td><?php echo $user->getEmail() ?></td>
                                 <td><?php echo $user->getPhone() ?></td>
                                 <td><?php echo $user->getFullAddress() ?></td>
+                                <td><?php echo $user->getPay() ?> $</td>
                                 <td>
                                     <a class="label bg-blue"><?php echo count($user->getOrders()); ?></a>
                                 </td>
