@@ -60,59 +60,68 @@ function in_list($categoryId, $listCategory)
     </div>
 
     <div class="card mt15">
-   
+
         <div class="panel-body">
             <h5>Price</h5>
             <div>
                 <form class="price row clearfix" method="post" action="#">
-                    <div class="col-xs-4">
-                        <input type="text" value="" name="price1" class="form-control">
+                    <div class="col-xs-4"
+                         :class="[errors.has('price1') ? 'has-error' : '']">
+                        <input type="text"
+                               v-model="filter.price_gte"
+                               v-validate="'numeric|min_value:0'"
+                               name="price1"
+                               class="form-control">
                     </div>
                     <div class="pull-left text-center">
                         <span class="vcenter">to</span>
                     </div>
-                    <div class="col-xs-4">
-                        <input type="text" value="" name="price2" class="form-control">
+                    <div class="col-xs-4"
+                         :class="[errors.has('price2') || !truePriceLte ? 'has-error' : '']">
+                        <input type="text"
+                               v-model="filter.price_lte"
+                               v-validate="'numeric|min_value:0'"
+                               name="price2"
+                               class="form-control">
                     </div>
                     <div class="col-xs-2">
-                        <input type="submit" value="Go" class="btn btn-default">
+                        <input type="submit"
+                               value="Go"
+                               class="btn btn-primary"
+                               @click.prevent="changeFilter">
                     </div>
-
                 </form>
             </div>
 
             <hr>
 
             <h5>Filter by color</h5>
-            <ul class="swatch">
-                <li>
-                    <a href="<?= $this->url('category', ['action' => 'view', 'id' => $category->getId(), 'color' => 'Red']) ?>" style="background-color: #ffffff;"></a>
-                </li>
-                <li>
-                    <a href="<?= $this->url('category', ['action' => 'view', 'id' => $category->getId(), 'color' => 'Orange']) ?>" style="background-color: #ff7f00;"></a>
-                </li>
-                <li>
-                    <a href="<?= $this->url('category', ['action' => 'view', 'id' => $category->getId(), 'color' => 'Yellow']) ?>" style="background-color: #f3cc0c;"></a>
-                </li>
-                <li>
-                    <a href="<?= $this->url('category', ['action' => 'view', 'id' => $category->getId(), 'color' => 'Green']) ?>" style="background-color: #0ac20a;"></a>
-                </li>
-                <li>
-                    <a href="<?= $this->url('category', ['action' => 'view', 'id' => $category->getId(), 'color' => 'Blue']) ?>" style="background-color: #0cccf3;"></a>
-                </li>
-                <li>
-                    <a href="<?= $this->url('category', ['action' => 'view', 'id' => $category->getId(), 'color' => 'Purple']) ?>" style="background-color: #a60cf3;"></a>
-                </li>
-                <li>
-                    <a href="<?= $this->url('category', ['action' => 'view', 'id' => $category->getId(), 'color' => 'Black']) ?>" style="background-color: #000000;"></a>
-                </li>
-                <li>
-                    <a href="<?= $this->url('category', ['action' => 'view', 'id' => $category->getId(), 'color' => 'White']) ?>" style="background-color: #f40b32;"></a>
-                </li>
-                <li>
-                    <a href="<?= $this->url('category', ['action' => 'view', 'id' => $category->getId(), 'color' => null]) ?>" style="background-color: #ffffff;" ><span class="" >No</span></a>
-                </li>
-            </ul>
+            <div class="swatch">
+                <button class="btn btn-lg btn-color"
+                        :class="{active: color == filter.color}"
+                        v-for="color in colors"
+                        :key="color"
+                        :style="{'background-color': color}"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        :title="color"
+                        @click="selectColor(color)">
+                </button>
+                <button class="btn btn-default btn-color"
+                        :class="{active: 'other' == filter.color}"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="OTHERS"
+                        @click="selectColor('other')">
+                    OTHERS
+                </button>
+            </div>
+
+            <hr>
+
+            <button class="btn btn-warning btn-group-justified pull-right"
+                    @click="clearFilter">Clear
+            </button>
         </div>
     </div>
 </div>
