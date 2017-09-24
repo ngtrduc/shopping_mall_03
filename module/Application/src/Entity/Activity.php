@@ -9,6 +9,12 @@ use Application\Entity\User;
  */
 class Activity
 {
+    const ORDER = 1;
+    const COMMENT = 2;
+    const REVIEW = 3;
+    const ORDER_SHIP = 4;
+    const ORDER_COMPLETE = 5;
+    
     /**
      * @ORM\ManyToOne(targetEntity="\Application\Entity\User", inversedBy="activities")
      * @ORM\JoinColumn(name="sender_id", referencedColumnName="id")
@@ -74,6 +80,11 @@ class Activity
      */
     protected $target_id;
 
+    /**
+     * @ORM\Column(name="date_created")
+     */
+    protected $date_created;
+
     // Returns ID of this post.
     public function getId() 
     {
@@ -104,5 +115,14 @@ class Activity
     public function setTargetId($target_id) 
     {
         $this->target_id = $target_id;
+    }
+    public function getDateCreated() 
+    {
+        return $this->date_created;
+    }
+
+    public function setDateCreated($date_created) 
+    {
+        $this->date_created = $date_created;
     }
 }
