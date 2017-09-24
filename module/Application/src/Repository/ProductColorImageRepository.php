@@ -4,6 +4,7 @@ namespace Application\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Application\Entity\ProductColorImage;
+use Application\Entity\Product;
 
 
 /**
@@ -21,8 +22,9 @@ class ProductColorImageRepository extends EntityRepository
             ->join('pm.product', 'p')
             ->join('p.category', 'c')
             ->where('c.id IN(:arr)')
+            ->andWhere('p.status = :public')
             ->andWhere('pm.color_id = :color_id')
-            ->setParameters(array('arr' => $arr,'color_id' => $color_id))
+            ->setParameters(array('arr' => $arr,'color_id' => $color_id, 'public' => Product::STATUS_PUBLISHED))
             ->distinct(true);
 
         return $queryBuilder->getQuery();
@@ -37,12 +39,13 @@ class ProductColorImageRepository extends EntityRepository
             ->from(ProductColorImage::class, 'pm')
             ->join('pm.product', 'p')
             ->join('p.category', 'c')
-            ->where('c.id IN(:arr)');
+            ->where('c.id IN(:arr)')
+            ->andWhere('p.status = :public');
         if ($data == null) 
-            $queryBuilder->setParameter('arr', $arr);
+            $queryBuilder->setParameters(['arr' => $arr, 'public' => Product::STATUS_PUBLISHED]);
         else {
             $queryBuilder->andWhere($queryBuilder->expr()->between('p.price', '?1', '?2'))
-            ->setParameters(['arr' => $arr, 1 => $data['price1'], 2 => $data['price2']]);
+            ->setParameters(['arr' => $arr, 'public' => Product::STATUS_PUBLISHED, 1 => $data['price1'], 2 => $data['price2']]);
         }
         return $queryBuilder->getQuery();
     }
@@ -57,7 +60,8 @@ class ProductColorImageRepository extends EntityRepository
             ->join('pm.product', 'p')
             ->join('p.category', 'c')
             ->where('c.id IN(:arr)')
-            ->setParameter('arr', $arr); 
+            ->andWhere('p.status = :public')
+            ->setParameters(['arr' => $arr, 'public' => Product::STATUS_PUBLISHED]); 
         switch ($option['sort']) {
             case 'htl':
                 $queryBuilder->orderBy('p.current_price', 'DESC');  

@@ -5,7 +5,8 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
         typeof define === 'function' && define.amd ? define(factory) :
             (global['vue-chat-scroll'] = factory());
-}(this, (function () { 'use strict';
+}(this, (function () {
+    'use strict';
 
     /**
      * @name VueJS vChatScroll (vue-chat-scroll)
@@ -37,7 +38,7 @@
                 scrollToBottom(el);
             }).observe(el, { childList: true });
         },
-        inserted: scrollToBottom
+        inserted: scrollToBottom,
     };
 
     /**
@@ -50,7 +51,7 @@
     var VueChatScroll = {
         install: function install(Vue, options) {
             Vue.directive('chat-scroll', vChatScroll);
-        }
+        },
     };
 
     if (typeof window !== 'undefined' && window.Vue) {

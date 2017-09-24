@@ -40,7 +40,7 @@ class Activity
     }
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Application\Entity\User", inversedBy="activities")
+     * @ORM\ManyToOne(targetEntity="\Application\Entity\User", inversedBy="notifications")
      * @ORM\JoinColumn(name="receiver_id", referencedColumnName="id")
      */
     protected $receiver;

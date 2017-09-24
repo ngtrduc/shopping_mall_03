@@ -140,7 +140,7 @@ class OrderManager
     {
 
         $order = $this->entityManager->getRepository(Order::class)->find($order_id);
-        if ($phone == $order->getEmail()) return null;
+        if ($email != $order->getEmail()) return null;
         $orderItems = $order->getOrderItems();
         $items = [];
         foreach ($orderItems as $orderItem) {

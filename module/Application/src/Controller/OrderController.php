@@ -50,7 +50,7 @@ class OrderController extends AbstractActionController
             //     'status' => 0,
             // ];
             // return order by $order_id ; $email
-            $order = $this->orderManager()->getOrder($order_id, $email);
+            $order = $this->orderManager->getOrder($order_id, $email);
 
             $this->response->setContent(json_encode($order));
             return $this->response;
