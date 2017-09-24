@@ -15,10 +15,10 @@
                             <div class="badge badge-sale">Sale</div>
                         <?php } ?>
                         <img src="<?php echo $this->basePath($product->getMainImage()) ?>"
-                             class="img-responsive"
+                             class="img-responsive product"
                              onclick="location.href = '/product/view/<?php echo $productMain->getId(); ?>';">
                         <div class="card-meta">
-                            <div class="card-title"
+                            <div class="card-title product"
                                  onclick="location.href = '/product/view/<?php echo $productMain->getId(); ?>';">
                                 <?php echo $productMain->getName(); ?>
                             </div>

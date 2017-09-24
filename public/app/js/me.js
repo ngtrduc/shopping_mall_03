@@ -22,3 +22,21 @@ $(document).ready(function(){
         load_district();
     });
 });
+$(document).ready(function(){
+    function add_view()
+    {
+        var product_id = document.location.href;
+        product_id = product_id.charAt(product_id.length-1);
+        $.ajax({
+            type: 'POST',
+            url: '/addView',
+            data: {
+                'product_id' : product_id,
+            },
+            success: function(data) {
+                //onsole.log(data);                    
+            }
+        })
+    }
+    $('.product').on("click",add_view());
+});

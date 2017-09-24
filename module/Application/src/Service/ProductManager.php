@@ -188,6 +188,13 @@ class ProductManager
         return $arr;
     }
 
+    public function addView($productId)
+    {
+        $product = $this->entityManager->getRepository(Product::class)->findOneById($productId);
+        $product->addViews();
 
+        $this->entityManager->flush();
+        return $product->getViews();
+    }
     
 }

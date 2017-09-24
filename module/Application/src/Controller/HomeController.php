@@ -132,4 +132,18 @@ class HomeController extends AbstractActionController
         $this->response->setContent(json_encode($arr));
         return $this->response;
     }
+
+    public function addViewAction()
+    {
+        
+        $views = 0;
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+            $views = $this->productManager->addView((int)($data['product_id']));
+            
+        }
+        $this->response->setContent(json_encode($views));
+        
+        return $this->response;
+    }
 }
