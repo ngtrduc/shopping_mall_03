@@ -413,7 +413,7 @@ class Product
     }
     public function getCurrentPrice()
     {
-        return $this->current_price;
+        return $this->getPrice() * (100 - $this->getCurrentSale()) / 100;
     }
 
     public function getSizeAndImageEachColors()

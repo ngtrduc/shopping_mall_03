@@ -19,7 +19,6 @@ Cart.init = function () {
             totalPrice: 0,
         };
     }
-    console.log(this.cart);
 
     this.updateUI();
 
@@ -35,8 +34,6 @@ Cart.bindUIActions = function () {
         let idx = current.cart.items.findIndex(function (ele) {
             return ele.id === id;
         });
-
-        console.log(idx);
 
         if (idx >= 0) {
             current.cart.totalItem -= 1;

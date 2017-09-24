@@ -232,7 +232,7 @@ return [
             Controller\HomeController::class => [
                 // Give access to "resetPassword", "message" and "setPassword" actions
                 // to anyone.
-                ['actions' => ['index', 'search'], 'allow' => '*'],
+                ['actions' => ['index', 'search', 'loaddistrict', 'loadprovince'], 'allow' => '*'],
                 // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
                 // ['actions' => ['changePassword'], 'allow' => '@']
             ],

@@ -18,7 +18,7 @@ $(document).ready(function(){
         })
     }
 
-    $('#province').on("change", function(){
+    $('#province').on("selected", function(){
         load_district();
     });
 });
