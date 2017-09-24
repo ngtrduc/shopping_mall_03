@@ -7,6 +7,7 @@ use Application\Entity\Product;
 use Application\Entity\OrderItem;
 use Application\Entity\User;
 use Application\Entity\Address;
+use Application\Entity\Activity;
 use Application\Entity\District;
 use Application\Entity\Province;
 use Zend\Filter\StaticFilter;
@@ -85,9 +86,24 @@ class OrderManager
             $user = $this->entityManager
                 ->getRepository(User::class)->find($data['user_id']);
             $order->setUser($user);
+            
         }    
         
         $this->entityManager->persist($order);
+        if (!empty($data['user_id'])) {
+            $user = $this->entityManager
+                ->getRepository(User::class)->find($data['user_id']);
+            $admin = $this->entityManager
+                ->getRepository(User::class)->find(1);
+            $activity = new Activity();
+            $activity->setSender($user);
+            $activity->setReceiver($admin);
+            $activity->setType(Activity::ORDER);
+            $activity->setTargetId($order->getId());
+            $activity->setDateCreated($date_created);
+            $this->entityManager->persist($activity);
+        }
+        
 
         foreach ($arrItems as $item) {
             $arr = explode("_", $item->id);

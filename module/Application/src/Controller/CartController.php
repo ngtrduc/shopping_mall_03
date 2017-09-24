@@ -42,6 +42,17 @@ class CartController extends AbstractActionController
     public function viewAction()
     {
         
+            // $data_formated = [
+            //     'full_name' => 'truong',
+            //     'phone_number' => '0999999999',
+            //     'email' => 'truong@gmail.com',
+            //     'address' => 'haaaaaaa', 
+            //     'district' => 'Quan 1 ',
+            //     'province' => 'Ho Chi Minh',
+            //     'total_price' => '10000',
+            // ];
+
+        //view
         $cookie = $this->getRequest()->getCookie('Cart', 'default');
         $cart_info = json_decode($cookie["Cart"]);
 

@@ -7,6 +7,7 @@ use Application\Entity\ProductMaster;
 use Application\Entity\ProductColorImage;
 use Application\Entity\Image;
 use Application\Entity\User;
+use Application\Entity\Activity;
 use Application\Entity\OrderItem;
 use Zend\Filter\StaticFilter;
 use Application\Entity\Comment;
@@ -59,16 +60,32 @@ class ProductManager
         $comment->setProduct($product);
         $comment->setUser($user);
         $comment->setContent($data['content']);
-        if ($data['comment_id'] != null) {
-            $parent = $this->entityManager->
-            getRepository(Comment::class)->find($data['comment_id']);
-            $comment->setParent($parent);
-        }
+        
         $currentDate = date('Y-m-d H:i:s');
         $comment->setDateCreated($currentDate);
 
         // Add the entity to entity manager.
         $this->entityManager->persist($comment);
+
+        $admin = $this->entityManager
+            ->getRepository(User::class)->find(1);
+        $activity = new Activity();
+        $activity->setSender($user);
+        $activity->setReceiver($admin);
+        $activity->setType(Activity::COMMENT);
+        $activity->setTargetId($comment->getId());
+        $activity->setDateCreated($currentDate);
+
+        $this->entityManager->persist($activity);
+        if (!empty($data['comment_id'])) {
+            $parent = $this->entityManager
+                ->getRepository(Comment::class)->find($data['comment_id']);
+            
+            $comment->setParent($parent);
+            $receiver = $this->entityManager
+                ->getRepository(User::class)->find($parent->getUser()->getId());
+            $activity->setReceiver($receiver);
+        }
 
         // Apply changes.
         $this->entityManager->flush();
@@ -91,6 +108,16 @@ class ProductManager
         $review->setProduct($product);
         // Add the entity to entity manager.
         $this->entityManager->persist($review);
+        $admin = $this->entityManager
+            ->getRepository(User::class)->find(1);
+        $activity = new Activity();
+        $activity->setSender($user);
+        $activity->setReceiver($admin);
+        $activity->setType(Activity::REVIEW);
+        $activity->setTargetId($review->getId());
+        $activity->setDateCreated($currentDate);
+        $this->entityManager->persist($activity);
+        
 
         // Apply changes.
         $this->entityManager->flush();

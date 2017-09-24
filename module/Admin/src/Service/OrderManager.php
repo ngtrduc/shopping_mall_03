@@ -2,6 +2,9 @@
 namespace Admin\Service;
 
 use Application\Entity\Order;
+use Application\Entity\User;
+use Application\Entity\Activity;
+
 use Zend\Filter\StaticFilter;
 
 class OrderManager 
@@ -24,9 +27,34 @@ class OrderManager
         if ($order->getStatus() == Order::STATUS_PENDING) {
             $order->setStatus(Order::STATUS_SHIPPING);
             $order->setShipAt($currentDate);
+            if ($order->getUser() != null) {
+                $activity = new Activity();
+                $user = $order->getUser();
+                $admin = $this->entityManager
+                    ->getRepository(User::class)->find(1);
+                $activity->setSender($admin);
+                $activity->setReceiver($user);
+                $activity->setType(Activity::ORDER_SHIP);
+                $activity->setTargetId($order->getId());
+                $activity->setDateCreated($currentDate);
+                $this->entityManager->persist($activity);
+            }
+
         }elseif ($order->getStatus() == Order::STATUS_SHIPPING) {
             $order->setStatus(Order::STATUS_COMPLETED);
             $order->setCompletedAt($currentDate);
+            if ($order->getUser() != null) {
+                $activity = new Activity();
+                $user = $order->getUser();
+                $admin = $this->entityManager
+                    ->getRepository(User::class)->find(1);
+                $activity->setSender($admin);
+                $activity->setReceiver($user);
+                $activity->setType(Activity::ORDER_COMPLETE);
+                $activity->setTargetId($order->getId());
+                $activity->setDateCreated($currentDate);
+                $this->entityManager->persist($activity);
+            }
         }
 
         $this->entityManager->flush();
