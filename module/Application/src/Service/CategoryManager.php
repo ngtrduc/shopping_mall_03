@@ -38,7 +38,7 @@ class CategoryManager
     }
     public function mainCategories()
     {
-        return $this->entityManager->getRepository(Category::class)->findBy(['parent_id' => '0']);
+        return $this->entityManager->getRepository(Category::class)->findBy(['parent_id' => null]);
       
     }
 
@@ -54,7 +54,7 @@ class CategoryManager
     public function arrCateTree()
     {   
         $arr = [];
-        $mainCates = $this->entityManager->getRepository(Category::class)->findBy(['parent_id' => '0']);  
+        $mainCates = $this->entityManager->getRepository(Category::class)->findBy(['parent_id' => null]);  
         foreach ( $mainCates as $cate ){
             $arr[$cate->getId()] = $this->entityManager->getRepository(Category::class)
                                         ->findBy(['parent_id' => $cate->getId()]);

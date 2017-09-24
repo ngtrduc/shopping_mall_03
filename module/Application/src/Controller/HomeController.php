@@ -37,9 +37,9 @@ class HomeController extends AbstractActionController
 
         $bestSell = $this->productManager->getBestSellsInCurrentMonth(4);
 
-        $bestSellProducts = $this->entityManager->getRepository(Product::class)->findBy(['id' => $bestSell]);
+        $bestSellProducts = $this->entityManager->getRepository(Product::class)->findBy(['id' => $bestSell, 'status' => Product::STATUS_PUBLISHED]);
         $bestSales = array_keys($this->productManager->getBestSaleProduct(5));
-        $bestSaleProducts = $this->entityManager->getRepository(Product::class)->findBy(['id' => $bestSales]);
+        $bestSaleProducts = $this->entityManager->getRepository(Product::class)->findBy(['id' => $bestSales, 'status' => Product::STATUS_PUBLISHED]);
         //var_dump($bestSaleProducts);die();
         $view = new ViewModel([
             'newProducts' => $newProducts,

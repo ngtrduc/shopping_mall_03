@@ -53,6 +53,7 @@ class CartController extends AbstractActionController
             // ];
 
         //view
+        
         $cookie = $this->getRequest()->getCookie('Cart', 'default');
         $cart_info = json_decode($cookie["Cart"]);
 

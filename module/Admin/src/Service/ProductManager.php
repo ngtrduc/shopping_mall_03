@@ -41,7 +41,7 @@ class ProductManager
         $product->setPrice($data['price']);
         $product->setIntro($data['intro']);
         $product->setDescription($data['description']);
-        $product->setStatus(0);
+        $product->setStatus(Product::STATUS_PUBLISHED);
         $product->setDateCreated($data['date_created']);
         $product->setImage($data['image']);
         $this->addKeywordsToProduct($data['keywords'], $product);
