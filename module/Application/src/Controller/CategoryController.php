@@ -56,6 +56,8 @@ class CategoryController extends AbstractActionController
 
         $categoryId = $this->params()->fromRoute('id', -1);
         $colorName = $this->params()->fromRoute('color', -1);
+        $sort = $this->params()->fromQuery('sort', -1);
+        
         $arr = [];
         $arr = $this->categoryManager->arrCate($arr,$categoryId);
         $option =$_GET;
@@ -100,6 +102,7 @@ class CategoryController extends AbstractActionController
             'category' => $category,
             'mainCategories' => $mainCategories,
             'arrCateTree' => $arrCateTree,
+            'sort' => $sort,
             
         ]);
         $this->layout('application/layout');

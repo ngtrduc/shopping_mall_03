@@ -41,7 +41,7 @@ class CartController extends AbstractActionController
      */
     public function viewAction()
     {
-        //var_dump($this->orderManager);die();
+        
         $cookie = $this->getRequest()->getCookie('Cart', 'default');
         $cart_info = json_decode($cookie["Cart"]);
 
@@ -67,8 +67,9 @@ class CartController extends AbstractActionController
                 'full_name' => $data->ship_add->full_name,
                 'phone_number' => $data->ship_add->phone_number,
                 'email' => $data->ship_add->email,
-                'address' => $data->ship_add->address . ' - ' . $data->ship_add->dist
-                    . ' - ' . $data->ship_add->province,
+                'address' => $data->ship_add->address, 
+                'district' => $data->ship_add->dist,
+                'province' => $data->ship_add->province,
                 'total_price' => $totalPrice,
             ];
 
@@ -83,7 +84,7 @@ class CartController extends AbstractActionController
                 $data_formated['user_id'] = $sessionContainer->id;
             }
             $order = $this->orderManager->addNewOrder($data_formated, $cart_info);
-
+            
 
             $cookie = new \Zend\Http\Header\SetCookie(
                 'Cart',

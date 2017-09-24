@@ -261,15 +261,17 @@ class Order
     {
         $arr = [];
         foreach ($this->order_items as $item) {
-            $productMaster = $this->getProductMaster();
+            $productMaster = $item->getProductMaster();
             $product = $productMaster->getProduct();
             $color_id = $productMaster->getColorId();
-            foreach ($product->getProductColorImage as $pCI) {
+            foreach ($product->getProductColorImages() as $pCI) {
+                
                 if($pCI->getColorId() == $color_id) {
                     $arr[$pCI->getId()] = $pCI; 
                 }
             }
         }
+        
         return $arr;
     }
 }

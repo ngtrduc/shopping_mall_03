@@ -156,6 +156,7 @@ class ProductController extends AbstractActionController
 
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
+
             $data['image-details'] = $this->imageManager->saveImages($_FILES);
 
             $this->productManager->addNewColor($product, $data);

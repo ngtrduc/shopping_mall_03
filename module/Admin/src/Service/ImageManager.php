@@ -28,7 +28,7 @@ class ImageManager
         foreach ($files as $file => $info) {
             $httpadapter->receive($file);
         } 
-
+        
         return $httpadapter->getFileName();           
     }
 

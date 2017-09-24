@@ -7,6 +7,8 @@ use Application\Entity\Product;
 use Application\Entity\OrderItem;
 use Application\Entity\User;
 use Application\Entity\Address;
+use Application\Entity\District;
+use Application\Entity\Province;
 use Zend\Filter\StaticFilter;
 
 
@@ -50,28 +52,36 @@ class OrderManager
         $date_created = date('Y-m-d H:i:s');
 
         //create address
-        // $district = $this->entityManager->getRepository(District::class)
-        //     ->find($data['district']);
+        $province = $this->entityManager->getRepository(Province::class)
+            ->findOneByName($data['province']);
+            
+        foreach ($province->getDistricts() as $district) {
+            if($district->getName() == $data['district']){
+                $cur_district = $district;break;
+            }
+        }
+        
 
-        // $address = new Address();
-        // $address->setDistrict($district);
-        // $address->setAddress($data['address']);
-        // $address->setDateCreated($date_created);
-        $address = $this->entityManager->getRepository(Address::class)
-                    ->find(1);
+        $address = new Address();
+        
+        $address->setAddress($data['address']);
+        $address->setDateCreated($date_created);
+        $address->setDistrict($cur_district);
+        $this->entityManager->persist($address);
+        
         
         $order = new Order();
         
         $order->setName($data['full_name']);
         $order->setPhone($data['phone_number']);
-
+        $order->setEmail($data['email']);
         $order->setAddress($address);
 
         $order->setNumberOfItems($cart->totalItem);
         $order->setCost($data['total_price']);
         $order->setStatus(Order::STATUS_PENDING);
         $order->setDateCreated($date_created);
-        if ($data['user_id'] != null) {
+        if (!empty($data['user_id'])) {
             $user = $this->entityManager
                 ->getRepository(User::class)->find($data['user_id']);
             $order->setUser($user);
@@ -110,11 +120,11 @@ class OrderManager
         return $order;
     }
 
-    public function getOrder($order_id, $phone) 
+    public function getOrder($order_id, $email) 
     {
 
         $order = $this->entityManager->getRepository(Order::class)->find($order_id);
-        if ($phone == $order->getPhone()) return null;
+        if ($phone == $order->getEmail()) return null;
         $orderItems = $order->getOrderItems();
         $items = [];
         foreach ($orderItems as $orderItem) {
@@ -128,6 +138,7 @@ class OrderManager
                 'customer_detail' => [
                     'full_name' => $order->getName(),
                     'phone_number' => $order->getPhone(),
+                    'email' => $order->getEmail(),
                     'address' => $address['address'] . ' - ' . $address['district'] . ' - ' . $address['province'],
                 ],
                 'total_price' => $order->getCost(),

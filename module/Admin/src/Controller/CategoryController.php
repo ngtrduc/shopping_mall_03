@@ -33,6 +33,7 @@ class CategoryController extends AbstractActionController
     }
 
     public function indexAction(){
+       
     	$categories = $this->entityManager->getRepository(Category::class)->findAll();
         // Render the view template
         

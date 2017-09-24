@@ -8,10 +8,10 @@
             <span class="sort_by">Sort by: </span>
             <select class="btn btn-default" onchange="location='/category/view/<?php echo $category->getId() ?>' + this.value;">
                 <option>None</option>
-                <option value="?sort=htl">Price High to Low</option>
-                <option value="?sort=lth">Price Low to High</option>
-                
-                <option value="?sort=new">Newest Items</option>
+                <option value="?sort=htl" <?= $sort == 'htl' ? ' selected="selected"' : '';?>>Price High to Low</option>
+                <option value="?sort=lth" <?= $sort == 'lth' ? ' selected="selected"' : '';?>>Price Low to High</option>
+                <option value="?sort=sell" <?= $sort == 'sell' ? ' selected="selected"' : '';?>>Best Sell</option>
+                <option value="?sort=new" <?= $sort == 'new' ? ' selected="selected"' : '';?>>Newest Items</option>
             </select>
         </div>
     </div>
