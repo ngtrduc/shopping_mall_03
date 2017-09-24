@@ -256,7 +256,7 @@ return [
             ],
             Controller\OrderController::class => [
                 // Give access to "view" actions to anyone.
-                ['actions' => ['view'], 'allow' => '@'],
+                ['actions' => ['view', 'getOrders'], 'allow' => '@'],
                 ['actions' => ['track'], 'allow' => '*'],
             ],
         ],
