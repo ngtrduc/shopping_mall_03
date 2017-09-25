@@ -47,6 +47,7 @@ class SaleProgram
     {
         $this->products[] = $product;        
     }
+    
     public function removeProductAssociation($product) 
     {
         $this->products->removeElement($product);
@@ -155,9 +156,9 @@ class SaleProgram
         return $this->status;
     }
 
-    public function setStatus($status) 
+    public function setStatus() 
     {
-        $this->status = $status;
+        $this->status = $this->getCurrentStatus();
     }
 
     public function getDateCreated() 
@@ -172,14 +173,45 @@ class SaleProgram
 
     public function getCurrentStatus()
     {
-        $currentDate = new \DateTime();
-        $currentDate = $currentDate->format('d-m-Y');
+        $currentDate = date('d-m-Y');
+        $currentDate = strtotime($currentDate);
+        $date_start = strtotime($this->getDateStart());
+        $date_end = strtotime($this->getDateEnd());
+        
+        if ($currentDate < $date_start)
+            return SaleProgram::PENDING;
+        elseif ($currentDate <= $date_end)
+            return SaleProgram::ACTIVE;
+        if ($currentDate > $date_end)
+            return SaleProgram::DONE;
+    }
 
-        if($currentDate < $this->getDateStart())
-            return 1;
-        if($currentDate >= $this->getDateStart() && $currentDate <= $this->getDateEnd())
-            return 0;
-        if($currentDate > $this->getDateEnd())
-            return 2;
+    public function getSaleArray()
+    {
+        $sales = $this->getSales();
+        foreach ($sales as $s) {
+            $sale_array[$s->getProduct()->getId()] = $s->getSale();
+        }
+        return $sale_array;
+    }
+
+    public function getStatusOfStatus()
+    {
+        $status_of_status = "";
+
+        if ($this->getStatus() == 1 && $this->getCurrentStatus() == 0) {
+            $status_of_status = "(Need to Active)";
+        }
+        if ($this->getStatus() == 0 && $this->getCurrentStatus() == 2) {
+            $status_of_status = "(Expired)";
+        }
+
+        return $status_of_status;
+    }
+
+    public function getStatusInWord($type)
+    {
+        $status_in_word = ["Active", "Pending", "Done", "Cancel"];
+        return $status_in_word[$type];
     }
 }
