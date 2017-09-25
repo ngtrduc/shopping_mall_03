@@ -159,7 +159,7 @@
     margin-top: -2px;
 }
 
-.time {
+/*.time {
     position: absolute;
     font-family: Arial, Helvetica, sans-serif;
     width: 50px;
@@ -167,7 +167,7 @@
     margin-top: -3px;
     margin-left: -5px;
     color: #9E9E9E;
-}
+}*/
 
 .eventAuthor {
     position: absolute;

@@ -22,6 +22,7 @@ class User
     /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\Activity", mappedBy="sender")
      * @ORM\JoinColumn(name="id", referencedColumnName="sender_id")
+     * @ORM\OrderBy({"date_created" = "ASC"})
      */
     protected $activities;
 
@@ -381,5 +382,25 @@ class User
             'email' => $this->email,
             'address' => $this->address,
         ];
+    }
+
+    public function getActivitiesByDay($index1, $index2)
+    {
+        $activities = $this->getActivities();
+        $activities_by_day = [];
+
+        foreach ($activities as $a) {
+            if ($activities_by_day[$a->getDateCreated()] == null)
+                $activities_by_day[$a->getDateCreated()] = [];
+            $item['time'] = $a->getTimeCreated();
+            $item['icon-class'] = $a->getIconClass();
+            $item['content'] = $a->getContent();
+
+            array_push($activities_by_day[$a->getDateCreated()], $item);
+        }
+
+        $activities_by_day = array_slice($activities_by_day, $index1, $index2);
+        
+        return $activities_by_day;
     }
 }

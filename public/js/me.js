@@ -217,7 +217,6 @@ $(document).ready(function(){
 $(document).ready(function(){
     $(".remove-form").submit(function(e) {
         var form_id = $(this).attr('id');
-        console.log(form_id);
         var product_id = $('#' + form_id + ' input[name=product_id]').val();
         var sale_program_id = $('#' + form_id + ' input[name=sale_program_id]').val();
 
@@ -235,5 +234,52 @@ $(document).ready(function(){
         })
         e.preventDefault();
 
+    })
+});
+
+$(document).ready(function(){
+    $(".btn-load-more").click(function() {
+        var index = $(this).attr('id');
+        var user_id = $("#user_id").val();
+        var new_index = parseInt(index) + 2;
+        $.ajax({
+            type: 'POST',
+            url: '/admin/users/loadmoreaction',
+            data: {
+                'index' : index,
+                'user_id' : user_id
+            },
+            success: function(data) {
+                var data = JSON.parse(data);
+                for (var k in data){
+                  $('.timeline').append('<li class="time-label">'
+                    + '<span class="bg-red">'
+                    + k
+                    + '</span>'
+                    + '</li>'
+                    );
+                  for (var i in data[k]){
+                    $('.timeline').append('<li>'
+                      + '<i class="'
+                      + data[k][i]['icon-class']
+                      + '"></i>'
+                      + '<div class="timeline-item">'
+                      + '<span class="time">'
+                      + '<i class="fa fa-clock-o"></i> '
+                      + data[k][i]['time']
+                      + '</span>'
+                      + '<div class="timeline-body">'
+                      + data[k][i]['content']
+                      + '</div>'
+                      + '</div>'
+                      + '</li>'
+                      );
+                  }
+
+                  $('.btn-load-more').attr('id', new_index);  
+                       
+                }                           
+            }
+        })
     })
 });
