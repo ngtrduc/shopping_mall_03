@@ -18,6 +18,7 @@ use Application\Entity\Sale;
 class Product
 {   
     const STATUS_PUBLISHED = 1;
+    const STATUS_DELETED = 0;
     const MAX_VIEWS = 2000000000;
      /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\Comment", mappedBy="product")

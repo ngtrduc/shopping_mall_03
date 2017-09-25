@@ -81,9 +81,11 @@ class ProductController extends AbstractActionController
 
     public function listAction(){
         $products = $this->entityManager->getRepository(Product::class)->findAll();
-    
+        $products_in_trash = $this->entityManager
+            ->getRepository(Product::class)->findBy(['status' => Product::STATUS_DELETED]);
         return new ViewModel([
             'products' => $products,
+            'products_in_trash' => $products_in_trash,
         ]);
     }
 
@@ -92,7 +94,7 @@ class ProductController extends AbstractActionController
         $productId = $this->params()->fromRoute('id', -1);
     
         $product = $this->entityManager->getRepository(Product::class)
-            ->findOneById($productId);
+            ->find($productId);
 
         if ($product == null) {
             $this->getResponse()->setStatusCode(404);
@@ -161,7 +163,7 @@ class ProductController extends AbstractActionController
 
             $this->productManager->addNewColor($product, $data);
 
-            return $this->redirect()->toRoute('products', ['action'=>'list']);
+            return $this->redirect()->toRoute('products', ['action'=>'view', 'id' => $productId]);
         }
 
         return new ViewModel([
@@ -253,26 +255,45 @@ class ProductController extends AbstractActionController
     {
         $productId = $this->params()->fromRoute('id', -1);
         $product = $this->entityManager->getRepository(Product::class)
-            ->findOneById($productId);        
+            ->findOneById($productId);
+
         if ($product == null) {
             $this->getResponse()->setStatusCode(404);
             return;                        
         }
 
-        $filename = 'public' . $product->getImage();
+        $this->productManager->softRemoveProduct($product);
 
-        if (file_exists($filename)) {
-            if (!unlink($filename)) {
-              $Message = "Error deleting $filename";
-            } else {
-              $Message = "Deleted $filename";
-            }
-        } else {
-            $Message = "The file $filename does not exist";
+        return $this->redirect()->toRoute('products', ['action'=>'list']);
+    }
+
+    public function harddeleteAction()
+    {
+        $productId = $this->params()->fromRoute('id', -1);
+        $product = $this->entityManager->getRepository(Product::class)
+            ->findOneBy(['id' => $productId]);
+
+        if ($product == null) {
+            $this->getResponse()->setStatusCode(404);
+            return;                        
         }
 
         $this->productManager->removeProduct($product);
+        return $this->redirect()->toRoute('products', ['action'=>'list']);
+    }
 
+    public function restoreAction()
+    {
+        $productId = $this->params()->fromRoute('id', -1);
+        $product = $this->entityManager->getRepository(Product::class)
+            ->findOneBy(['id' => $productId]);
+
+        if ($product == null) {
+            $this->getResponse()->setStatusCode(404);
+            return;                        
+        }
+
+        $this->productManager->restoreProduct($product);
         return $this->redirect()->toRoute('products', ['action'=>'list']);
     }
 
