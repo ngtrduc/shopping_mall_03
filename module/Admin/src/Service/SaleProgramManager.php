@@ -56,6 +56,11 @@ class SaleProgramManager
     public function cancelSaleProgram($saleProgram)
     {
         $saleProgram->setStatus(SaleProgram::CANCEL);
+        $products = $saleProgram->getProducts();
+        for($i = 0; $i < count($products); $i++) {
+            $current_price = (int)($products[$i]->getPrice()*(100 - $products[$i]->getCurrentSale())/100);
+            $products[$i]->setCurrentPrice($current_price); 
+        }
         $this->entityManager->flush();
     }
 

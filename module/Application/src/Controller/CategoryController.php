@@ -22,15 +22,15 @@ class CategoryController extends AbstractActionController
      * @var
      */
     private $color = [
-        ProductMaster::WHITE => 'White',
-        ProductMaster::BLACK => 'Black',
-        ProductMaster::YELLOW => 'Yellow',
-        ProductMaster::RED => 'Red',
-        ProductMaster::GREEN => 'Green',
-        ProductMaster::PURPLE => 'Purple',
-        ProductMaster::ORANGE => 'Orange',
-        ProductMaster::BLUE => 'Blue',
-        ProductMaster::GREY => 'Grey',
+        ProductMaster::WHITE => 'white',
+        ProductMaster::BLACK => 'black',
+        ProductMaster::YELLOW => 'yellow',
+        ProductMaster::RED => 'red',
+        ProductMaster::GREEN => 'green',
+        ProductMaster::PURPLE => 'purple',
+        ProductMaster::ORANGE => 'orange',
+        ProductMaster::BLUE => 'blue',
+        ProductMaster::GREY => 'grey',
         ];
     private $entityManager;
 
@@ -57,35 +57,23 @@ class CategoryController extends AbstractActionController
         $categoryId = $this->params()->fromRoute('id', -1);
         $colorName = $this->params()->fromRoute('color', -1);
         $sort = $this->params()->fromQuery('sort', -1);
-        
+        $price_gte = $this->params()->fromQuery('price_gte', -1);
+        $price_lte = $this->params()->fromQuery('price_lte', -1);
+        $colorName = $this->params()->fromQuery('color', -1);
+        $color_id = -1;
+        if ($colorName != -1 && $colorName != 'other') {
+            $color = array_flip($this->color);
+            $color_id = $color[$colorName];
+        }
         $arr = [];
         $arr = $this->categoryManager->arrCate($arr,$categoryId);
         $option =$_GET;
         $page = $this->params()->fromQuery('page', 1);
 
         $category = $this->entityManager->getRepository(category::class)->find($categoryId);
-
-        if($this->getRequest()->isPost()){
-            $data = $_POST;
-            $products = $this->entityManager->getRepository(ProductColorImage::class)
-                ->findProductsByCategory($arr,$data);
-
-        } elseif ($colorName != -1) {
-            $color = array_flip($this->color);
-            $color_id = $color[$colorName];
-            $products = $this->entityManager->getRepository(ProductColorImage::class)
-                ->findProductsByColor($arr,$color_id);
-                
-        } else if ($option != null){
-
-            $products = $this->entityManager->getRepository(ProductColorImage::class)
-                ->findProductsBySort($arr, $option);
-                
-        } else {
-            $products = $this->entityManager->getRepository(ProductColorImage::class)
-                ->findProductsByCategory($arr);
-        }
-           
+        $products = $this->entityManager->getRepository(ProductColorImage::class)
+                ->findProductsByCategory($arr, $sort, $color_id, $price_gte, $price_lte);
+        
         $adapter = new DoctrineAdapter(new ORMPaginator($products, false));
         
         $paginator = new Paginator($adapter);

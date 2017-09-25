@@ -98,10 +98,15 @@ class Product
     public function addSale($sale) 
     {
         $this->sales[] = $sale;
-        $current_price = (int)($this->getPrice()*(100 - $this->getCurrentSale())/100);
+        $current_price = (int)($this->getPrice() * (100 - $this->getCurrentSale()) / 100);
+        $this->setCurrentPrice($current_price); 
+    }
+
+    public function removeSale($sale) {
+        $this->sales->removeElement($sale);
+        
+        $current_price = (int)($this->getPrice() * (100 - $this->getCurrentSale()) / 100);
         $this->setCurrentPrice($current_price);
-        
-        
     }
 
     /**

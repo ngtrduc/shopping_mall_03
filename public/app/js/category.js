@@ -1,15 +1,14 @@
 /**
  * Created by isling on 24/09/2017.
  */
+ 
 const COLORS = [
-    'BEIGE',
+    'PURPLE',
     'BLACK',
     'BLUE',
-    'BROWN',
     'GREEN',
-    'GREY',
     'ORANGE',
-    'PINK',
+    'GREY',
     'RED',
     'WHITE',
     'YELLOW',
