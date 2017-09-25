@@ -191,10 +191,15 @@ class ProductManager
     public function addView($productId)
     {
         $product = $this->entityManager->getRepository(Product::class)->findOneById($productId);
-        $product->addViews();
+
+        $views = 0;
+        if($product != null) {
+            $product->addViews();
+            $views = $product->getViews();var_dump($views);
+        }
 
         $this->entityManager->flush();
-        return $product->getViews();
+        return $views;
     }
     
 }

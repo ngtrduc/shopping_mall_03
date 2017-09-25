@@ -263,4 +263,5 @@ class ProductController extends AbstractActionController
         $this->response->setContent(json_encode($data));
         return $this->response;
     }
+    
 }

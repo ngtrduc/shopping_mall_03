@@ -172,7 +172,14 @@ class Product
     {
         return $this->keywords;
     }      
-      
+    
+    public function getInfoKeywords()
+    {
+        foreach ($this->getKeywords() as $key) {
+            $data[] = $key->getKeyword();
+        }
+        return $data;
+    }  
     // Adds a new keyword to this product.
     public function addKeyword($keyword) 
     {
@@ -373,7 +380,7 @@ class Product
 
     public function addViews() 
     {
-        if($this->getViews() < MAX_VIEWS)
+        if($this->getViews() < self::MAX_VIEWS)
         $this->views = $this->views + 1;
     }
 
@@ -499,6 +506,7 @@ class Product
 
         return $mainComments;
     }
+
     public function getCountOfSells()
     {
         $sells = 0;

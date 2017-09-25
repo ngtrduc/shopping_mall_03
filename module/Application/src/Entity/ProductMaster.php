@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Application\Entity\Product;
 use Application\Entity\ProductColorImage;
 use Application\Entity\Store;
+
 /**
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="\Application\Repository\ProductMasterRepository")
@@ -186,8 +187,8 @@ class ProductMaster
         $data = date("Y-m-d h:i:sa", $currentMonth);
     
         $criteria = Criteria::create()
-            ->where(Criteria::expr()->gt("date_created", $data))
-            ->andWhere(Criteria::expr()->eq("status", OrderItem::STATUS_COMPLETED));
+            ->where(Criteria::expr()->gt("date_created", $data));
+            
         return $this->order_items->matching($criteria);
     }
 
