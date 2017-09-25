@@ -87,9 +87,10 @@
 
     </div>
     <div class="cart_button" style="padding-top:10px;">
-        <button class="btn btn-success btn-block addToCart"
+        <button class="btn btn-block"
+                :class="[current_list_size.length == 0 ? 'btn-warning disabled' : 'btn-success']"
                 @click="addToCart">
-            Add to cart
+            {{ current_list_size.length == 0 ? 'Out of stock' : 'Add to cart' }}
         </button>
     </div>
 </div>
