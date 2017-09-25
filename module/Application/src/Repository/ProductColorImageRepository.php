@@ -12,57 +12,27 @@ use Application\Entity\Product;
  */
 class ProductColorImageRepository extends EntityRepository
 {
-	public function findProductsByColor($arr, $color_id) {
-        $entityManager = $this->getEntityManager();
 
-        $queryBuilder = $entityManager->createQueryBuilder();
-
-        $queryBuilder->select('pm')
-            ->from(ProductColorImage::class, 'pm')
-            ->join('pm.product', 'p')
-            ->join('p.category', 'c')
-            ->where('c.id IN(:arr)')
-            ->andWhere('p.status = :public')
-            ->andWhere('pm.color_id = :color_id')
-            ->setParameters(array('arr' => $arr,'color_id' => $color_id, 'public' => Product::STATUS_PUBLISHED))
-            ->distinct(true);
-
-        return $queryBuilder->getQuery();
-    }
-
-    public function findProductsByCategory($arr, $data = null)
+    public function findProductsByCategory(
+        $arr, 
+        $sort = -1, 
+        $color_id = -1, 
+        $prict_gte = -1, 
+        $price_lte = -1
+        )
     {
         $entityManager = $this->getEntityManager();
 
         $queryBuilder = $entityManager->createQueryBuilder();
-        $queryBuilder->select('pm')
-            ->from(ProductColorImage::class, 'pm')
-            ->join('pm.product', 'p')
-            ->join('p.category', 'c')
-            ->where('c.id IN(:arr)')
-            ->andWhere('p.status = :public');
-        if ($data == null) 
-            $queryBuilder->setParameters(['arr' => $arr, 'public' => Product::STATUS_PUBLISHED]);
-        else {
-            $queryBuilder->andWhere($queryBuilder->expr()->between('p.price', '?1', '?2'))
-            ->setParameters(['arr' => $arr, 'public' => Product::STATUS_PUBLISHED, 1 => $data['price1'], 2 => $data['price2']]);
-        }
-        return $queryBuilder->getQuery();
-    }
-
-    public function findProductsBySort($arr ,$option = null)
-    {
-        $entityManager = $this->getEntityManager();
-
-        $queryBuilder = $entityManager->createQueryBuilder();
-        $queryBuilder->select('pm')
-            ->from(ProductColorImage::class, 'pm')
-            ->join('pm.product', 'p')
+        $queryBuilder->select('pci')
+            ->from(ProductColorImage::class, 'pci')
+            ->join('pci.product', 'p')
             ->join('p.category', 'c')
             ->where('c.id IN(:arr)')
             ->andWhere('p.status = :public')
-            ->setParameters(['arr' => $arr, 'public' => Product::STATUS_PUBLISHED]); 
-        switch ($option['sort']) {
+            ->setParameters(['arr' => $arr, 'public' => Product::STATUS_PUBLISHED]);
+        if ($sort != -1) {
+            switch ($sort) {
             case 'htl':
                 $queryBuilder->orderBy('p.current_price', 'DESC');  
                 break;
@@ -78,7 +48,25 @@ class ProductColorImageRepository extends EntityRepository
             default:
                 
                 break;
-        };
+            }; 
+        }
+        if ($color_id != -1) {
+            $queryBuilder->andWhere('pci.color_id = :color_id')
+                ->setParameter('color_id' , $color_id);
+        }
+        if ($price_lte != -1 && $prict_gte != -1) {
+            $queryBuilder->andWhere($queryBuilder->expr()->between('p.current_price', '?1', '?2'))
+                ->setParameters([1 => $price_gte, 2 => $price_lte]);
+        } else if ($price_lte != -1 && $prict_gte == -1) {
+            $queryBuilder->andWhere($queryBuilder->expr()->lte('p.current_price', '?1'))
+                ->setParameter(1 , $price_lte);
+        } else if ($price_lte == -1 && $prict_gte != -1) {
+            $queryBuilder->andWhere($queryBuilder->expr()->gte('p.current_price', '?1'))
+                ->setParameter(1 , $price_gte);
+        } else {
+
+        }
+
         return $queryBuilder->getQuery();
     }
 

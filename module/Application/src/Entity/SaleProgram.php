@@ -50,6 +50,11 @@ class SaleProgram
     public function removeProductAssociation($product) 
     {
         $this->products->removeElement($product);
+        for ($i = 0;$i < count($this->sales);$i++) {
+            $sale = $this->sales[$i];
+            if($sale->getProduct()->getId() == $product->getId()) break;
+        }
+        $product->removeSale($sale);
     }
 
     /**
