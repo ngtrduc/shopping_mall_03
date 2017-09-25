@@ -156,6 +156,11 @@ class ProductManager
             $this->removeColor($product, $c);
         }
 
+        $sales = $product->getSales();      
+        foreach ($sales as $s) {
+            $this->entityManager->remove($s);
+        }
+
         $this->entityManager->remove($product);   
         $this->entityManager->flush();
     }

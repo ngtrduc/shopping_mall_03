@@ -26,8 +26,7 @@ class SaleProgramManager
         $saleProgram->setName($data['name']);
         $saleProgram->setDateStart($data['date_start']);
         $saleProgram->setDateEnd($data['date_end']);
-        $saleProgram->setStatus($this->get_status_depend_on_time(
-            $data['date_start'], $data['date_end']));
+        $saleProgram->setStatus();
         $currentDate = date('Y-m-d H:i:s');
         $saleProgram->setDateCreated($currentDate);       
             
@@ -45,8 +44,7 @@ class SaleProgramManager
         $saleProgram->setName($data['name']);
         $saleProgram->setDateStart($data['date_start']);
         $saleProgram->setDateEnd($data['date_end']);
-        $saleProgram->setStatus($this->get_status_depend_on_time(
-            $data['date_start'], $data['date_end']));
+        $saleProgram->setStatus();
 
         $this->entityManager->flush();
 
@@ -66,8 +64,7 @@ class SaleProgramManager
 
     public function setStatusDependOnTime($saleProgram)
     {
-        $saleProgram->setStatus($this->get_status_depend_on_time(
-            $saleProgram->getDateStart(), $saleProgram->getDateEnd()));
+        $saleProgram->setStatus();
 
         $this->entityManager->flush();
     }
@@ -105,15 +102,6 @@ class SaleProgramManager
         $this->entityManager->flush();
     }
 
-    public function getSaleArray($saleProgram)
-    {   
-        $sales = $saleProgram->getSales();
-        foreach ($sales as $s) {
-            $sale_array[$s->getProduct()->getId()] = $s->getSale();
-        }
-        return $sale_array;
-    }
-
     public function getSaleProgramNeedActive()
     {
         $currentDate = date('d-m-Y');
@@ -148,20 +136,5 @@ class SaleProgramManager
         }
 
         return $list;
-    }
-
-    private function get_status_depend_on_time($date_start, $date_end)
-    {
-        $currentDate = date('d-m-Y');
-        $date_start = str_replace('/', '-', $date_start);
-        $date_start = date('d-m-Y', strtotime($date_start));
-        $date_end = str_replace('/', '-', $date_end);
-        $date_end = date('d-m-Y', strtotime($date_end));
-        if ($currentDate < $date_start)
-            return SaleProgram::PENDING;
-        elseif ($currentDate <= $date_end)
-            return SaleProgram::ACTIVE;
-        if ($currentDate > $date_end)
-            return SaleProgram::DONE;
     }
 }
