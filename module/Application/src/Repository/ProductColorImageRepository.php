@@ -17,7 +17,7 @@ class ProductColorImageRepository extends EntityRepository
         $arr, 
         $sort = -1, 
         $color_id = -1, 
-        $prict_gte = -1, 
+        $price_gte = -1, 
         $price_lte = -1
         )
     {
@@ -29,8 +29,10 @@ class ProductColorImageRepository extends EntityRepository
             ->join('pci.product', 'p')
             ->join('p.category', 'c')
             ->where('c.id IN(:arr)')
-            ->andWhere('p.status = :public')
-            ->setParameters(['arr' => $arr, 'public' => Product::STATUS_PUBLISHED]);
+            ->andWhere('p.status = :public');
+            $parameters['arr'] = $arr;
+            $parameters['public'] = Product::STATUS_PUBLISHED; 
+            
         if ($sort != -1) {
             switch ($sort) {
             case 'htl':
@@ -40,10 +42,10 @@ class ProductColorImageRepository extends EntityRepository
                 $queryBuilder->orderBy('p.current_price', 'ASC');  
                 break; 
             case 'new':
-                $queryBuilder->orderBy('pm.date_created', 'DESC');  
+                $queryBuilder->orderBy('pci.date_created', 'DESC');  
                 break;
             case 'sell':
-                $queryBuilder->orderBy('pm.count_sell', 'DESC');  
+                $queryBuilder->orderBy('pci.count_sell', 'DESC');  
                 break;
             default:
                 
@@ -51,22 +53,27 @@ class ProductColorImageRepository extends EntityRepository
             }; 
         }
         if ($color_id != -1) {
-            $queryBuilder->andWhere('pci.color_id = :color_id')
-                ->setParameter('color_id' , $color_id);
+            $queryBuilder->andWhere('pci.color_id = :color_id');
+            $parameters['color_id'] = $color_id;    
         }
-        if ($price_lte != -1 && $prict_gte != -1) {
-            $queryBuilder->andWhere($queryBuilder->expr()->between('p.current_price', '?1', '?2'))
-                ->setParameters([1 => $price_gte, 2 => $price_lte]);
-        } else if ($price_lte != -1 && $prict_gte == -1) {
-            $queryBuilder->andWhere($queryBuilder->expr()->lte('p.current_price', '?1'))
-                ->setParameter(1 , $price_lte);
-        } else if ($price_lte == -1 && $prict_gte != -1) {
-            $queryBuilder->andWhere($queryBuilder->expr()->gte('p.current_price', '?1'))
-                ->setParameter(1 , $price_gte);
+        if ($price_lte != -1 && $price_gte != -1) {
+            $queryBuilder->andWhere($queryBuilder->expr()->between('p.current_price', ':price_gte', ':price_lte'));
+            $parameters['price_lte'] = $price_lte;
+            $parameters['price_gte'] = $price_gte;
+
+        } else if ($price_lte != -1 && $price_gte == -1) {
+            $queryBuilder->andWhere($queryBuilder->expr()->lte('p.current_price', ':price_lte'));
+            $parameters['price_lte'] = $price_lte;
+
+        } else if ($price_lte == -1 && $price_gte != -1) {
+            $queryBuilder->andWhere($queryBuilder->expr()->gte('p.current_price', ':price_gte'));
+            $parameters['price_gte'] = $price_gte;
+
         } else {
 
         }
-
+        $queryBuilder->setParameters($parameters);
+        
         return $queryBuilder->getQuery();
     }
 
