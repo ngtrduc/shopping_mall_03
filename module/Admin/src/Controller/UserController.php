@@ -5,6 +5,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Admin\Form\UserForm;
 use Application\Entity\User;
+use Application\Entity\Activity;
 
 
 class UserController extends AbstractActionController
@@ -35,9 +36,6 @@ class UserController extends AbstractActionController
      * to enter post title, content and tags. When the user clicks the Submit button,
      * a new Post entity will be created.
      */
-    public function indexAction(){
-    	return ViewModel();
-    }
 
     public function listAction(){
         //var_dump(2);die();
@@ -65,6 +63,7 @@ class UserController extends AbstractActionController
         for($i = 1; $i < 4; $i++){
             $countOfOrderByStatus[$i] = 0;
         }
+        
         foreach ($orders as $o) {
             if($o->getStatus() == 3){
                 $countOfOrderByStatus[3]++;
@@ -79,13 +78,30 @@ class UserController extends AbstractActionController
             }
         }
         
+        $activities_by_day = $user->getActivitiesByDay(0, 2);
+
         return new ViewModel([
             'total_pays' => $total_pays,
             'total_purchased' => $total_purchased,
             'countOfOrderByStatus' => $countOfOrderByStatus,
             'orders' => $orders,
+            'activities_by_day' => $activities_by_day,
             'user' => $user
         ]);
+    }
+
+    public function loadmoreactionAction()
+    {
+        $data = $this->params()->fromPost();
+        $user = $this->entityManager->getRepository(User::class)->find($data['user_id']);
+        $activities_by_day = $user
+            ->getActivitiesByDay($data['index'], 2);
+
+
+        $data_json = json_encode($activities_by_day);
+        $this->response->setContent($data_json);
+        
+        return $this->response;
     }
 }
 

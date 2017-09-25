@@ -3,6 +3,8 @@ namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Application\Entity\User;
+use Doctrine\DBAL\Types\DateTimeType;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="activities")
@@ -81,7 +83,7 @@ class Activity
     protected $target_id;
 
     /**
-     * @ORM\Column(name="date_created")
+     * @ORM\Column(name="date_created", type="datetime")
      */
     protected $date_created;
 
@@ -116,13 +118,95 @@ class Activity
     {
         $this->target_id = $target_id;
     }
+
     public function getDateCreated() 
     {
-        return $this->date_created;
+        return $this->date_created->format('d-m-Y');
+    }
+
+    public function getTimeCreated() 
+    {
+        return $this->date_created->format('H:i:s');
     }
 
     public function setDateCreated($date_created) 
     {
+        $date_created = new \DateTime($date_created);
         $this->date_created = $date_created;
+    }
+
+    // return an object of Entity depend on targetID
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\Application\Entity\Order")
+     * @ORM\JoinColumn(name="target_id", referencedColumnName="id")
+     */
+    protected $order;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\Application\Entity\Comment")
+     * @ORM\JoinColumn(name="target_id", referencedColumnName="id")
+     */
+    protected $comment;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\Application\Entity\Review")
+     * @ORM\JoinColumn(name="target_id", referencedColumnName="id")
+     */
+    protected $review;
+
+    public function getTarget()
+    {
+        switch ($this->type) {
+            case 1:
+            case 4:
+            case 5:
+                return $this->order;
+            case 2:
+                return $this->comment;
+            case 3:
+                return $this->review;
+            default:
+                return null;
+        }
+    }
+
+    public function getIconClass()
+    {
+        $iconClass = [
+            1 => 'fa fa-truck bg-blue',
+            2 => 'fa fa-comment bg-green',
+            3 => 'fa fa-pencil bg-yellow'
+        ];
+
+        return $iconClass[$this->type];
+    }
+
+    public function getContent()
+    {
+        $content = [
+
+        ];
+
+        if($this->type == 1)
+            $content = 'Create new <a href="/admin/orders/view/'
+                .$this->getTargetId()
+                .'">order</a>';
+
+        if ($this->type == 3)
+            $content = 'Create new review in product <a href="/admin/products/view/'
+                .$this->getTarget()->getProduct()->getId()
+                .'">'
+                .$this->getTarget()->getProduct()->getName()
+                .'</a>'; 
+
+        if ($this->type == 2)
+            $content = 'Create new comment in product <a href="/admin/products/view/'
+                .$this->getTarget()->getProduct()->getId()
+                .'">'
+                .$this->getTarget()->getProduct()->getName()
+                .'</a>';
+
+        return $content;
     }
 }
