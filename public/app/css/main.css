@@ -656,3 +656,43 @@
     transform: translateX(10px);
     opacity: 0;
 }
+
+/*sale*/
+.md-card {
+    width: 100%;
+}
+
+.product-sale-card {
+    margin-top: 10px;
+    display: flex;
+    padding: 8px 10px;
+    align-items: center;
+    width: 100%;
+}
+
+.product-sale-card img {
+    margin-right: 16px;
+    max-height: 80px;
+}
+
+.product-sale-card .product-sale-card-info {
+    display: flex;
+    flex-flow: column;
+    flex: 1;
+}
+
+.product-sale-card .product-sale-card-info a {
+    font-size: 14px;
+    color: dodgerblue !important;
+}
+
+.product-sale-card .product-sale-card-info .price {
+    font-weight: bold;
+    font-size: 16px;
+    color: red;
+}
+
+.product-sale-card .product-sale-card-info .price span {
+    margin-top: 5px;
+    margin-right: 15px;
+}

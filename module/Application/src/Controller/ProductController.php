@@ -186,6 +186,13 @@ class ProductController extends AbstractActionController
             return;
         }
 
+        if ($product->getStatus() == 0) {
+            $this->getResponse()->setContent(json_encode([
+                'error' => 'Product is inactive',
+            ]));
+            return $this->getResponse();
+        }
+
         // get color in word 
         $colors = $product->getColors();
         $colors_in_word = [];
@@ -236,6 +243,7 @@ class ProductController extends AbstractActionController
             'id' => $product->getId(),
             'name' => $product->getName(),
             'price' => $product->getPrice(),
+            'key_word' => $product->getKeywords(),
             'rate_sum' => $product->getRateSum(),
             'rate_count' => $product->getRateCount(),
             'review' => [

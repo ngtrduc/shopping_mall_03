@@ -2156,15 +2156,21 @@ i {
 }
 
 .product_outer .cart_button button {
-    background: #7ac142;
     font-weight: 600;
     font-size: 15px;
-    border-color: #7ac142;
     border-radius: 0;
 }
 
-.product_outer .cart_button button:active, .product_outer .cart_button button:hover, .product_outer .cart_button button:focus, .product_outer .cart_button button:visited {
+.product_outer .cart_button button.btn-success {
     background: #7ac142;
+    border-color: #7ac142;
+}
+
+.product_outer .cart_button button.btn-success:active,
+.product_outer .cart_button button.btn-success:hover,
+.product_outer .cart_button button.btn-success:focus,
+.product_outer .cart_button button.btn-success:visited {
+    background: #7ac000;
     border-color: #7ac142;
 }
 

@@ -206,6 +206,20 @@ return [
                     ],
                 ],
             ],
+            'sale' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/sale[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\SaleProgramController::class,
+                        'action' => 'index',
+                    ]
+                ]
+            ]
         ],
     ],
     'controllers' => [
@@ -218,6 +232,7 @@ return [
             Controller\CartController::class => Controller\Factory\CartControllerFactory::class,
             Controller\CommentController::class => Controller\Factory\CommentControllerFactory::class,
             Controller\OrderController::class => Controller\Factory\OrderControllerFactory::class,
+            Controller\SaleProgramController::class => Controller\Factory\SaleProgramControllerFactory::class,
         ],
     ],
     'access_filter' => [
@@ -255,9 +270,12 @@ return [
                 ['actions' => ['view', 'checkout', 'success'], 'allow' => '*'],
             ],
             Controller\OrderController::class => [
-                // Give access to "view" actions to anyone.
                 ['actions' => ['view', 'getOrders'], 'allow' => '@'],
                 ['actions' => ['track'], 'allow' => '*'],
+            ],
+            Controller\SaleProgramController::class => [
+                // Give access to "view" actions to anyone.
+                ['actions' => ['index', 'view'], 'allow' => '*'],
             ],
         ],
     ],

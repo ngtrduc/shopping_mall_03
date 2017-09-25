@@ -60,7 +60,7 @@ Main.bindUIActions = function () {
     });
 
     let $window = $(window);
-    if ($window.width() < 767) {
+    if ($window.width() < 640) {
         $('.megamenu').insertAfter('#hlink');
     } else {
         // change functionality for larger screens

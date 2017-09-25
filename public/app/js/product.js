@@ -30,6 +30,9 @@ $(function () {
         mounted: function () {
             this.fetchLoginInfo();
             this.fetchData();
+            if (this.product.error) {
+                location.href = '/';
+            }
         },
         computed: {
             current_image: function () {
@@ -94,6 +97,11 @@ $(function () {
             addToCart: function () {
                 if (this.quantity < 1 || this.quantity > 100) {
                     Snackbar.pushMessage('The quantity must be between 1 and 100', 'danger');
+                    return;
+                }
+
+                if (this.current_list_size.length === 0) {
+                    Snackbar.pushMessage('The size is out of stock', 'danger');
                     return;
                 }
 
