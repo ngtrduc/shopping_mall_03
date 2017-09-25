@@ -15,5 +15,18 @@ class ProductRepository extends EntityRepository
      * Retrieves all published posts in descending date order.
      * @return Query
      */
+    public function findAll()
+    {
+    	return $this->findBy(['status' => Product::STATUS_PUBLISHED], ['date_created' => 'ASC']);
+    }
 
+    public function find($id)
+    {
+    	return $this->findOneBy(['id' => $id, 'status' => Product::STATUS_PUBLISHED]);
+    }
+
+    public function findOneById($id)
+    {
+        return $this->findOneBy(['id' => $id, 'status' => Product::STATUS_PUBLISHED]);
+    }
 }

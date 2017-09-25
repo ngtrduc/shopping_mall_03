@@ -7,6 +7,7 @@ use Application\Entity\ProductColorImage;
 use Application\Entity\ProductMaster;
 use Zend\Filter\StaticFilter;
 use Application\Entity\Keyword;
+use Application\Entity\Activity;
 
 // The UserManager service is responsible for adding new posts.
 class ProductManager
@@ -123,18 +124,51 @@ class ProductManager
 
     public function removeProduct($product)
     {   
-        //remove comment
+        //remove comments & related activities
         $comments = $product->getComments();
         foreach ($comments as $comment) {
+            $activity = $this->entityManager->getRepository(Activity::class)
+                ->findOneBy(['type' => Activity::COMMENT, 'target_id' => $comment->getId()]);
+            if($activity != null)
+                $this->entityManager->remove($activity);
             $this->entityManager->remove($comment);
         }
 
-        //remove keyword
-        $productkeys = $product->getKeywords();
-            foreach ($productkeys as $productkey) {
-                $this->entityManager->remove($productkey);
+        //remove reviews & related activities
+        $reviews = $product->getReviews();
+        foreach ($reviews as $review) {
+            $activity = $this->entityManager->getRepository(Activity::class)
+                ->findOneBy(['type' => Activity::REVIEW, 'target_id' => $review->getId()]);
+            if($activity != null)
+                $this->entityManager->remove($activity);
+            $this->entityManager->remove($review);
         }
+
+        // remove keyword
+        $productkeys = $product->getKeywords();
+        foreach ($productkeys as $productkey) {
+            $this->entityManager->remove($productkey);
+        }
+
+        // remove all colors
+        $colors = $product->getColors();
+        foreach ($colors as $c) {
+            $this->removeColor($product, $c);
+        }
+
         $this->entityManager->remove($product);   
+        $this->entityManager->flush();
+    }
+
+    public function softRemoveProduct($product)
+    {
+        $product->setStatus(Product::STATUS_DELETED);
+        $this->entityManager->flush();
+    }
+
+    public function restoreProduct($product)
+    {
+        $product->setStatus(Product::STATUS_PUBLISHED);
         $this->entityManager->flush();
     }
 
