@@ -28,7 +28,6 @@ $(function () {
                     email: this.email,
                 })
                     .then(res => {
-                        console.log(res.data);
                         this.order = res.data;
                         this.track_form = false;
                     })

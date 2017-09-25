@@ -86,7 +86,7 @@ class Order
             $d = $this->getAddress()->getDistrict()->getName();
             $p = $this->getAddress()->getDistrict()->getProvince()->getName();
 
-            $format = '%s, %s District %s Province';
+            $format = '%s, %s District, %s Province';
             return sprintf($format, $a, $d, $p);
         } else return null;
     }

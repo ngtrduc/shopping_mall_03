@@ -30,14 +30,14 @@
                         </div>
                         <hr class="md-divider">
                         <div class="md-step-header"
-                             :class="[order.status > 0 ? 'md-active' : '']">
+                             :class="[order.status > 1 ? 'md-active' : '']">
                             <div class="md-step-icons"><!---->
                                 <div class="md-step-number">
                                                         <span>
-                                                            <i v-if="order.status > 0"
+                                                            <i v-if="order.status > 1"
                                                                class="fa fa-check"
                                                                aria-hidden="true"></i>
-                                                           <i v-if="order.status <= 0"
+                                                           <i v-if="order.status <= 1"
                                                               class="fa fa-spinner"
                                                               aria-hidden="true"></i>
                                                         </span>
@@ -48,14 +48,14 @@
                             </div> <!----></div>
                         <hr class="md-divider">
                         <div class="md-step-header"
-                             :class="[order.status > 1 ? 'md-active' : '']">
+                             :class="[order.status > 2 ? 'md-active' : '']">
                             <div class="md-step-icons"><!---->
                                 <div class="md-step-number">
                                                         <span>
-                                                            <i v-if="order.status > 1"
+                                                            <i v-if="order.status > 2"
                                                                class="fa fa-check"
                                                                aria-hidden="true"></i>
-                                                            <i v-if="order.status <= 1"
+                                                            <i v-if="order.status <= 2"
                                                                class="fa fa-spinner" aria-hidden="true"></i>
                                                         </span>
                                 </div>

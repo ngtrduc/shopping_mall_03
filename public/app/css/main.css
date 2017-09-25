@@ -507,6 +507,11 @@
 
 }
 
+.no-data-icon {
+    color: lightslategray;
+    font-size: 20px;
+}
+
 /*tracking.html ends*/
 
 .hide-bullets {
