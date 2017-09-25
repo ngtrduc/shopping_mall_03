@@ -56,9 +56,7 @@ Main.bindUIActions = function () {
             $('.hover_div_outer').removeClass('displayblock');
         });
 
-        $('.like-btn2').on('click', function () {
-            $(this).toggleClass('is-active');
-        });
+        $('[data-toggle="tooltip"]').tooltip();
     });
 
     let $window = $(window);

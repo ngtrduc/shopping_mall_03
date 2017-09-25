@@ -69,8 +69,8 @@
                  ref="snackbar"
                  :md-duration="duration"
                  id="snackbar">
-        <span style="color: #000;"><b>{{notifyMessage}}.</b></span>
-        <md-button @click="notifyActionAdapter" style="color: #000;">{{ notifyAction }}</md-button>
+        <span><b>{{notifyMessage}}.</b></span>
+        <md-button @click="notifyActionAdapter">{{ notifyAction }}</md-button>
     </md-snackbar>
 
     <div id="speech2text"
