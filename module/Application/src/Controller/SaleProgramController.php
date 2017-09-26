@@ -27,6 +27,12 @@ class SaleProgramController extends AbstractActionController
 
     public function indexAction()
     {
+        $this->layout('application/layout');
+        return new ViewModel();
+    }
+
+    public function getSalesAction()
+    {
         $sale_programs = $this->entityManager->getRepository(SaleProgram::class)
             ->findBy(['status' => 0], ['date_start' => 'ASC']);
 
@@ -44,7 +50,7 @@ class SaleProgramController extends AbstractActionController
                 'num_products' => sizeof($products),
             ];
 
-            for ($i = 0; $i < sizeof($products) && $i < 2; $i++) {
+            for ($i = 0; $i < sizeof($products) && $i < 50; $i++) {
                 $product = $products[$i];
                 $product_data = [
                     'name' => $product->getName(),
@@ -53,7 +59,7 @@ class SaleProgramController extends AbstractActionController
                     'current_price' => $product->getCurrentPrice(),
                     'image' => $product->getImage(),
                 ];
-                 array_push($sale['products'], $product_data);
+                array_push($sale['products'], $product_data);
             }
 
             array_push($sale_data, $sale);
@@ -65,35 +71,48 @@ class SaleProgramController extends AbstractActionController
 
     public function viewAction()
     {
+        $this->layout('application/layout');
+        return new ViewModel();
+    }
+
+    public function getSaleAction()
+    {
         $saleProgramId = $this->params()->fromRoute('id', -1);
-        $saleProgram = $this->entityManager->getRepository(SaleProgram::class)
+        $sp = $this->entityManager->getRepository(SaleProgram::class)
             ->findOneById($saleProgramId);
-        if ($saleProgram == null) {
+
+        if ($sp == null) {
             $this->getResponse()->setStatusCode(404);
-            return;
+            $this->getResponse()->setContent(json_encode([
+                'error' => '404',
+            ]));
+        } else {
+            $products = $sp->getProducts();
+
+            $sale = [
+                'name' => $sp->getName(),
+                'id' => $sp->getId(),
+                'date_start' => $sp->getDateStart(),
+                'date_end' => $sp->getDateEnd(),
+                'products' => [],
+                'num_products' => sizeof($products),
+            ];
+
+            for ($i = 0; $i < sizeof($products); $i++) {
+                $product = $products[$i];
+                $product_data = [
+                    'name' => $product->getName(),
+                    'id' => $product->getId(),
+                    'sale' => $product->getCurrentSale(),
+                    'current_price' => $product->getCurrentPrice(),
+                    'image' => $product->getImage(),
+                ];
+                array_push($sale['products'], $product_data);
+            }
+
+            $this->getResponse()->setContent(json_encode($sale));
         }
 
-        $products = $this->entityManager->getRepository(Product::class)
-            ->findAll();
-        $products_in_sale = $saleProgram->getProducts();
-
-        $sale_array = $this->saleProgramManager->getSaleArray($saleProgram);
-
-        $currentDate = date('d-m-Y');
-        if ($saleProgram->getStatus() == 1 && $saleProgram->getCurrentStatus() == 0) {
-            $status_of_status = "Need to Active";
-        }
-        if ($saleProgram->getStatus() == 0 && $saleProgram->getCurrentStatus() == 2) {
-            $status_of_status = "Expired";
-        }
-
-        return new ViewModel([
-            'products_in_sale' => $products_in_sale,
-            'saleProgram' => $saleProgram,
-            'products' => $products,
-            'currentDate' => $currentDate,
-            'sale_array' => $sale_array,
-            'status_of_status' => $status_of_status
-        ]);
+        return $this->getResponse();
     }
 }

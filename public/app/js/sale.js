@@ -1,6 +1,6 @@
 $(function () {
-    const home = new Vue({
-        el: '#home',
+    const sale = new Vue({
+        el: '#sale',
         data: {
             sale_programs: [],
             num_sales_per_page: 3,
@@ -33,15 +33,12 @@ $(function () {
                         data[idx].products = ele.products.slice(0, 2);
                     }
                 });
-                const format_data = [];
-                for (let i = 0; i < data.length; i += this.num_sales_per_page) {
-                    format_data.push(data.slice(i, i + this.num_sales_per_page));
-                }
-                this.sale_programs = format_data;
+
+                this.sale_programs = data;
             },
             viewDetails: function (id) {
                 location.href = '/sale/view/' + id;
-            },
+            }
         },
     });
 });

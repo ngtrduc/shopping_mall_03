@@ -141,12 +141,10 @@ return [
             'category' => [
                 'type' => Segment::class,
                 'options' => [
-                    'route' => '/category[/:action[/:id[/:color][?:order]]]',
+                    'route' => '/category[/:action[/:id]]',
                     'constraints' => [
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[a-zA-Z0-9_-]*',
-                        'color' => '[a-zA-Z0-9_-]*',
-                        'order' => '[a-zA-Z0-9_-]*',
                     ],
                     'defaults' => [
                         'controller' => Controller\CategoryController::class,
@@ -212,7 +210,7 @@ return [
                     'route' => '/sale[/:action[/:id]]',
                     'constraints' => [
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z0-9_-]*',
                     ],
                     'defaults' => [
                         'controller' => Controller\SaleProgramController::class,
@@ -275,7 +273,7 @@ return [
             ],
             Controller\SaleProgramController::class => [
                 // Give access to "view" actions to anyone.
-                ['actions' => ['index', 'view'], 'allow' => '*'],
+                ['actions' => ['index', 'view', 'getSales', 'getSale'], 'allow' => '*'],
             ],
         ],
     ],
