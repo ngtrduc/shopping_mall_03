@@ -18,10 +18,13 @@ class ProductManager
      */
     private $entityManager;
 
+    private $elasticSearchManager;
+
     // Constructor is used to inject dependencies into the service.
-    public function __construct($entityManager)
+    public function __construct($entityManager, $elasticSearchManager)
     {
         $this->entityManager = $entityManager;
+        $this->elasticSearchManager = $elasticSearchManager;
     }
 
 

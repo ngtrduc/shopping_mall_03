@@ -6,6 +6,7 @@ use Zend\ServiceManager\Factory\FactoryInterface;
 use Admin\Controller\IndexController;
 use Admin\Service\SaleProgramManager;
 use Admin\Service\StatisticManager;
+use ElasticSearch\Service\ElasticSearchManager;
 
 class IndexControllerFactory implements FactoryInterface
 {
@@ -14,7 +15,8 @@ class IndexControllerFactory implements FactoryInterface
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $saleProgramManager = $container->get(SaleProgramManager::class);
         $statisticManager = $container->get(StatisticManager::class);
+        $elasticSearchManager = $container->get(ElasticSearchManager::class);
 
-        return new IndexController($entityManager, $saleProgramManager, $statisticManager);
+        return new IndexController($entityManager, $saleProgramManager, $statisticManager, $elasticSearchManager);
     }
 }

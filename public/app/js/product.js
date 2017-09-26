@@ -110,7 +110,7 @@ $(function () {
                 item.name = this.product.name;
                 item.quantity = this.quantity;
                 item.img = this.product.images[this.selected_color][0];
-                item.price = this.product.price;
+                item.price = this.product.current_price;
                 item.size = this.selected_size;
                 item.color = this.selected_color;
                 item.id = [this.product.id, item.color, item.size].join('_');

@@ -1,4 +1,5 @@
 <?php
+
 namespace Admin\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
@@ -32,26 +33,28 @@ class CategoryController extends AbstractActionController
         $this->categoryManager = $categoryManager;
     }
 
-    public function indexAction(){
-       
-    	$categories = $this->entityManager->getRepository(Category::class)->findAll();
+    public function indexAction()
+    {
+
+        $categories = $this->entityManager->getRepository(Category::class)->findAll();
         // Render the view template
-        
+
         $category = $this->entityManager->getRepository(Category::class)
             ->findOneById(1);
-        
+
         return new ViewModel([
             'categories' => $categories,
         ]);
     }
 
-    public function viewAction(){
+    public function viewAction()
+    {
         $categoryId = $this->params()->fromRoute('id', -1);
         $category = $this->entityManager->getRepository(Category::class)->findOneById($categoryId);
 
         if ($category == null) {
-          $this->getResponse()->setStatusCode(404);
-          return;                        
+            $this->getResponse()->setStatusCode(404);
+            return;
         }
         // Render the view template
         $products = $category->getProducts();
@@ -69,10 +72,11 @@ class CategoryController extends AbstractActionController
     }
 
 
-    public function addAction(){
-       
+    public function addAction()
+    {
+
         $categories_for_select = $this->categoryManager->categories_for_select();
-        
+
         $form = new CategoryForm($categories_for_select);
 
         // Check whether this post is a POST request.
@@ -91,25 +95,26 @@ class CategoryController extends AbstractActionController
                 $data['parent_id'] = ($data['parent_id'] != "") ? $data['parent_id'] : 0;
 
                 // Check if Category exists?
-                if ($this->categoryManager->addNewCategory($data) != 0)             
-                    return $this->redirect()->toRoute('categories',['action'=>'index']);
+                if ($this->categoryManager->addNewCategory($data) != 0)
+                    return $this->redirect()->toRoute('categories', ['action' => 'index']);
                 else $form->get('name')->setMessages(['Category exists.']);
             }
         }
         // Render the view template.
         return new ViewModel([
             'form' => $form
-            ]);
+        ]);
     }
 
-    public function editAction(){
+    public function editAction()
+    {
         $categoryId = $this->params()->fromRoute('id', -1);
 
         $category = $this->entityManager->getRepository(Category::class)
-            ->findOneById($categoryId);        
+            ->findOneById($categoryId);
         if ($category == null) {
-          $this->getResponse()->setStatusCode(404);
-          return;                        
+            $this->getResponse()->setStatusCode(404);
+            return;
         }
         $categories_for_select = $this->categoryManager->categories_for_select();
         unset($categories_for_select[$categoryId]);
@@ -131,16 +136,15 @@ class CategoryController extends AbstractActionController
                 $data['alias'] = $this->slug($data['name']);
 
                 // Check if Category exists?
-                if ($this->categoryManager->updateCategory($category, $data) != 0)             
-                    return $this->redirect()->toRoute('categories',['action'=>'index']);
+                if ($this->categoryManager->updateCategory($category, $data) != 0)
+                    return $this->redirect()->toRoute('categories', ['action' => 'index']);
                 else $form->get('name')->setMessages(['Category exists.']);
             }
-        }
-        else {
+        } else {
             $data = [
-               'name' => $category->getName(),
-               'description' => $category->getDescription(),
-               'parent_id' => $category->getParentId(),
+                'name' => $category->getName(),
+                'description' => $category->getDescription(),
+                'parent_id' => $category->getParentId(),
             ];
             $form->setData($data);
         }
@@ -148,25 +152,25 @@ class CategoryController extends AbstractActionController
         return new ViewModel([
             'form' => $form,
             'category' => $category
-            ]);
+        ]);
     }
 
     public function deleteAction()
-        {
-            $CategoryId = $this->params()->fromRoute('id', -1);
-                
-            $category = $this->entityManager->getRepository(Category::class)
-                        ->findOneById($CategoryId);        
-            if ($category == null) {
-                $this->getResponse()->setStatusCode(404);
-                return;                        
-            }        
-                
-            $this->categoryManager->removeCategory($category);
-                
-            // Redirect the user to "index" page.
-            return $this->redirect()->toRoute('categories', ['action'=>'index']);
+    {
+        $CategoryId = $this->params()->fromRoute('id', -1);
+
+        $category = $this->entityManager->getRepository(Category::class)
+            ->findOneById($CategoryId);
+        if ($category == null) {
+            $this->getResponse()->setStatusCode(404);
+            return;
         }
+
+        $this->categoryManager->removeCategory($category);
+
+        // Redirect the user to "index" page.
+        return $this->redirect()->toRoute('categories', ['action' => 'index']);
+    }
 
 
     public function slug($str)
