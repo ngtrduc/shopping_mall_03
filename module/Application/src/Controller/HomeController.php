@@ -13,6 +13,10 @@ use Application\Entity\Category;
 use Application\Entity\Product;
 use Application\Entity\Province;
 use Admin\Helper\TrunCate;
+use Zend\Mail;
+use Zend\Mail\Message;
+use Zend\Mail\Transport\Smtp as SmtpTransport;
+use Zend\Mail\Transport\SmtpOptions;
 
 class HomeController extends AbstractActionController
 {
@@ -147,4 +151,5 @@ class HomeController extends AbstractActionController
         
         return $this->response;
     }
+    
 }

@@ -287,6 +287,7 @@ return [
             Service\ProductManager::class => Service\Factory\ProductManagerFactory::class,
             Service\CartManager::class => Service\Factory\CartManagerFactory::class,
             Service\OrderManager::class => Service\Factory\OrderManagerFactory::class,
+            Service\MailManager::class => Service\Factory\MailManagerFactory::class,
         ],
     ],
     'session_containers' => [

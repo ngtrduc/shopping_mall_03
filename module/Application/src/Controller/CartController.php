@@ -23,15 +23,16 @@ class CartController extends AbstractActionController
     private $sessionContainer;
     private $cartManager;
     private $orderManager;
-
+    private $mailManager;
     /**
      * Constructor.
      */
-    public function __construct($entityManager, $cartManager, $orderManager)
+    public function __construct($entityManager, $cartManager, $orderManager, $mailManager)
     {
         $this->entityManager = $entityManager;
         $this->cartManager = $cartManager;
         $this->orderManager = $orderManager;
+        $this->mailManager = $mailManager;
         $this->sessionContainer = new Container('UserLogin');
 
     }
@@ -53,7 +54,7 @@ class CartController extends AbstractActionController
             // ];
 
         //view
-        
+       
         $cookie = $this->getRequest()->getCookie('Cart', 'default');
         $cart_info = json_decode($cookie["Cart"]);
 
@@ -96,7 +97,8 @@ class CartController extends AbstractActionController
                 $data_formated['user_id'] = $sessionContainer->id;
             }
             $order = $this->orderManager->addNewOrder($data_formated, $cart_info);
-            
+            $hash = $this->orderManager->encryptByOrderId($order->getId());
+            $this->mailManager->sendOrder($hash);
 
             $cookie = new \Zend\Http\Header\SetCookie(
                 'Cart',
@@ -109,7 +111,7 @@ class CartController extends AbstractActionController
             // response data
             $res = [
                 'status' => 'ok',
-                'order_id' => $order->getId(),
+                'order_id' => $hash),
             ];
 
             $this->response->setContent(json_encode($res));

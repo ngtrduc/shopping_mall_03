@@ -138,8 +138,16 @@ class OrderManager
 
     public function getOrder($order_id, $email) 
     {
+        $order_id = self::decryptByOrderId($order_id);
         $order = $this->entityManager->getRepository(Order::class)->find($order_id);
         if ($email != $order->getEmail()) return null;
         return $order;
+    }
+
+    public function encryptByOrderId($data) {
+        return base64_encode($data);
+    }
+    public function decryptByOrderId($data) {
+        return base64_decode($data);
     }
 }
