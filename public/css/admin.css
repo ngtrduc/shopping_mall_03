@@ -346,3 +346,8 @@
 .center {
     text-align: center;
 }
+
+.select-box {
+    float: right;
+    width: 140px;
+}

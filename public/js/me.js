@@ -283,3 +283,71 @@ $(document).ready(function(){
         })
     })
 });
+function  makeChart(id, data){
+    Highcharts.chart(id, data);
+}
+$(document).ready(function(){
+    $.ajax({
+        type: 'POST',
+        url: '/admin/orderchart',
+        data: {
+            'type' : 1
+        },
+        success: function(data) {
+            var data = JSON.parse(data);
+            makeChart('order-chart', data);                         
+        }
+    });
+  
+    function load_order_chart(){
+        var type = $('#order-select option:selected').val();
+        $.ajax({
+            type: 'POST',
+            url: '/admin/orderchart',
+            data: {
+                'type' : type
+            },
+            success: function(data) {
+              var data = JSON.parse(data);
+              makeChart('order-chart', data);                              
+            }
+        })
+    }
+
+    $('#order-select').on("change", function(){
+        load_order_chart();
+    });
+});
+
+$(document).ready(function(){
+    $.ajax({
+        type: 'POST',
+        url: '/admin/reviewchart',
+        data: {
+            'type' : 1
+        },
+        success: function(data) {
+            var data = JSON.parse(data);
+            makeChart('review-chart', data);                         
+        }
+    });
+  
+    function load_review_chart(){
+        var type = $('#review-select option:selected').val();
+        $.ajax({
+            type: 'POST',
+            url: '/admin/reviewchart',
+            data: {
+                'type' : type
+            },
+            success: function(data) {
+              var data = JSON.parse(data);
+              makeChart('review-chart', data);                              
+            }
+        })
+    }
+
+    $('#review-select').on("change", function(){
+        load_review_chart();
+    });
+});

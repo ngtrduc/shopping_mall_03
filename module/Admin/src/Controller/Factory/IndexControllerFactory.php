@@ -5,14 +5,16 @@ use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Admin\Controller\IndexController;
 use Admin\Service\SaleProgramManager;
+use Admin\Service\StatisticManager;
 
 class IndexControllerFactory implements FactoryInterface
 {
-	public function __invoke(ContainerInterface $container,	$requestedName, array $options = null)
-	{
-		$entityManager = $container->get('doctrine.entitymanager.orm_default');
-		$saleProgramManager = $container->get(SaleProgramManager::class);
+    public function __invoke(ContainerInterface $container,	$requestedName, array $options = null)
+    {
+        $entityManager = $container->get('doctrine.entitymanager.orm_default');
+        $saleProgramManager = $container->get(SaleProgramManager::class);
+        $statisticManager = $container->get(StatisticManager::class);
 
-		return new IndexController($entityManager, $saleProgramManager);
-	}
+        return new IndexController($entityManager, $saleProgramManager, $statisticManager);
+    }
 }

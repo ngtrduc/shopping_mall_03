@@ -14,11 +14,15 @@ return [
             // Define a new route called "blog"
             'admin' => [
                 // Define a "literal" route type:
-                'type' => Literal::class,
+                'type' => Segment::class,
                 // Configure the route itself
                 'options' => [
                     // Listen to "/admin" as uri:
-                    'route' => '/admin',
+                    'route'    => '/admin[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]*'
+                    ],
                     // Define default controller and action to be called when
                     // this route is matched
                     'defaults' => [
@@ -139,7 +143,7 @@ return [
             Service\StoreManager::class => Service\Factory\StoreManagerFactory::class,
             Service\ImageManager::class => Service\Factory\ImageManagerFactory::class,
             Service\SaleProgramManager::class => Service\Factory\SaleProgramManagerFactory::class,
-            
+            Service\StatisticManager::class => Service\Factory\StatisticManagerFactory::class,
         ],
         'abstract_factories' => array(
             'Zend\Form\FormAbstractServiceFactory',

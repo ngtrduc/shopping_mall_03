@@ -109,11 +109,7 @@ class SaleProgramManager
             ->findBy(['status' => SaleProgram::PENDING]);
         $list = [];
         foreach ($salePrograms as $sP) {
-            $date_start = $sP->getDateStart();
-            $date_start = date('d-m-Y', strtotime($date_start));
-            $date_end = $sP->getDateEnd();
-            $date_end = date('d-m-Y', strtotime($date_end));
-            if ($date_start <= $currentDate && $date_end >= $currentDate) {
+            if ($sP->getCurrentStatus() == SaleProgram::ACTIVE) {
                 array_push($list, $sP);
             }
         }
@@ -128,9 +124,7 @@ class SaleProgramManager
             ->findBy(['status' => SaleProgram::ACTIVE]);
         $list = [];
         foreach ($salePrograms as $sP) {
-            $date_end = $sP->getDateEnd();
-            $date_end = date('d-m-Y', strtotime($date_end));
-            if ($date_end < $currentDate) {
+            if ($sP->getCurrentStatus() == SaleProgram::DONE) {
                 array_push($list, $sP);
             }
         }

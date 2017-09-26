@@ -29,10 +29,14 @@ class IndexController extends AbstractActionController
      */
     private $saleProgramManager;
 
-	public function __construct($entityManager, $saleProgramManager)
-    {
+	public function __construct(
+                                $entityManager,
+                                $saleProgramManager,
+                                $statisticManager
+                                ) {
         $this->entityManager = $entityManager; 
         $this->saleProgramManager = $saleProgramManager;
+        $this->statisticManager = $statisticManager;
     }
 
     public function indexAction()
@@ -52,6 +56,7 @@ class IndexController extends AbstractActionController
             ->findBy(["status" => Order::STATUS_PENDING]);
         $order_shippings = $this->entityManager->getRepository(Order::class)
             ->findBy(["status" => Order::STATUS_SHIPPING]);
+
         return new ViewModel([
             'number_of_users' => $number_of_users,
             'number_of_products' => $number_of_products,
@@ -61,5 +66,36 @@ class IndexController extends AbstractActionController
             'order_pendings' => $order_pendings,
             'order_shippings' => $order_shippings
             ]);
+    }
+
+    public function chartAction()
+    {
+        return new ViewModel();
+    }
+
+    public function orderchartAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+            $data_order = $this->statisticManager->getOrderStatistic($data['type']);
+            $data_json = json_encode($data_order);
+
+            $this->response->setContent($data_json);
+
+            return $this->response;
+        }
+    }
+
+    public function reviewchartAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+            $data_order = $this->statisticManager->getReviewStatistic($data['type']);
+            $data_json = json_encode($data_order);
+
+            $this->response->setContent($data_json);
+            
+            return $this->response;
+        }
     }
 }
