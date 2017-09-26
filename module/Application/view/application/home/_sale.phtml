@@ -57,7 +57,7 @@
                                     <i>*2 products in total {{ sale.num_products }} sale products</i>
                                 </span>
                                 <div style="flex:1"></div>
-                                <md-button>View Details</md-button>
+                                <md-button @click="viewDetails(sale.id)">View Details</md-button>
                             </md-card-actions>
                         </md-card>
                     </md-layout>

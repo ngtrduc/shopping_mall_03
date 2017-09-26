@@ -696,3 +696,16 @@
     margin-top: 5px;
     margin-right: 15px;
 }
+
+#sale .md-card {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+#sale-details .md-card {
+    margin: 30px;
+}
+
+#sale-details .product-sale-card {
+    margin: 10px;
+}
