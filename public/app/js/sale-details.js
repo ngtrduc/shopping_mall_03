@@ -14,8 +14,7 @@ $(function () {
 
                 axios.get('/sale/getSale/' + id)
                     .then(res => {
-                        let data = res.data;
-                        this.sale = data;
+                        this.sale = res.data;
                     })
                     .catch(err => {
 

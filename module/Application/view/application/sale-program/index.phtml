@@ -41,15 +41,15 @@
                                 </md-whiteframe>
                             </md-layout>
                         </md-layout>
-                    </md-card-content>
-
-                    <md-card-actions>
-                                <span v-if="sale.num_products > sale.products.length">
+                        <span v-if="sale.num_products > sale.products.length">
                                     <i>*2 products in total {{ sale.num_products }} sale products</i>
                                 </span>
-                        <div style="flex:1"></div>
-                        <md-button @click="viewDetails(sale.id)">View Details</md-button>
-                    </md-card-actions>
+                    </md-card-content>
+                    <md-layout md-vertical-align="end" md-align="end">
+                        <md-card-actions>
+                            <md-button @click="viewDetails(sale.id)">View Details</md-button>
+                        </md-card-actions>
+                    </md-layout>
                 </md-card>
             </md-layout>
         </md-layout>
