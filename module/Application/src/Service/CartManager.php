@@ -57,4 +57,5 @@ class CartManager
 
         return true;
     }
+    
 }

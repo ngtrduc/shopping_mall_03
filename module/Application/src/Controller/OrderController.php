@@ -26,7 +26,7 @@ class OrderController extends AbstractActionController
 
             $data = $this->getRequest()->getContent();
             $data = json_decode($data);
-
+            
             // find order by $data->email and $data->order_id
             $order = $this->orderManager->getOrder($data->order_id, $data->email);
 
