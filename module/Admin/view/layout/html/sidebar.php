@@ -8,6 +8,13 @@
 		        </a>
 	      	</li>
 
+	   		<li >
+		        <a href="/admin/chart">
+		          	<i class="fa fa-bar-chart"></i>
+		          	<span>Chart</span>
+		        </a>
+	      	</li>
+
 	      	<li class="treeview">
 		        <a href="">
 		            <i class="glyphicon glyphicon-user"></i>

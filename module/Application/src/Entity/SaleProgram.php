@@ -186,6 +186,7 @@ class SaleProgram
             return SaleProgram::DONE;
     }
 
+    // $sale_array['product_id'] =  Sale's value of this product
     public function getSaleArray()
     {
         $sales = $this->getSales();

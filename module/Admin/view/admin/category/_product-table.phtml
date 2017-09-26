@@ -5,6 +5,7 @@
             <th>Name</th>
             <th>Image</th>
             <th>Price</th>
+            <th>Colors</th>
             <th>Category</th>
             <th>Option</th>
         </tr>
@@ -18,6 +19,13 @@
                 <img src="<?php echo $this->basePath($product->getImage()) ?>" class="image_product">
             </td>
             <td><?php echo $product->getPrice(); ?></td>
+            <td>
+                <?php foreach ($product->getColorsInWord() as $c) { ?>
+                        <i class="set-size-icon pull-right color-<?php echo $c ?>" >
+                            <p class="hidden"><?php echo $c ?></p>
+                        </i>
+                <?php } ?>
+            </td>
             <td>
                 <?php if ($product->getCategory() != null){ ?>
                     <a href="<?= $this->url('categories',
