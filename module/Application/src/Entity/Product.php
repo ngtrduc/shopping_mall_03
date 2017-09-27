@@ -1,4 +1,5 @@
 <?php
+
 namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -16,11 +17,11 @@ use Application\Entity\Sale;
  * @ORM\Table(name="products")
  */
 class Product
-{   
+{
     const STATUS_PUBLISHED = 1;
     const STATUS_DELETED = 0;
     const MAX_VIEWS = 2000000000;
-     /**
+    /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\Comment", mappedBy="product")
      * @ORM\JoinColumn(name="id", referencedColumnName="product_id")
      */
@@ -40,7 +41,7 @@ class Product
      *      )
      */
     protected $keywords;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\ProductColorImage", mappedBy="product")
      * @ORM\JoinColumn(name="id", referencedColumnName="product_id")
@@ -58,54 +59,56 @@ class Product
      * @ORM\JoinColumn(name="id", referencedColumnName="product_id")
      */
     protected $sales;
+
     /**
      * Constructor.
      */
 
-    public function __construct() 
+    public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->keywords = new ArrayCollection();
         $this->product_color_images = new ArrayCollection();
         $this->reviews = new ArrayCollection();
         $this->product_masters = new ArrayCollection();
-        $this->sales = new ArrayCollection();                  
+        $this->sales = new ArrayCollection();
     }
-      
+
     /**
      * Returns comments for this product.
      * @return array
      */
 
-    public function getComments() 
+    public function getComments()
     {
         return $this->comments;
     }
-      
+
     /**
      * Adds a new comment to this product.
      * @param $comment
      */
-    public function addComment($comment) 
+    public function addComment($comment)
     {
         $this->comments[] = $comment;
     }
 
-    public function getSales() 
+    public function getSales()
     {
         return $this->sales;
     }
-      
-    public function addSale($sale) 
+
+    public function addSale($sale)
     {
         $this->sales[] = $sale;
         $current_price = (int)($this->getPrice() * (100 - $this->getCurrentSale()) / 100);
-        $this->setCurrentPrice($current_price); 
+        $this->setCurrentPrice($current_price);
     }
 
-    public function removeSale($sale) {
+    public function removeSale($sale)
+    {
         $this->sales->removeElement($sale);
-        
+
         $current_price = (int)($this->getPrice() * (100 - $this->getCurrentSale()) / 100);
         $this->setCurrentPrice($current_price);
     }
@@ -114,37 +117,37 @@ class Product
      * Returns comments for this product.
      * @return array
      */
-    public function getReviews() 
+    public function getReviews()
     {
         return $this->reviews;
     }
-      
+
     /**
      * Adds a new comment to this product.
      * @param $comment
      */
-    public function addReview($review) 
+    public function addReview($review)
     {
         $this->reviews[] = $review;
         $this->rate_sum = $this->rate_sum + $review->getRate();
         $this->rate_count++;
     }
 
-      
+
     /**
      * Returns product_images for this product.
      * @return array
      */
-    public function getProductColorImages() 
+    public function getProductColorImages()
     {
         return $this->product_color_images;
     }
-      
+
     /**
      * Adds a new product_image to this product.
      * @param $product_color_image
      */
-    public function addProductColorImage($product_color_image) 
+    public function addProductColorImage($product_color_image)
     {
         $this->product_color_images[] = $product_color_image;
     }
@@ -153,41 +156,42 @@ class Product
      * Returns product_images for this product.
      * @return array
      */
-    public function getProductMasters() 
+    public function getProductMasters()
     {
         return $this->product_masters;
     }
-      
+
     /**
      * Adds a new product_image to this product.
      * @param $product_master
      */
-    public function addProductMaster($product_master) 
+    public function addProductMaster($product_master)
     {
         $this->product_masters[] = $product_master;
     }
 
     // Returns keywords for this product.
-    public function getKeywords() 
+    public function getKeywords()
     {
         return $this->keywords;
-    }      
-    
+    }
+
     public function getInfoKeywords()
     {
         foreach ($this->getKeywords() as $key) {
             $data[] = $key->getKeyword();
         }
         return $data;
-    }  
-    // Adds a new keyword to this product.
-    public function addKeyword($keyword) 
-    {
-        $this->keywords[] = $keyword;        
     }
-      
+
+    // Adds a new keyword to this product.
+    public function addKeyword($keyword)
+    {
+        $this->keywords[] = $keyword;
+    }
+
     // Removes association between this product and the given keyword.
-    public function removeKeywordAssociation($keyword) 
+    public function removeKeywordAssociation($keyword)
     {
         $this->keywords->removeElement($keyword);
     }
@@ -197,27 +201,39 @@ class Product
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
     protected $category;
-       
+
     /*
      * Returns associated category.
      * @return \Application\Entity\Category
      */
-    public function getCategory() 
+    public function getCategory()
     {
         return $this->category;
     }
-      
+
+    public function getAllCategory()
+    {
+        $cur_c = $this->getCategory();
+        $c_arr = [];
+        while ($cur_c->getParent() != null) {
+            array_push($c_arr, $cur_c->getName());
+            $cur_c = $cur_c->getParent();
+        }
+        array_push($c_arr, $cur_c->getName());
+        return $c_arr;
+    }
+
     /**
      * Sets associated category.
      * @param \Application\Entity\Category $category
      */
-    public function setCategory($category) 
+    public function setCategory($category)
     {
         $this->category = $category;
         $category->addProduct($this);
     }
 
-    
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -284,142 +300,142 @@ class Product
      */
     protected $rate_count = 0;
 
-     /**
-    * @ORM\Column(name="date_created")
-    */
+    /**
+     * @ORM\Column(name="date_created")
+     */
     protected $date_created;
 
     // Returns ID of this product.
-    public function getId() 
+    public function getId()
     {
         return $this->id;
     }
 
     // Sets ID of this product.
-    public function setId($id) 
+    public function setId($id)
     {
         $this->id = $id;
     }
 
-    public function getName() 
+    public function getName()
     {
         return $this->name;
     }
 
-    public function setName($name) 
+    public function setName($name)
     {
         $this->name = $name;
     }
 
-    public function getAlias() 
+    public function getAlias()
     {
         return $this->alias;
     }
 
-    public function setAlias($alias) 
+    public function setAlias($alias)
     {
         $this->alias = $alias;
     }
 
-    public function getPrice() 
+    public function getPrice()
     {
         return $this->price;
     }
 
-    public function setPrice($price) 
+    public function setPrice($price)
     {
         $this->price = $price;
-        if ($this->getCurrentPrice == null) 
+        if ($this->getCurrentPrice == null)
             $this->setCurrentPrice($price);
     }
 
-    public function getIntro() 
+    public function getIntro()
     {
         return $this->intro;
     }
 
-    public function setIntro($intro) 
+    public function setIntro($intro)
     {
         $this->intro = $intro;
     }
 
-    public function getImage() 
+    public function getImage()
     {
         return $this->image;
     }
 
-    public function setImage($image) 
+    public function setImage($image)
     {
         $this->image = $image;
     }
 
-    public function getDescription() 
+    public function getDescription()
     {
         return $this->description;
     }
 
-    public function setDescription($description) 
+    public function setDescription($description)
     {
         $this->description = $description;
     }
 
-    public function getStatus() 
+    public function getStatus()
     {
         return $this->status;
     }
 
-    public function setStatus($status) 
+    public function setStatus($status)
     {
         $this->status = $status;
     }
 
-    public function getViews() 
+    public function getViews()
     {
         return $this->views;
     }
 
-    public function addViews() 
+    public function addViews()
     {
-        if($this->getViews() < self::MAX_VIEWS)
-        $this->views = $this->views + 1;
+        if ($this->getViews() < self::MAX_VIEWS)
+            $this->views = $this->views + 1;
     }
 
-    public function getRateSum() 
+    public function getRateSum()
     {
         return $this->rate_sum;
     }
 
-    public function setRateSum($rate_sum) 
+    public function setRateSum($rate_sum)
     {
         $this->rate_sum = $rate_sum;
     }
 
-    public function getPopularLevel() 
+    public function getPopularLevel()
     {
         return $this->popular_level;
     }
 
-    public function setPopularLevel($popular_level) 
+    public function setPopularLevel($popular_level)
     {
         $this->popular_level = $popular_level;
     }
 
-    public function getRateCount() 
+    public function getRateCount()
     {
         return $this->rate_count;
     }
 
-    public function setRateCount($rate_count) 
+    public function setRateCount($rate_count)
     {
         $this->rate_count = $rate_count;
     }
 
-    public function getDateCreated() 
+    public function getDateCreated()
     {
         return $this->date_created;
     }
 
-    public function setDateCreated($date_created) 
+    public function setDateCreated($date_created)
     {
         $this->date_created = $date_created;
     }
@@ -431,7 +447,7 @@ class Product
         $arr = [0];
         foreach ($sales as $sale) {
             if ($sale->getSaleProgram()->getStatus() == 0)
-            $arr[] = $sale->getSale();
+                $arr[] = $sale->getSale();
         }
 
         return max($arr);
@@ -441,6 +457,7 @@ class Product
     {
         $this->current_price = $current_price;
     }
+
     public function getCurrentPrice()
     {
         return (int)($this->getPrice() * (100 - $this->getCurrentSale()) / 100);
@@ -450,13 +467,13 @@ class Product
     {
         $product_masters = $this->getProductMasters();
         $product_color_images = $this->getProductColorImages();
-        $size_and_images =[];
+        $size_and_images = [];
         // get Size each Color
-        foreach ($product_masters as $pm){
+        foreach ($product_masters as $pm) {
             if (empty($size_and_images[$pm->getColorId()]))
-            $size_and_images[$pm->getColorId()] = ['size'=>[], 'image' => ['0' => null,'1' => []]];
+                $size_and_images[$pm->getColorId()] = ['size' => [], 'image' => ['0' => null, '1' => []]];
             array_push($size_and_images[$pm->getColorId()]['size'], $pm->getSizeId());
-            
+
         };
 
         // get Image each Color
@@ -467,9 +484,9 @@ class Product
                 } else {
                     array_push($size_and_images[$pci->getColorId()]['image'][1], $image->getImage());
                 }
-            }       
+            }
         }
-        
+
         return $size_and_images;
     }
 
@@ -512,7 +529,7 @@ class Product
         $sells = 0;
         $product_color_images = $this->getProductColorImages();
         foreach ($product_color_images as $pci) {
-            $sells = $sells + $pci->getCountSell(); 
+            $sells = $sells + $pci->getCountSell();
         }
         return $sells;
     }

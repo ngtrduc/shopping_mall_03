@@ -32,4 +32,5 @@ return [
     'Application',
     'Admin',
     'Message',
+    'ElasticSearch',
 ];

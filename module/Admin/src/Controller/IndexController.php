@@ -29,14 +29,18 @@ class IndexController extends AbstractActionController
      */
     private $saleProgramManager;
 
+    private $elasticSearchManager;
+
 	public function __construct(
                                 $entityManager,
                                 $saleProgramManager,
-                                $statisticManager
+                                $statisticManager,
+                                $elasticSearchManager
                                 ) {
         $this->entityManager = $entityManager; 
         $this->saleProgramManager = $saleProgramManager;
         $this->statisticManager = $statisticManager;
+        $this->$elasticSearchManager = $elasticSearchManager;
     }
 
     public function indexAction()
@@ -97,5 +101,10 @@ class IndexController extends AbstractActionController
             
             return $this->response;
         }
+    }
+
+    public function initElasticSearchAction()
+    {
+
     }
 }

@@ -164,9 +164,9 @@ class ProductController extends AbstractActionController
                 default:
                     $this->response->setContent(json_encode('error'));
             }
-
             return $this->response;
         }
+
         $view = new ViewModel([
 
         ]);
@@ -193,12 +193,6 @@ class ProductController extends AbstractActionController
             return $this->getResponse();
         }
 
-        // get color in word 
-        $colors = $product->getColors();
-        $colors_in_word = [];
-        foreach ($colors as $c) {
-            array_push($colors_in_word, $this->list_color[$c]);
-        }
         // get color in word
         $colors = $product->getColors();
         $colors_in_word = [];
@@ -243,7 +237,8 @@ class ProductController extends AbstractActionController
             'id' => $product->getId(),
             'name' => $product->getName(),
             'price' => $product->getPrice(),
-            'key_word' => $product->getKeywords(),
+            'key_word' => $product->getInfoKeywords(),
+            'category' => $product->getAllCategory(),
             'rate_sum' => $product->getRateSum(),
             'rate_count' => $product->getRateCount(),
             'review' => [
@@ -271,5 +266,5 @@ class ProductController extends AbstractActionController
         $this->response->setContent(json_encode($data));
         return $this->response;
     }
-    
+
 }
