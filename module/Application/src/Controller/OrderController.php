@@ -43,8 +43,8 @@ class OrderController extends AbstractActionController
                         'quantity' => $item->getQuantity(),
                         'color' => $pm->getColorInWord(),
                         'size' => $pm->getSizeInWord(),
-                        'price' => $item->getCost() / $item->getQuantity(),
-                        'total' => $item->getCost(),
+                        'price' => $item->getCost(),
+                        'total' => $item->getCost() * $item->getQuantity(),
                     ];
                     array_push($items_data, $data);
                 }

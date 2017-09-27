@@ -28,6 +28,7 @@
                                 <div class="badge badge-sale"
                                      v-if="result._source.sale > 0">
                                     Sale
+                                    <md-tooltip>{{ result._source.sale }}%</md-tooltip>
                                 </div>
                                 <md-layout md-row md-align="right"
                                            class="badge badge-transparent">

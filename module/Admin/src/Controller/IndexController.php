@@ -33,17 +33,21 @@ class IndexController extends AbstractActionController
 
     private $elasticSearchManager;
 
+    private $productElasticSearchManager;
+
     public function __construct(
         $entityManager,
         $saleProgramManager,
         $statisticManager,
-        $elasticSearchManager
+        $elasticSearchManager,
+        $productElasticSearchManager
     )
     {
         $this->entityManager = $entityManager;
         $this->saleProgramManager = $saleProgramManager;
         $this->statisticManager = $statisticManager;
         $this->elasticSearchManager = $elasticSearchManager;
+        $this->productElasticSearchManager = $productElasticSearchManager;
     }
 
     public function indexAction()
@@ -135,6 +139,12 @@ class IndexController extends AbstractActionController
     public function initElasticSearchAction()
     {
         $result = $this->elasticSearchManager->createIndex('infinishop');
+
+        $products = $this->entityManager->getRepository(Product::class)->findAll();
+
+        foreach ($products as $p) {
+            $this->productElasticSearchManager->updateProduct($p);
+        }
 
         $this->response->setContent(json_encode($result));
         return $this->response;
