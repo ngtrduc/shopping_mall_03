@@ -27,12 +27,13 @@ class HomeController extends AbstractActionController
     private $entityManager;
     private $productManager;
     private $categoryManager;
-
-    public function __construct($entityManager, $categoryManager, $productManager)
+    private $sqlManager;
+    public function __construct($entityManager, $categoryManager, $productManager, $sqlManager)
     {
         $this->entityManager = $entityManager;
         $this->categoryManager = $categoryManager;
         $this->productManager = $productManager;
+        $this->sqlManager = $sqlManager;
     }
 
     public function indexAction()
@@ -58,6 +59,8 @@ class HomeController extends AbstractActionController
     public function viewAction()
     {
         //var_dump(2);die();
+        
+        
         $view = new ViewModel();
         $this->layout('application/home');
         return $view;
@@ -150,6 +153,23 @@ class HomeController extends AbstractActionController
         $this->response->setContent(json_encode($views));
         
         return $this->response;
+    }
+    
+    
+
+    public function sqlTestAction()
+    {
+        $this->sqlManager->sqlAddress();
+        $this->sqlManager->sqlUser();
+        $this->sqlManager->sqlCategory();
+        $this->sqlManager->sqlProduct();
+        $this->sqlManager->sqlProductColorImage();
+        $this->sqlManager->sqlSaleProgram();
+        $this->sqlManager->sqlKeyword();
+        $this->sqlManager->sqlReview();
+        $this->sqlManager->sqlComment();
+        $this->sqlManager->sqlOrder();
+        die();
     }
     
 }

@@ -111,7 +111,7 @@ class CartController extends AbstractActionController
             // response data
             $res = [
                 'status' => 'ok',
-                'order_id' => $hash),
+                'order_id' => $hash,
             ];
 
             $this->response->setContent(json_encode($res));

@@ -217,7 +217,8 @@ return [
                         'action' => 'index',
                     ]
                 ]
-            ]
+            ],
+            
         ],
     ],
     'controllers' => [
@@ -231,6 +232,7 @@ return [
             Controller\CommentController::class => Controller\Factory\CommentControllerFactory::class,
             Controller\OrderController::class => Controller\Factory\OrderControllerFactory::class,
             Controller\SaleProgramController::class => Controller\Factory\SaleProgramControllerFactory::class,
+            
         ],
     ],
     'access_filter' => [
@@ -288,6 +290,7 @@ return [
             Service\CartManager::class => Service\Factory\CartManagerFactory::class,
             Service\OrderManager::class => Service\Factory\OrderManagerFactory::class,
             Service\MailManager::class => Service\Factory\MailManagerFactory::class,
+            Service\SqlManager::class => Service\Factory\SqlManagerFactory::class,
         ],
     ],
     'session_containers' => [
