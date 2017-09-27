@@ -4,72 +4,65 @@ namespace Elasticsearch\Service;
 
 class ElasticSearchManager
 {
-    private $client;
+    private $clientBuilder;
+    private $hosts;
 
-    public function __construct($client)
+    public function __construct($clientBuilder, $host)
     {
-        $this->client = $client;
+        $this->clientBuilder = $clientBuilder;
+        $this->hosts = $host;
     }
 
     public function getClient()
     {
-        return $this->client;
+        return $this->clientBuilder->setHosts($this->hosts)->build();
     }
 
-    public function initData()
+    public function createIndex($index)
     {
         $params = [
-            'index' => 'product',
+            'index' => $index,
         ];
 
-        $response = $this->client->indices()->create($params);
+        $response = $this->getClient()->indices()->create($params);
 
-        $params = [
-            'index' => 'category',
-        ];
-
-        $response = $this->client->indices()->create($params);
-
-        $params = [
-            'index' => 'sale',
-        ];
-
-        $response = $this->client->indices()->create($params);
-
-        $params = [
-            'index' => 'tag',
-        ];
-
-        $response = $this->client->indices()->create($params);
+        return $response;
     }
 
-    public function indexProduct($id, $product)
+    public function index($index, $type, $id, $data)
     {
         $params = [
-            'index' => 'product',
-            'type' => 'product',
+            'index' => $index,
+            'type' => $type,
             'id' => $id,
-            'body' => $product
+            'body' => $data
         ];
 
-        $this->client->index($params);
+        return $this->getClient()->index($params);
     }
 
-    public function updateProduct($product)
+    public function update($index, $type, $id, $data)
     {
+        $params = [
+            'index' => $index,
+            'type' => $type,
+            'id' => $id,
+            'body' => [
+                'doc' => $data
+            ]
+        ];
 
+        return $this->getClient()->update($params);
     }
 
-    public function deleteProduct()
+    public function delete($index, $type, $id)
     {
-        for ($id = 1; $id < 4; $id++) {
-            $params = [
-                'index' => 'product',
-                'type' => 'product',
-                'id' => $id,
-            ];
+        $params = [
+            'index' => $index,
+            'type' => $type,
+            'id' => $id,
+        ];
 
-            $this->client->delete($params);
-        }
+        return $this->getClient()->delete($params);
     }
 }

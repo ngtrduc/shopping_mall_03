@@ -17,11 +17,11 @@ use Application\Entity\Order;
 
 class IndexController extends AbstractActionController
 {
-	/**
+    /**
      * Entity manager.
      * @var Doctrine\ORM\EntityManager
      */
-	private $entityManager;
+    private $entityManager;
 
     /**
      * Sale Program manager.
@@ -29,29 +29,32 @@ class IndexController extends AbstractActionController
      */
     private $saleProgramManager;
 
+    private $statisticManager;
+
     private $elasticSearchManager;
 
-	public function __construct(
-                                $entityManager,
-                                $saleProgramManager,
-                                $statisticManager,
-                                $elasticSearchManager
-                                ) {
-        $this->entityManager = $entityManager; 
+    public function __construct(
+        $entityManager,
+        $saleProgramManager,
+        $statisticManager,
+        $elasticSearchManager
+    )
+    {
+        $this->entityManager = $entityManager;
         $this->saleProgramManager = $saleProgramManager;
         $this->statisticManager = $statisticManager;
-        $this->$elasticSearchManager = $elasticSearchManager;
+        $this->elasticSearchManager = $elasticSearchManager;
     }
 
     public function indexAction()
     {
-    	$products = $this->entityManager->getRepository(Product::class)->findAll();
-    	$stores = $this->entityManager->getRepository(Store::class)->findAll();
-    	$users = $this->entityManager->getRepository(User::class)->findAll();
+        $products = $this->entityManager->getRepository(Product::class)->findAll();
+        $stores = $this->entityManager->getRepository(Store::class)->findAll();
+        $users = $this->entityManager->getRepository(User::class)->findAll();
 
-    	$number_of_users = count($users);
-    	$number_of_products = count($products);
-    	$number_of_stores = count($stores);
+        $number_of_users = count($users);
+        $number_of_products = count($products);
+        $number_of_stores = count($stores);
 
         $sale_prodgram_need_active = $this->saleProgramManager->getSaleProgramNeedActive();
         $sale_prodgram_need_done = $this->saleProgramManager->getSaleProgramNeedDone();
@@ -69,7 +72,7 @@ class IndexController extends AbstractActionController
             'sale_prodgram_need_done' => $sale_prodgram_need_done,
             'order_pendings' => $order_pendings,
             'order_shippings' => $order_shippings
-            ]);
+        ]);
     }
 
     public function chartAction()
@@ -98,7 +101,7 @@ class IndexController extends AbstractActionController
             $data_json = json_encode($data_review);
 
             $this->response->setContent($data_json);
-            
+
             return $this->response;
         }
     }
@@ -111,7 +114,7 @@ class IndexController extends AbstractActionController
             $data_json = json_encode($data_user);
 
             $this->response->setContent($data_json);
-            
+
             return $this->response;
         }
     }
@@ -131,5 +134,9 @@ class IndexController extends AbstractActionController
 
     public function initElasticSearchAction()
     {
+        $result = $this->elasticSearchManager->createIndex('infinishop');
+
+        $this->response->setContent(json_encode($result));
+        return $this->response;
     }
 }
