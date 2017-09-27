@@ -1,4 +1,5 @@
 <?php
+
 namespace Admin\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
@@ -12,23 +13,23 @@ use Zend\File\Transfer\Adapter\Http;
 class ProductController extends AbstractActionController
 {
     private $list_color = [
-                ProductMaster::WHITE => 'white',
-                ProductMaster::BLACK => 'black',
-                ProductMaster::YELLOW => 'yellow',
-                ProductMaster::RED => 'red',
-                ProductMaster::GREEN => 'green',
-                ProductMaster::PURPLE => 'purple',
-                ProductMaster::ORANGE => 'orange',
-                ProductMaster::BLUE => 'blue',
-                ProductMaster::GREY => 'grey',
-                ];
+        ProductMaster::WHITE => 'white',
+        ProductMaster::BLACK => 'black',
+        ProductMaster::YELLOW => 'yellow',
+        ProductMaster::RED => 'red',
+        ProductMaster::GREEN => 'green',
+        ProductMaster::PURPLE => 'purple',
+        ProductMaster::ORANGE => 'orange',
+        ProductMaster::BLUE => 'blue',
+        ProductMaster::GREY => 'grey',
+    ];
     private $list_size = [
-                ProductMaster::S => 'S',
-                ProductMaster::M => 'M',
-                ProductMaster::L => 'L',
-                ProductMaster::XL => 'XL',
-                ProductMaster::XXL => 'XXL',
-                ];
+        ProductMaster::S => 'S',
+        ProductMaster::M => 'M',
+        ProductMaster::L => 'L',
+        ProductMaster::XL => 'XL',
+        ProductMaster::XXL => 'XXL',
+    ];
     /**
      * Entity manager.
      * @var Doctrine\ORM\EntityManager
@@ -52,22 +53,26 @@ class ProductController extends AbstractActionController
      */
     private $imageManager;
 
+    private $ProductElasticSearchManager;
+
     /**
      * Constructor is used for injecting dependencies into the controller.
      */
     public function __construct(
-        $entityManager, 
-        $productManager, 
-        $categoryManager, 
-        $storeManager, 
-        $imageManager
-    ) {
+        $entityManager,
+        $productManager,
+        $categoryManager,
+        $storeManager,
+        $imageManager,
+        $ProductElasticSearchManager
+    )
+    {
         $this->entityManager = $entityManager;
         $this->productManager = $productManager;
-        $this->categoryManager = $categoryManager; 
+        $this->categoryManager = $categoryManager;
         $this->storeManager = $storeManager;
         $this->imageManager = $imageManager;
-
+        $this->ProductElasticSearchManager = $ProductElasticSearchManager;
     }
 
     /**
@@ -75,11 +80,13 @@ class ProductController extends AbstractActionController
      * to enter post title, content and tags. When the user clicks the Submit button,
      * a new Post entity will be created.
      */
-    public function indexAction(){
+    public function indexAction()
+    {
         return ViewModel();
     }
 
-    public function listAction(){
+    public function listAction()
+    {
         $products = $this->entityManager->getRepository(Product::class)->findAll();
         $products_in_trash = $this->entityManager
             ->getRepository(Product::class)->findBy(['status' => Product::STATUS_DELETED]);
@@ -92,26 +99,27 @@ class ProductController extends AbstractActionController
     public function viewAction()
     {
         $productId = $this->params()->fromRoute('id', -1);
-    
+
         $product = $this->entityManager->getRepository(Product::class)
             ->find($productId);
 
         if ($product == null) {
             $this->getResponse()->setStatusCode(404);
-            return;                        
+            return;
         }
 
         $size_and_images = $product->getSizeAndImageEachColors();
-        
+
         return new ViewModel([
             'product' => $product,
             'size_and_images' => $size_and_images,
             'list_color' => $this->list_color,
             'list_size' => $this->list_size
-            ]);     
+        ]);
     }
 
-    public function addAction(){
+    public function addAction()
+    {
         $categories = $this->categoryManager->categories_for_select();
 
         $form = new ProductForm('create', $categories, $this->entityManager);
@@ -123,23 +131,25 @@ class ProductController extends AbstractActionController
 
             if ($form->isValid()) {
                 $data['alias'] = $this->slug($data['name']);
-                
-                $files =  $_FILES;
+
+                $files = $_FILES;
                 $httpadapter = new \Zend\File\Transfer\Adapter\Http();
                 $httpadapter->setDestination('public/img/products/');
                 $httpadapter->receive();
                 $data['image'] = $httpadapter->getFileName();
                 $data['image'] = ltrim($data['image'], "public");
-                
-                $this->productManager->addNewProduct($data);             
-                
-                return $this->redirect()->toRoute('products', ['action'=>'list']);
+
+                $product = $this->productManager->addNewProduct($data);
+
+                $this->ProductElasticSearchManager->indexProduct($product);
+
+                return $this->redirect()->toRoute('products', ['action' => 'list']);
             }
         }
 
         return new ViewModel([
             'form' => $form
-            ]);
+        ]);
     }
 
     public function addcolorAction()
@@ -150,10 +160,10 @@ class ProductController extends AbstractActionController
 
         if ($product == null) {
             $this->getResponse()->setStatusCode(404);
-            return;                      
+            return;
         }
 
-        $color = $this->productManager->getColorForSelect($product); 
+        $color = $this->productManager->getColorForSelect($product);
         $form = new AddColorForm($color);
 
         if ($this->getRequest()->isPost()) {
@@ -163,13 +173,15 @@ class ProductController extends AbstractActionController
 
             $this->productManager->addNewColor($product, $data);
 
-            return $this->redirect()->toRoute('products', ['action'=>'view', 'id' => $productId]);
+            $this->ProductElasticSearchManager->updateColor($product);
+
+            return $this->redirect()->toRoute('products', ['action' => 'view', 'id' => $productId]);
         }
 
         return new ViewModel([
             'product' => $product,
             'form' => $form
-            ]);
+        ]);
     }
 
     public function removecolorAction()
@@ -179,7 +191,7 @@ class ProductController extends AbstractActionController
 
         if ($product == null) {
             $this->getResponse()->setStatusCode(404);
-            return;                      
+            return;
         }
 
         if ($this->getRequest()->isPost()) {
@@ -187,15 +199,17 @@ class ProductController extends AbstractActionController
 
             $this->productManager->removeColor($product, $data['color_id']);
 
-            return $this->redirect()->toRoute('products', ['action'=>'view', 'id' => $product->getId()]);
+            $this->ProductElasticSearchManager->updateColor($product);
+
+            return $this->redirect()->toRoute('products', ['action' => 'view', 'id' => $product->getId()]);
         }
 
     }
 
     public function editAction()
-    {  
+    {
         $categories = $this->categoryManager->categories_for_select();
-        
+
         $productId = $this->params()->fromRoute('id', -1);
 
         $product = $this->entityManager->getRepository(Product::class)->find($productId);
@@ -203,19 +217,19 @@ class ProductController extends AbstractActionController
         //var_dump($images);die();
         if ($product == null) {
             $this->getResponse()->setStatusCode(404);
-            return;                      
+            return;
         }
 
         $form = new ProductForm('edit', $categories, $this->entityManager);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-    
+
             $form->setData($data);
-            
+
             if ($form->isValid()) {
                 $data = $form->getData();
 
-                $files =  $_FILES;
+                $files = $_FILES;
                 $httpadapter = new \Zend\File\Transfer\Adapter\Http();
                 $httpadapter->setDestination('public/img/products/');
                 $httpadapter->receive();
@@ -224,23 +238,25 @@ class ProductController extends AbstractActionController
 
                 $data['alias'] = $this->slug($data['name']);
                 //var_dump($data);die();
-                $this->productManager->updateProduct($product, $data);
+                $product = $this->productManager->updateProduct($product, $data);
+
+                $this->ProductElasticSearchManager->updateProduct($product);
+
                 // Redirect the user to "index" page.
-                return $this->redirect()->toRoute('products', ['action'=>'list']);
+                return $this->redirect()->toRoute('products', ['action' => 'list']);
             }
-        } else 
-        {
+        } else {
             $data = [
                 'name' => $product->getName(),
                 'price' => $product->getPrice(),
                 'intro' => $product->getIntro(),
-                
-                'description' => $product->getDescription(),   
+
+                'description' => $product->getDescription(),
                 'status' => $product->getStatus(),
                 'category_id' => $product->getCategory(),
                 'keywords' => $this->productManager->convertKeywordsToString($product)
 
-                ];
+            ];
 
             $form->setData($data);
         }
@@ -248,7 +264,7 @@ class ProductController extends AbstractActionController
         return new ViewModel([
             'form' => $form,
             'product' => $product,
-            ]);
+        ]);
     }
 
     public function deleteAction()
@@ -259,12 +275,13 @@ class ProductController extends AbstractActionController
 
         if ($product == null) {
             $this->getResponse()->setStatusCode(404);
-            return;                        
+            return;
         }
 
         $this->productManager->softRemoveProduct($product);
 
-        return $this->redirect()->toRoute('products', ['action'=>'list']);
+        $this->ProductElasticSearchManager->deleteProduct($product);
+        return $this->redirect()->toRoute('products', ['action' => 'list']);
     }
 
     public function harddeleteAction()
@@ -275,11 +292,14 @@ class ProductController extends AbstractActionController
 
         if ($product == null) {
             $this->getResponse()->setStatusCode(404);
-            return;                        
+            return;
         }
 
         $this->productManager->removeProduct($product);
-        return $this->redirect()->toRoute('products', ['action'=>'list']);
+
+        $this->ProductElasticSearchManager->deleteProduct($product);
+
+        return $this->redirect()->toRoute('products', ['action' => 'list']);
     }
 
     public function restoreAction()
@@ -290,11 +310,15 @@ class ProductController extends AbstractActionController
 
         if ($product == null) {
             $this->getResponse()->setStatusCode(404);
-            return;                        
+            return;
         }
 
         $this->productManager->restoreProduct($product);
-        return $this->redirect()->toRoute('products', ['action'=>'list']);
+
+
+        $this->ProductElasticSearchManager->indexProduct($product);
+
+        return $this->redirect()->toRoute('products', ['action' => 'list']);
     }
 
     public function slug($str)
@@ -311,5 +335,5 @@ class ProductController extends AbstractActionController
         $str = preg_replace('/([\s]+)/', '-', $str);
         return $str;
     }
-    
+
 }

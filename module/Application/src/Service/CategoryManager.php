@@ -62,4 +62,15 @@ class CategoryManager
        
         return $arr;
     }
+    public function getAllCategories()
+    {
+        $categories = $this->entityManager->getRepository(Category::class)->findAll();
+        $categories_name = [];
+
+        foreach ($categories as $c) {
+            array_push($categories_name, strtolower($c->getName()));
+        }
+
+        return $categories_name;
+    }
 }

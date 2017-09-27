@@ -3,6 +3,7 @@
 namespace Elasticsearch\Service\Factory;
 
 use ElasticSearch\Service\ElasticSearchManager;
+use ElasticSearch\Service\ProductElasticSearchManager;
 use Interop\Container\Exception\ContainerException;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
@@ -10,7 +11,7 @@ use Zend\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 use Elasticsearch;
 
-define('PATH_APPLICATION', realpath(dirname(_DIR_)));
+define('PATH_APPLICATION', realpath(dirname(null)));
 define('PATH_CONFIG', PATH_APPLICATION . '/config');
 
 class ElasticSearchManagerFactory implements FactoryInterface
@@ -30,13 +31,15 @@ class ElasticSearchManagerFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $config = new \Zend\Config\Config(include PATH_CONFIG.'/autoload/local.php');
-        $hosts = [
-            'localhost', // Domain
-        ];
+        $config = new \Zend\Config\Config(include PATH_CONFIG . '/autoload/local.php');
+        $hosts = $config->elasticsearch->hosts->toArray();
 
         $clientBuilder = Elasticsearch\ClientBuilder::create();
 
-        return new ElasticSearchManager($clientBuilder, $hosts);
+        if ($requestedName == ElasticSearchManager::class) {
+            return new ElasticSearchManager($clientBuilder, $hosts);
+        } else {
+            return new ProductElasticSearchManager($clientBuilder, $hosts);
+        }
     }
 }

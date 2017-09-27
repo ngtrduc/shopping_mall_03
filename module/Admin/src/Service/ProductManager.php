@@ -18,13 +18,10 @@ class ProductManager
      */
     private $entityManager;
 
-    private $elasticSearchManager;
-
     // Constructor is used to inject dependencies into the service.
-    public function __construct($entityManager, $elasticSearchManager)
+    public function __construct($entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->elasticSearchManager = $elasticSearchManager;
     }
 
 
@@ -54,6 +51,7 @@ class ProductManager
 
         $this->entityManager->flush();
 
+        return $product;
     }
 
     public function addNewColor($product, $data)
@@ -114,15 +112,27 @@ class ProductManager
         $product->setIntro($data['intro']);
         $product->setDescription($data['description']);
         $product->setStatus($data['status']);
-        $product->setImage($data['image']);
+        if (!empty($data['image'])) {
+            $product->setImage($data['image']);
+        }
         if (!empty($data['picture']['image_0_'])) {
             $product->setImage($data['picture']['image_0_']);
         }
         if ($data['category'] != null)
             $product->setCategory($data['category']);
+
+        // remove keyword
+        $productkeys = $product->getKeywords();
+        foreach ($productkeys as $productkey) {
+            $this->entityManager->remove($productkey);
+        }
+
+        $this->addKeywordsToProduct($data['keywords'], $product);
         
         // Apply changes to database.
         $this->entityManager->flush();
+
+        return $product;
     }
 
     public function removeProduct($product)
@@ -166,18 +176,23 @@ class ProductManager
 
         $this->entityManager->remove($product);   
         $this->entityManager->flush();
+
     }
 
     public function softRemoveProduct($product)
     {
         $product->setStatus(Product::STATUS_DELETED);
         $this->entityManager->flush();
+
+        return $product;
     }
 
     public function restoreProduct($product)
     {
         $product->setStatus(Product::STATUS_PUBLISHED);
         $this->entityManager->flush();
+
+        return $product;
     }
 
     public function removeColor($product, $color_id)

@@ -7,6 +7,7 @@
 
 namespace Admin\Controller\Factory;
 
+use Application\Entity\Product;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Admin\Service\ProductManager;
@@ -14,6 +15,7 @@ use Admin\Service\CategoryManager;
 use Admin\Service\StoreManager;
 use Admin\Service\ImageManager;
 use Admin\Controller\ProductController;
+use ElasticSearch\Service\ProductElasticSearchManager;
 
 /**
  * This is the factory for AdminController. Its purpose is to instantiate the
@@ -29,13 +31,15 @@ class ProductControllerFactory implements FactoryInterface
         $categoryManager = $container->get(CategoryManager::class);
         $storeManager = $container->get(StoreManager::class);
         $imageManager = $container->get(ImageManager::class);
+        $ProductElasticSearchManager = $container->get(ProductElasticSearchManager::class);
         // Instantiate the controller and inject dependencies
         return new ProductController(
             $entityManager, 
             $productManager, 
             $categoryManager, 
             $storeManager, 
-            $imageManager
+            $imageManager,
+            $ProductElasticSearchManager
             );
     }
 }

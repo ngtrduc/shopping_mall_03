@@ -82,6 +82,8 @@ $(function () {
                         location.href = '/order/track';
                         break;
                     default:
+                        Search.keyword = say;
+                        Search.search(say);
                 }
                 setTimeout(function () {
                     speech.say = '';

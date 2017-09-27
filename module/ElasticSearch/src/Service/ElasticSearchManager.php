@@ -61,8 +61,21 @@ class ElasticSearchManager
             'index' => $index,
             'type' => $type,
             'id' => $id,
+            'client' => [ 'ignore' => 404 ],
         ];
 
         return $this->getClient()->delete($params);
+    }
+
+    public function get($index, $type, $id)
+    {
+        $params = [
+            'index' => $index,
+            'type' => $type,
+            'id' => $id,
+            'client' => [ 'ignore' => 404 ],
+        ];
+
+        return $this->getClient()->get($params);
     }
 }

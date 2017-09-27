@@ -237,7 +237,7 @@ class ProductController extends AbstractActionController
             'id' => $product->getId(),
             'name' => $product->getName(),
             'price' => $product->getPrice(),
-            'key_word' => $product->getInfoKeywords(),
+            'keywords' => $product->getInfoKeywords(),
             'category' => $product->getAllCategory(),
             'rate_sum' => $product->getRateSum(),
             'rate_count' => $product->getRateCount(),
