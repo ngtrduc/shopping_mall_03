@@ -131,8 +131,8 @@ class Activity
 
     public function setDateCreated($date_created) 
     {
-        $date_created = new \DateTime($date_created);
-        $this->date_created = $date_created;
+        $date = new \DateTime($date_created);
+        $this->date_created = $date;
     }
 
     // return an object of Entity depend on targetID
@@ -171,6 +171,20 @@ class Activity
         }
     }
 
+    public function setTarget($target)
+    {
+        switch ($this->type) {
+            case 1:
+            case 4:
+            case 5:
+                $this->order = $target; break;
+            case 2:
+                $this->comment = $target; break;
+            case 3:
+                $this->review = $target; break;
+        }
+    }
+
     public function getIconClass()
     {
         $iconClass = [
@@ -194,14 +208,14 @@ class Activity
                 .'">order</a>';
 
         if ($this->type == 3)
-            $content = 'Create new review in product <a href="/admin/products/view/'
+            $content = 'Create new review in product <a href="/product/view/'
                 .$this->getTarget()->getProduct()->getId()
                 .'">'
                 .$this->getTarget()->getProduct()->getName()
                 .'</a>'; 
 
         if ($this->type == 2)
-            $content = 'Create new comment in product <a href="/admin/products/view/'
+            $content = 'Create new comment in product <a href="/product/view/'
                 .$this->getTarget()->getProduct()->getId()
                 .'">'
                 .$this->getTarget()->getProduct()->getName()

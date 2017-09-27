@@ -56,6 +56,18 @@ class ProductMaster
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     protected $product;
+
+    /**
+     * @ORM\OneToMany(targetEntity="\Application\Entity\OrderItem", mappedBy="product_master")
+     * @ORM\JoinColumn(name="id", referencedColumnName="product_master_id")
+     */
+    protected $order_items;
+
+
+    public function __construct() 
+    {
+        $this->order_items = new ArrayCollection();
+    }
        
     /*
      * Returns associated product.
@@ -94,20 +106,15 @@ class ProductMaster
     {
         $this->stores[] = $store;
     }
-    /**
-     * @ORM\OneToMany(targetEntity="\Application\Entity\OrderItem", mappedBy="product_master")
-     * @ORM\JoinColumn(name="id", referencedColumnName="product_master_id")
-     */
-    protected $order_items;
 
     public function getOrderItems() 
     { 
         return $this->order_items;
     }
       
-    public function setOrderItems($order_items) 
+    public function addOrderItem($order_item) 
     {
-        $this->order_items[] = $order_items;
+        $this->order_items[] = $order_item;
     }   
     /**
      * @ORM\Id
