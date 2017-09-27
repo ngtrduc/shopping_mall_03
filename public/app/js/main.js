@@ -57,6 +57,24 @@ Main.bindUIActions = function () {
         });
 
         $('[data-toggle="tooltip"]').tooltip();
+        //
+        // $('.js-gotop').on('click', function(event){
+        //
+        //
+        //
+        //     return false;
+        // });
+
+        // $(window).scroll(function(){
+        //
+        //     var $win = $(window);
+        //     if ($win.scrollTop() > 200) {
+        //         $('.js-top').addClass('active');
+        //     } else {
+        //         $('.js-top').removeClass('active');
+        //     }
+        //
+        // });
     });
 
     let $window = $(window);

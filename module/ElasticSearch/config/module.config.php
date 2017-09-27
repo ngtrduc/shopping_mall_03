@@ -11,7 +11,8 @@ namespace ElasticSearch;
 return [
     'service_manager' => [
         'factories' => [
-            Service\ElasticSearchManager::class => Service\Factory\ElasticSearchManagerFactory::class
+            Service\ElasticSearchManager::class => Service\Factory\ElasticSearchManagerFactory::class,
+            Service\ProductElasticSearchManager::class => Service\Factory\ElasticSearchManagerFactory::class,
         ]
     ],
 ];

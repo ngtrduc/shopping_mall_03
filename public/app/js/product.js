@@ -78,6 +78,14 @@ $(function () {
                     .catch(err => {
                     });
             },
+            search: function (keyword) {
+                Search.keyword = keyword;
+                Search.search(keyword);
+
+                $('html, body').animate({
+                    scrollTop: $('html').offset().top
+                }, 500, 'easeInOutExpo');
+            },
             selectSize: function (size) {
                 this.selected_size = size;
             },
