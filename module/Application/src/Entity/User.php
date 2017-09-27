@@ -239,7 +239,7 @@ class User
     /**
      * @ORM\Column(name="date_created")
      */
-    protected $dateCreated;
+    protected $date_created;
 
     // Returns ID of this post.
     public function getId() 
@@ -350,12 +350,12 @@ class User
 
     public function getDateCreated()
     {
-        return $this->dateCreated;
+        return $this->date_created;
     }
 
     public function setDateCreated($date)
     {
-        $this->dateCreated = $date;
+        $this->date_created = $date;
     }
 
     public function getPay() 

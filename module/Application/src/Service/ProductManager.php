@@ -73,7 +73,7 @@ class ProductManager
         $activity->setSender($user);
         $activity->setReceiver($admin);
         $activity->setType(Activity::COMMENT);
-        $activity->setTargetId($comment->getId());
+        $activity->setTarget($comment);
         $activity->setDateCreated($currentDate);
 
         $this->entityManager->persist($activity);
@@ -114,7 +114,7 @@ class ProductManager
         $activity->setSender($user);
         $activity->setReceiver($admin);
         $activity->setType(Activity::REVIEW);
-        $activity->setTargetId($review->getId());
+        $activity->setTarget($review);
         $activity->setDateCreated($currentDate);
         $this->entityManager->persist($activity);
         

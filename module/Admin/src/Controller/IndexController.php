@@ -94,8 +94,8 @@ class IndexController extends AbstractActionController
     {
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            $data_order = $this->statisticManager->getReviewStatistic($data['type']);
-            $data_json = json_encode($data_order);
+            $data_review = $this->statisticManager->getReviewStatistic($data['type']);
+            $data_json = json_encode($data_review);
 
             $this->response->setContent($data_json);
             
@@ -103,8 +103,33 @@ class IndexController extends AbstractActionController
         }
     }
 
+    public function userchartAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+            $data_user = $this->statisticManager->getUserStatistic($data['type']);
+            $data_json = json_encode($data_user);
+
+            $this->response->setContent($data_json);
+            
+            return $this->response;
+        }
+    }
+
+    public function moneychartAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+            $data_money = $this->statisticManager->getMoneyStatistic($data['type']);
+            $data_json = json_encode($data_money);
+
+            $this->response->setContent($data_json);
+
+            return $this->response;
+        }
+    }
+
     public function initElasticSearchAction()
     {
-
     }
 }

@@ -192,6 +192,10 @@ class ProductManager
 
         foreach ($product_masters as $pm) {
             if ($pm->getColorId() == $color_id)
+                $order_items = $pm->getOrderItems();
+                foreach ($order_items as $o) {
+                    $this->entityManager->remove($o);
+                }
                 $this->entityManager->remove($pm); 
         }
 

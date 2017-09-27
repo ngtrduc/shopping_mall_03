@@ -32,6 +32,7 @@ class OrderItem
     public function setProductMaster($product_master) 
     {
         $this->product_master = $product_master;
+        $product_master->addOrderItem($this);
     }
 
     /**

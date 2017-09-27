@@ -24,7 +24,7 @@
                     <?php foreach($items as $item): ?>
                         <tr>
                             <td><?php echo ++$i ?></td>
-                            <td><a href="<?php $this->url('products',['action' => 'view',
+                            <td><a href="<?php echo $this->url('products',['action' => 'view',
                                 'id' => $item['product_id']]) ?>">
                                 <?php echo $item['product_name'] ?>
                             </a></td>
