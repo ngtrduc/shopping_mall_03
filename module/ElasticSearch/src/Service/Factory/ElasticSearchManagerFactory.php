@@ -35,10 +35,8 @@ class ElasticSearchManagerFactory implements FactoryInterface
             'localhost', // Domain
         ];
 
-        $client = Elasticsearch\ClientBuilder::create()
-            ->setHosts($hosts)
-            ->build();
+        $clientBuilder = Elasticsearch\ClientBuilder::create();
 
-        return new ElasticSearchManager($client);
+        return new ElasticSearchManager($clientBuilder, $hosts);
     }
 }
