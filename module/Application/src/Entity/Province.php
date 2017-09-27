@@ -28,6 +28,11 @@ class Province
     {
         return $this->districts;
     }
+    public function addDistricts($district) 
+    {
+        $this->districts[] = $district;
+        $district->setProvince($this);
+    }
 
 	/**
      * @ORM\Id

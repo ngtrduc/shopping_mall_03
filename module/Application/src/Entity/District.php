@@ -53,6 +53,10 @@ class District
         return $this->province;
     }
 
+    public function setProvince($province) 
+    {
+        $this->province = $province;
+    }
 	/**
      * @ORM\Id
      * @ORM\GeneratedValue
