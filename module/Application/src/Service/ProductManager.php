@@ -56,6 +56,7 @@ class ProductManager
         // Create new Comment entity.
         $user = $this->entityManager->
             getRepository('Application\Entity\User')->find($data['user_id']);
+        
         $comment = new Comment();
         $comment->setProduct($product);
         $comment->setUser($user);
@@ -63,17 +64,15 @@ class ProductManager
         
         $currentDate = date('Y-m-d H:i:s');
         $comment->setDateCreated($currentDate);
+        $this->entityManager->persist($comment);
 
         // Add the entity to entity manager.
-        $this->entityManager->persist($comment);
 
         $activity = new Activity();
         $activity->setSender($user);
-        $activity->setType(Activity::COMMENT);
         $activity->setTarget($comment);
         $activity->setDateCreated($currentDate);
 
-        $this->entityManager->persist($activity);
         if (!empty($data['comment_id'])) {
             $parent = $this->entityManager
                 ->getRepository(Comment::class)->find($data['comment_id']);
@@ -81,8 +80,17 @@ class ProductManager
             $comment->setParent($parent);
             $receiver = $this->entityManager
                 ->getRepository(User::class)->find($parent->getUser()->getId());
+            $activity->setType(Activity::REPLY);
             $activity->setReceiver($receiver);
+        }else {
+            $admin = $this->entityManager->
+                getRepository('Application\Entity\User')->find(1);
+            
+            $activity->setType(Activity::COMMENT);
+            $activity->setReceiver($admin);
         }
+
+        $this->entityManager->persist($activity);
 
         // Apply changes.
         $this->entityManager->flush();

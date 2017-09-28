@@ -99,7 +99,7 @@ class OrderManager
             $activity->setSender($user);
             $activity->setReceiver($admin);
             $activity->setType(Activity::ORDER);
-            $activity->setTargetId($order->getId());
+            $activity->setTarget($order);
             $activity->setDateCreated($date_created);
             $this->entityManager->persist($activity);
         }
