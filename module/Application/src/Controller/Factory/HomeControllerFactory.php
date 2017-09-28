@@ -23,7 +23,15 @@ class HomeControllerFactory implements FactoryInterface
         $productManager = $container->get(ProductManager::class);
         $sqlManager = $container->get(SqlManager::class);
         $elasticSearchManager = $container->get(ElasticSearchManager::class);
+        $sessionContainer = $container->get('UserLogin');
         // Instantiate the controller and inject dependencies
-        return new HomeController($entityManager, $categoryManager, $productManager, $sqlManager, $elasticSearchManager);
+        return new HomeController(
+            $entityManager,
+            $categoryManager,
+            $productManager,
+            $sqlManager,
+            $elasticSearchManager,
+            $sessionContainer
+        );
     }
 }

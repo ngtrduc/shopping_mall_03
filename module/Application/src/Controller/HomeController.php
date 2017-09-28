@@ -31,14 +31,23 @@ class HomeController extends AbstractActionController
 
     private $sqlManager;
     private $elasticSearchManager;
+    private $sessionContainer;
 
-    public function __construct($entityManager, $categoryManager, $productManager, $sqlManager, $elasticSearchManager)
+    public function __construct(
+        $entityManager,
+        $categoryManager,
+        $productManager,
+        $sqlManager,
+        $elasticSearchManager,
+        $sessionContainer
+    )
     {
         $this->entityManager = $entityManager;
         $this->categoryManager = $categoryManager;
         $this->productManager = $productManager;
         $this->sqlManager = $sqlManager;
         $this->elasticSearchManager = $elasticSearchManager;
+        $this->sessionContainer = $sessionContainer;
     }
 
     public function indexAction()
@@ -238,11 +247,11 @@ class HomeController extends AbstractActionController
     {
 
         $views = 0;
-        
+
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $views = $this->productManager->addView((int)($data['product_id']));
-            
+
         }
         $this->response->setContent(json_encode($views));
 
@@ -252,7 +261,7 @@ class HomeController extends AbstractActionController
 
     public function sqlTestAction()
     {
-        
+
         $this->sqlManager->sqlAddress();
         $this->sqlManager->sqlUser();
         $this->sqlManager->sqlCategory();
@@ -269,18 +278,21 @@ class HomeController extends AbstractActionController
 
     public function loadNotificationAction()
     {
-        $user = $this->entityManager->getRepository(User::class)->find(1);
-        $unread_notifications = $user->getUnreadNotifications();
-        $data['unread_count'] = count($unread_notifications);
-        foreach ($unread_notifications as $un) {
-            array_push($data, $un->getNotiContent());
+        if (isset($this->sessionContainer->id)) {
+            $user_id = $this->sessionContainer->id;
+            $user = $this->entityManager->getRepository(User::class)->find($user_id);
+            $unread_notifications = $user->getUnreadNotifications();
+            $data['unread_count'] = count($unread_notifications);
+            foreach ($unread_notifications as $un) {
+                array_push($data, $un->getNotiContent());
+            }
+
+            $this->response->setContent(json_encode($data));
+        } else {
+            $this->response->setContent(json_encode([
+                'error' => 'You need login',
+            ]));
         }
-        
-        //$data['unread_count'] = number of unreadnoti
-        //$data[0] Content of unread noti 1;
-        //$data[1] Content of unread noti 2;
-        //...
-        $this->response->setContent(json_encode($data));
 
         return $this->response;
     }

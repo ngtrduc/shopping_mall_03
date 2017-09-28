@@ -249,7 +249,7 @@ return [
                 // to anyone.
                 ['actions' => ['index', 'search', 'loaddistrict', 'loadprovince', 'getDataSearch'], 'allow' => '*'],
                 // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
-                // ['actions' => ['changePassword'], 'allow' => '@']
+                 ['actions' => ['loadNotification'], 'allow' => '@']
             ],
             Controller\ProductController::class => [
                 // Give access to "resetPassword", "message" and "setPassword" actions
