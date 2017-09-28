@@ -22,7 +22,7 @@ class User
     /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\Activity", mappedBy="sender")
      * @ORM\JoinColumn(name="id", referencedColumnName="sender_id")
-     * @ORM\OrderBy({"date_created" = "ASC"})
+     * @ORM\OrderBy({"date_created" = "DESC"})
      */
     protected $activities;
 
@@ -35,6 +35,7 @@ class User
     /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\Comment", mappedBy="user")
      * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
+     * @ORM\OrderBy({"date_created" = "DESC"})
      */
     protected $comments;
 
@@ -138,6 +139,20 @@ class User
     {
         return $this->notifications;
     }
+
+    public function getUnreadNotifications() 
+    {
+        $unread = [];
+        foreach ($this->notifications as $notify) {
+            if ($notify->getStatus() == Activity::STATUS_UNREAD) {
+                array_push($unread, $notify);
+            }
+        }
+        $unread_notify = new ArrayCollection($unread);
+
+        return $unread_notify;
+    }
+
       
     /**
      * Adds a new notification to this user.

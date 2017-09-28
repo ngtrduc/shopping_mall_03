@@ -22,6 +22,7 @@ class Version20170822024134_activity extends AbstractMigration
         $table->addColumn('target_id', 'integer', ['notnull' => false]);
         $table->addColumn('receiver_id', 'integer', ['notnull' => false]);
         $table->addColumn('type', 'integer');
+        $table->addColumn('status', 'integer');
         $table->addColumn('date_created', 'datetime');
         $table->setPrimaryKey(['id']);
         $table->addOption('engine', 'InnoDB');

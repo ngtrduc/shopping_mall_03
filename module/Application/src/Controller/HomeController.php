@@ -12,6 +12,7 @@ use Zend\View\Model\ViewModel;
 use Application\Entity\Category;
 use Application\Entity\Product;
 use Application\Entity\Province;
+use Application\Entity\User;
 use Admin\Helper\TrunCate;
 use Zend\Mail;
 use Zend\Mail\Message;
@@ -262,5 +263,23 @@ class HomeController extends AbstractActionController
         $this->sqlManager->sqlComment();
         $this->sqlManager->sqlOrder();
         die();
+    }
+
+    public function loadNotificationAction()
+    {
+        $user = $this->entityManager->getRepository(User::class)->find(1);
+        $unread_notifications = $user->getUnreadNotifications();
+        $data['unread_count'] = count($unread_notifications);
+        foreach ($unread_notifications as $un) {
+            array_push($data, $un->getNotiContent());
+        }
+
+        //$data['unread_count'] = number of unreadnoti
+        //$data[0] Content of unread noti 1;
+        //$data[1] Content of unread noti 2;
+        //...
+        $this->response->setContent(json_encode($data));
+
+        return $this->response;
     }
 }

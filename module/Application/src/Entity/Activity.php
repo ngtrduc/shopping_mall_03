@@ -16,7 +16,11 @@ class Activity
     const REVIEW = 3;
     const ORDER_SHIP = 4;
     const ORDER_COMPLETE = 5;
+    const SALE_PROGRAM = 6;
     
+    const STATUS_UNREAD = 1;
+    const STATUS_READ = 0;
+
     /**
      * @ORM\ManyToOne(targetEntity="\Application\Entity\User", inversedBy="activities")
      * @ORM\JoinColumn(name="sender_id", referencedColumnName="id")
@@ -83,6 +87,11 @@ class Activity
     protected $target_id;
 
     /**
+     * @ORM\Column(name="status")
+     */
+    protected $status = 1;
+
+    /**
      * @ORM\Column(name="date_created", type="datetime")
      */
     protected $date_created;
@@ -107,6 +116,16 @@ class Activity
     public function setType($type) 
     {
         $this->type = $type;
+    }
+
+    public function getStatus() 
+    {
+        return $this->status;
+    }
+
+    public function setStatus($status) 
+    {
+        $this->status = $status;
     }
 
     public function getTargetId() 
@@ -220,6 +239,34 @@ class Activity
                 .'">'
                 .$this->getTarget()->getProduct()->getName()
                 .'</a>';
+
+        return $content;
+    }
+
+    public function getNotiContent()
+    {
+        $content = [
+
+        ];
+
+        if($this->type == 2)
+        {
+            $format = '%s commented on your comment in product <a href="/product/view/%d">%s</a>';
+            $content = sprintf($format, $this->getSender()->getName(),
+                $this->getTarget()->getProduct()->getId(), $this->getTarget()->getProduct()->getName());
+        }
+
+        if ($this->type == 4)
+        {
+            $format = 'Your order #%d has been shipped - check <a href="/order">here</a>';
+            $content = sprintf($format, $this->getTargetID());
+        }
+
+        if ($this->type == 5)
+        {
+            $format = 'Your order #%d has been shipped successfully - check <a href="/order">here</a>';
+            $content = sprintf($format, $this->getTargetID());
+        }
 
         return $content;
     }

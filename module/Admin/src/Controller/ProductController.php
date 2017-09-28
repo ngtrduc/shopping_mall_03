@@ -114,7 +114,8 @@ class ProductController extends AbstractActionController
             'product' => $product,
             'size_and_images' => $size_and_images,
             'list_color' => $this->list_color,
-            'list_size' => $this->list_size
+            'list_size' => $this->list_size,
+            'keywords' => $this->productManager->convertKeywordsToString($product)
         ]);
     }
 
