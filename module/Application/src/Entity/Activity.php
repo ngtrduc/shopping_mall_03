@@ -16,7 +16,7 @@ class Activity
     const REVIEW = 3;
     const ORDER_SHIP = 4;
     const ORDER_COMPLETE = 5;
-    const SALE_PROGRAM = 6;
+    const REPLY = 6;
     
     const STATUS_UNREAD = 1;
     const STATUS_READ = 0;
@@ -82,11 +82,6 @@ class Activity
     protected $type;
 
     /**
-     * @ORM\Column(name="target_id")
-     */
-    protected $target_id;
-
-    /**
      * @ORM\Column(name="status")
      */
     protected $status = 1;
@@ -128,15 +123,12 @@ class Activity
         $this->status = $status;
     }
 
-    public function getTargetId() 
-    {
-        return $this->target_id;
-    }
 
-    public function setTargetId($target_id) 
-    {
-        $this->target_id = $target_id;
-    }
+
+    // public function setTargetId($target_id) 
+    // {
+    //     $this->target_id = $target_id;
+    // }
 
     public function getDateCreated() 
     {
@@ -154,28 +146,27 @@ class Activity
         $this->date_created = $date;
     }
 
-    // return an object of Entity depend on targetID
-
     /**
      * @ORM\ManyToOne(targetEntity="\Application\Entity\Order")
-     * @ORM\JoinColumn(name="target_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="order_id", referencedColumnName="id")
      */
     protected $order;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Application\Entity\Comment")
-     * @ORM\JoinColumn(name="target_id", referencedColumnName="id")
-     */
-    protected $comment;
-
-    /**
      * @ORM\ManyToOne(targetEntity="\Application\Entity\Review")
-     * @ORM\JoinColumn(name="target_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="review_id", referencedColumnName="id")
      */
     protected $review;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="\Application\Entity\Comment")
+     * @ORM\JoinColumn(name="comment_id", referencedColumnName="id")
+     */
+    protected $comment;
+
     public function getTarget()
     {
+
         switch ($this->type) {
             case 1:
             case 4:
@@ -185,9 +176,16 @@ class Activity
                 return $this->comment;
             case 3:
                 return $this->review;
+            case 6:
+                return $this->comment;
             default:
                 return null;
         }
+    }
+
+    public function getTargetId() 
+    {
+        return $this->getTarget()->getId();
     }
 
     public function setTarget($target)
@@ -196,11 +194,15 @@ class Activity
             case 1:
             case 4:
             case 5:
-                $this->order = $target; break;
+                return $this->order = $target;
             case 2:
-                $this->comment = $target; break;
+                return $this->comment = $target;
             case 3:
-                $this->review = $target; break;
+                return $this->review = $target;
+            case 6:
+                return $this->comment = $target;
+            default:
+                return null;
         }
     }
 
@@ -251,7 +253,7 @@ class Activity
 
         if($this->type == 2)
         {
-            $format = '%s commented on your comment in product <a href="/product/view/%d">%s</a>';
+            $format = '%s commented in product <a href="/product/view/%d">%s</a>';
             $content = sprintf($format, $this->getSender()->getName(),
                 $this->getTarget()->getProduct()->getId(), $this->getTarget()->getProduct()->getName());
         }
@@ -266,6 +268,13 @@ class Activity
         {
             $format = 'Your order #%d has been shipped successfully - check <a href="/order">here</a>';
             $content = sprintf($format, $this->getTargetID());
+        }
+
+        if($this->type == 6)
+        {
+            $format = '%s commented on your comment in product <a href="/product/view/%d">%s</a>';
+            $content = sprintf($format, $this->getSender()->getName(),
+                $this->getTarget()->getProduct()->getId(), $this->getTarget()->getProduct()->getName());
         }
 
         return $content;

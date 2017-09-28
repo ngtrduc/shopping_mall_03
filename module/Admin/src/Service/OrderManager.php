@@ -35,7 +35,7 @@ class OrderManager
                 $activity->setSender($admin);
                 $activity->setReceiver($user);
                 $activity->setType(Activity::ORDER_SHIP);
-                $activity->setTargetId($order->getId());
+                $activity->setTarget($order);
                 $activity->setDateCreated($currentDate);
                 $this->entityManager->persist($activity);
             }
@@ -51,7 +51,7 @@ class OrderManager
                 $activity->setSender($admin);
                 $activity->setReceiver($user);
                 $activity->setType(Activity::ORDER_COMPLETE);
-                $activity->setTargetId($order->getId());
+                $activity->setTarget($order);
                 $activity->setDateCreated($currentDate);
                 $this->entityManager->persist($activity);
             }
