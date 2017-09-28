@@ -67,11 +67,8 @@ class ProductManager
         // Add the entity to entity manager.
         $this->entityManager->persist($comment);
 
-        $admin = $this->entityManager
-            ->getRepository(User::class)->find(1);
         $activity = new Activity();
         $activity->setSender($user);
-        $activity->setReceiver($admin);
         $activity->setType(Activity::COMMENT);
         $activity->setTarget($comment);
         $activity->setDateCreated($currentDate);
@@ -108,11 +105,8 @@ class ProductManager
         $review->setProduct($product);
         // Add the entity to entity manager.
         $this->entityManager->persist($review);
-        $admin = $this->entityManager
-            ->getRepository(User::class)->find(1);
         $activity = new Activity();
         $activity->setSender($user);
-        $activity->setReceiver($admin);
         $activity->setType(Activity::REVIEW);
         $activity->setTarget($review);
         $activity->setDateCreated($currentDate);

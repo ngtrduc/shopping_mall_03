@@ -53,25 +53,25 @@ class IndexController extends AbstractActionController
     public function indexAction()
     {
         $products = $this->entityManager->getRepository(Product::class)->findAll();
-        $stores = $this->entityManager->getRepository(Store::class)->findAll();
+        $orders = $this->entityManager->getRepository(Order::class)->findAll();
         $users = $this->entityManager->getRepository(User::class)->findAll();
 
         $number_of_users = count($users);
         $number_of_products = count($products);
-        $number_of_stores = count($stores);
+        $number_of_orders = count($orders);
 
         $sale_prodgram_need_active = $this->saleProgramManager->getSaleProgramNeedActive();
         $sale_prodgram_need_done = $this->saleProgramManager->getSaleProgramNeedDone();
 
         $order_pendings = $this->entityManager->getRepository(Order::class)
-            ->findBy(["status" => Order::STATUS_PENDING]);
+            ->findBy(["status" => Order::STATUS_PENDING], ['date_created' => 'DESC']);
         $order_shippings = $this->entityManager->getRepository(Order::class)
-            ->findBy(["status" => Order::STATUS_SHIPPING]);
+            ->findBy(["status" => Order::STATUS_SHIPPING], ['date_created' => 'DESC']);
 
         return new ViewModel([
             'number_of_users' => $number_of_users,
             'number_of_products' => $number_of_products,
-            'number_of_stores' => $number_of_stores,
+            'number_of_orders' => $number_of_orders,
             'sale_prodgram_need_active' => $sale_prodgram_need_active,
             'sale_prodgram_need_done' => $sale_prodgram_need_done,
             'order_pendings' => $order_pendings,
