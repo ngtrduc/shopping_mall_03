@@ -9,8 +9,21 @@
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
                         <div class="card clearfix">
                             <?php if ($bestSellProduct->getCurrentSale() > 0) { ?>
-                                <div class="badge badge-sale">Sale</div>
+                                <div class="badge badge-sale">
+                                    Sale
+                                    <md-tooltip><?php echo $bestSellProduct->getCurrentSale() ?>%</md-tooltip>
+                                </div>
                             <?php }; ?>
+                            <md-layout md-row md-align="right"
+                                       class="badge badge-transparent">
+                                <?php foreach ($bestSellProduct->getColorsInWord() as $c) { ?>
+                                    <div style="color: <?php echo $c ?>">
+                                        <md-icon>brightness_1</md-icon>
+                                        <md-tooltip><?php echo $c ?></md-tooltip>
+                                    </div>
+                                <?php } ?>
+                            </md-layout>
+
                             <img class="card-img-top img-responsive product"
                                  src="<?= $this->basePath($bestSellProduct->getImage()) ?>"
                                  onclick="location.href = '/product/view/<?php echo $bestSellProduct->getId(); ?>';">
@@ -39,8 +52,20 @@
                         <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
                             <div class="card">
                                 <?php if ($product->getCurrentSale() > 0) { ?>
-                                    <div class="badge badge-sale">Sale</div>
+                                    <div class="badge badge-sale">
+                                        Sale
+                                        <md-tooltip><?php echo $product->getCurrentSale() ?>%</md-tooltip>
+                                    </div>
                                 <?php }; ?>
+                                <md-layout md-row md-align="right"
+                                           class="badge badge-transparent">
+                                    <?php foreach ($product->getColorsInWord() as $c) { ?>
+                                        <div style="color: <?php echo $c ?>">
+                                            <md-icon>brightness_1</md-icon>
+                                            <md-tooltip><?php echo $c ?></md-tooltip>
+                                        </div>
+                                    <?php } ?>
+                                </md-layout>
                                 <img class="card-img-top img-responsive product"
                                      src="<?= $this->basePath($product->getImage()) ?>"
                                      onclick="location.href='/product/view/<?php echo $product->getId(); ?>';">
@@ -69,8 +94,21 @@
                         <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
                             <div class="card">
                                 <?php if ($product->getCurrentSale() > 0) { ?>
-                                    <div class="badge badge-sale">Sale</div>
+                                    <div class="badge badge-sale">
+                                        Sale
+                                        <md-tooltip><?php echo $product->getCurrentSale() ?>%</md-tooltip>
+                                    </div>
                                 <?php }; ?>
+                                <md-layout md-row md-align="right"
+                                           class="badge badge-transparent">
+                                    <?php foreach ($product->getColorsInWord() as $c) { ?>
+                                        <div style="color: <?php echo $c ?>">
+                                            <md-icon>brightness_1</md-icon>
+                                            <md-tooltip><?php echo $c ?></md-tooltip>
+                                        </div>
+                                    <?php } ?>
+                                </md-layout>
+
                                 <img class="card-img-top img-responsive product"
                                      src="<?= $this->basePath($product->getImage()) ?>"
                                      onclick="location.href = '/product/view/<?php echo $product->getId(); ?>';">

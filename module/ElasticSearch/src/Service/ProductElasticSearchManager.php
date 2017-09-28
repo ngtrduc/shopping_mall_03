@@ -20,6 +20,7 @@ class ProductElasticSearchManager extends ElasticSearchManager
             'price' => $product->getPrice(),
             'intro' => $product->getIntro(),
             'keywords' => $product->getInfoKeywords(),
+            'sale' => $product->getCurrentSale(),
         ];
 
         if ($product->getCurrentSale() > 0) {
@@ -42,6 +43,7 @@ class ProductElasticSearchManager extends ElasticSearchManager
             'price' => $product->getPrice(),
             'intro' => $product->getIntro(),
             'keywords' => $product->getInfoKeywords(),
+            'sale' => $product->getCurrentSale(),
         ];
 
         if ($product->getCurrentSale() > 0) {

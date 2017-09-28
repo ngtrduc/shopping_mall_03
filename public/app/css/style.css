@@ -1524,9 +1524,10 @@ i {
     }
 
     .navbar-brand {
+        left: 15px;
+        padding-left: 0 !important;
         height: auto;
         line-height: 60px;
-
     }
 
     .prd {

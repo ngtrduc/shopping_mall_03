@@ -22,6 +22,7 @@ class ElasticSearchManager
     {
         $params = [
             'index' => $index,
+            'client' => ['ignore' => [400, 404]],
         ];
 
         $response = $this->getClient()->indices()->create($params);
@@ -35,7 +36,8 @@ class ElasticSearchManager
             'index' => $index,
             'type' => $type,
             'id' => $id,
-            'body' => $data
+            'body' => $data,
+            'client' => ['ignore' => [400, 404]]
         ];
 
         return $this->getClient()->index($params);
@@ -61,7 +63,7 @@ class ElasticSearchManager
             'index' => $index,
             'type' => $type,
             'id' => $id,
-            'client' => [ 'ignore' => 404 ],
+            'client' => ['ignore' => 404],
         ];
 
         return $this->getClient()->delete($params);
@@ -73,7 +75,7 @@ class ElasticSearchManager
             'index' => $index,
             'type' => $type,
             'id' => $id,
-            'client' => [ 'ignore' => 404 ],
+            'client' => ['ignore' => 404],
         ];
 
         return $this->getClient()->get($params);
