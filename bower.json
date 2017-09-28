@@ -21,7 +21,7 @@
         "animate.css": "^3.5.2",
         "datatables": "^1.10.15",
         "semantic": "semantic-ui#^2.2.13",
-        "AdminLTE": "admin-lte#^2.3.11",
+        "AdminLTE": "admin-lte#^2.3.8",
         "typeahead.js": "^0.11.1",
         "handlebars": "^4.0.10",
         "vue": "^2.4.2",

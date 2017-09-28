@@ -26,7 +26,8 @@ $(document).ready(function(){
     function add_view()
     {
         var product_id = document.location.href;
-        product_id = product_id.charAt(product_id.length-1);
+        product_id = product_id.substring(product_id.lastIndexOf('/') + 1);;
+        
         $.ajax({
             type: 'POST',
             url: '/addView',

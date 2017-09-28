@@ -70,7 +70,7 @@ class ProductController extends AbstractActionController
 
         $product = $this->entityManager->getRepository(Product::class)
             ->findOneById($productId);
-
+            // /var_dump($product->getPrice());die();
         if ($product == null) {
             $this->getResponse()->setStatusCode(404);
             return;

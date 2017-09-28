@@ -77,21 +77,26 @@ class CategoryController extends AbstractActionController
         $adapter = new DoctrineAdapter(new ORMPaginator($products, false));
         
         $paginator = new Paginator($adapter);
-        $paginator->setDefaultItemCountPerPage(9);                
+        $paginator->setDefaultItemCountPerPage(12);                
         $paginator->setCurrentPageNumber($page);
 
         $mainCategories = $this->categoryManager->mainCategories();
         $arrCateTree = $this->categoryManager->arrCateTree();
         
-        
+        $params = [
+            'sort' => $sort,
+            'color' => $colorName,
+            'price_gte' => $price_gte,
+            'price_lte' => $price_lte,
+        ];
         //var_dump($paginator);die();
         $view = new ViewModel([
             'products' => $paginator,
             'category' => $category,
             'mainCategories' => $mainCategories,
             'arrCateTree' => $arrCateTree,
-            'sort' => $sort,
-            
+            'params' => $params,
+             
         ]);
         $this->layout('application/layout');
         return $view;
