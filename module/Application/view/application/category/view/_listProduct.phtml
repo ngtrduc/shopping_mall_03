@@ -52,7 +52,8 @@
             'application/partial/paginator',
             ['route' => 'category',
                 'action' => 'view',
-                'id' => $category->getId()
+                'id' => $category->getId(),
+                'params' => $params,
             ]); ?>
     </div>
 </div>

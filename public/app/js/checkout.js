@@ -61,7 +61,7 @@ $(function () {
                     Snackbar.pushMessage('You must fill all information.', 'warning');
                     return;
                 }
-
+                
                 // post data and receive order_id
                 axios.post('/cart/checkout', data)
                     .then(res => {

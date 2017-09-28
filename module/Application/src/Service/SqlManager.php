@@ -1,6 +1,6 @@
 <?php
 namespace Application\Service;
-
+use Zend\Crypt\Password\Bcrypt;
 
 
 class SqlManager 
@@ -54,27 +54,27 @@ class SqlManager
             'p' => 'Man',
             'c' => [
                 [ 
-                    'p' => 'Jackets Man',
+                    'p' => 'Jackets',
                     'c' => [
-                        'Jackets Man 1',
-                        'Jackets Man 2',
-                        'Jackets Man 3'
+                        'Jackets 1',
+                        'Jackets 2',
+                        'Jackets 3'
                     ],
                 ],
                 [ 
-                    'p' => 'Jean Man',
+                    'p' => 'Jean',
                     'c' => [
-                        'Jean Man 1',
-                        'Jean Man 2',
-                        'Jean Man 3'
+                        'Jean 1',
+                        'Jean 2',
+                        'Jean 3'
                     ],
                 ],
                 [ 
-                    'p' => 'Suit Man',
+                    'p' => 'Suit',
                     'c' => [
-                        'Suit Man 1',
-                        'Suit Man 2',
-                        'Suit Man 3'
+                        'Suit 1',
+                        'Suit 2',
+                        'Suit 3'
                     ],
                 ],
             ],
@@ -83,27 +83,27 @@ class SqlManager
             'p' => 'Woman',
             'c' => [
                 [ 
-                    'p' => 'Jackets Woman',
+                    'p' => 'Jackets',
                     'c' => [
-                        'Jackets Woman 1',
-                        'Jackets Woman 2',
-                        'Jackets Woman 3'
+                        'Jackets 1',
+                        'Jackets 2',
+                        'Jackets 3'
                     ],
                 ],
                 [ 
-                    'p' => 'Jean Woman',
+                    'p' => 'Jean',
                     'c' => [
-                        'Jean Woman 1',
-                        'Jean Woman 2',
-                        'Jean Woman 3'
+                        'Jean 1',
+                        'Jean 2',
+                        'Jean 3'
                     ],
                 ],
                 [ 
-                    'p' => 'Suit Woman',
+                    'p' => 'Suit',
                     'c' => [
-                        'Suit Woman 1',
-                        'Suit Woman 2',
-                        'Suit Woman 3'
+                        'Suit 1',
+                        'Suit 2',
+                        'Suit 3'
                     ],
                 ],
             ],
@@ -131,10 +131,28 @@ class SqlManager
         ['Fashion Shirt 2', 890, 'Straight fit, vinyl jacket with laminated effect. Features a classic collar and contrasting snap buttons for fastening', 21, '/img/products/image_170.jpg'],
         ['DRESS WITH RUFFLE 2', 110, 'Straight fit, vinyl jacket with laminated effect. Features a classic collar and contrasting snap buttons for fastening', 22, '/img/products/image_180.jpg'],
 
+        ['ハイネックセーター', 240, 'ハイネックセーター、長袖.モデル身長: 189 cm、サイズ', 7, '/img/products/image_190.jpg'],
+        ['ラバー加工入り長袖ワンピース', 380, 'ハイネック長袖ワンピース、ラバー加工入り生地、コントラストのデザイン', 24, '/img/products/image_200.jpg'],
+        ['レザーライダースジャケット', 830, 'ラペル付き長袖レザーライダースジャケット。肩にストラップ、ジッパー付きカフス。フロントジッパーポケット。メタルバックル付きベルト。フロントダブルジッパークロージング。モデル身長: 179 cm', 17, '/img/products/image_210.jpg'],
+        ['スリット＆リボン付きスウェットシャツ', 320, 'ラウンドネックスウェットシャツ、長袖、裾にスリット＆リボン付き', 18, '/img/products/image_220.jpg'],
+        ['レースライン入りチェック柄キュロット', 450, 'コントラストレースのサイドライン入りキュロット、フロントジップ＆メタルホッククロージングモデル身長: 178 cm', 21, '/img/products/image_230.jpg'],
+        ['コンビギンガムチェック柄チュニック', 110, 'ルーズフィットAラインチュニック、ラペル付き、長袖、ロールアップスリーブ仕様、シームにサイドポケット付き、バックにコントラストのソリッドカラー生地、布ベルト付き、フロントボタンクロージングモデル身長: 178 cm.', 22, '/img/products/image_240.jpg'],
+        ['コンビスリーブTシャツ', 420, 'ラウンドネックTシャツ、長袖、 袖口にコントラストのポプリン地とボタン付き.モデル身長: 178 cm', 16, '/img/products/image_250.jpg'],
+        ['ダブルフリルトリム付きミニスカート', 140, 'スケータースタイルニット地ミニスカート、ダブルフリルトリム付き.モデル身長: 178 cm', 17, '/img/products/image_260.jpg'],
+
     ];
-    protected $views = [22,33,23,44,55,36,332,100,334,111,22,33,23,44,55,36,332,100,334,111];
-    protected $arr = [0,1,1,2,3,2,2,1,1,2,3,2,2,1,1,2,3,2,2];
-    protected $arr_color = [0,[0],[1],[1,4],[0,4,5],[0,3],[5,6],[0],[1],[1,4],[0,4,5],[0,3],[5,6],[0],[1],[1,4],[0,4,5],[0,3],[5,6]];
+    protected $views = [22,33,23,44,55,36,332,100,334,111,22,33,23,44,55,36,332,100,334,111,231,422,533,144,555,624,712,128];
+    const WHITE = 1;
+    const BLACK = 2;
+    const YELLOW = 3;
+    const RED = 4;
+    const GREEN = 5;
+    const PURPLE = 6;
+    const ORANGE = 7;
+    const BLUE = 8;
+    const GREY = 9;
+    protected $arr = [0,1,1,2,3,2,2,1,1,2,3,2,2,1,1,2,3,2,2,1,1,1,1,1,1,1,1];
+    protected $arr_color = [0,[1],[2],[1,9],[1,2,9],[1,4],[9,3],[1],[2],[1,9],[1,2,9],[1,4],[9,3],[1],[2],[1,9],[1,2,9],[1,4],[9,3],[2],[2],[2],[4],[9],[9],[1],[8]];
 
     protected $order_items = [
         [
@@ -157,6 +175,17 @@ class SqlManager
         ],
 
     ];
+    protected $sale = [10,20,25,15,50,30,35,40];
+    protected $arr_product = [
+            [11,1,4,6,7,8],
+            [15,14,10,2,7,8],
+            [16,17,11,6,7,12],
+            [1,8,9,6,4,3],
+            [16,15,14,13,12,8],
+            [4,5,6,7,8,11],
+            [3,8],
+            [1,4,6,12,13],
+        ];
     public function __construct($entityManager)
     {
         $this->entityManager = $entityManager;
@@ -191,10 +220,13 @@ class SqlManager
     public function sqlUser()
     {
         $users = $this->users;
+        $bcrypt = new Bcrypt();
+        $passwordHash = $bcrypt->create('12345678');        
+        
         $id_u = 1;
         for ($u = 0; $u < count($users); $u++) {
             $user = $users[$u];
-            echo "insert into users(id, email, password, name, phone, role, status, token, date_created, address_id) values (".$id_u.", '".$user[0]."', '$2y$10$K0WBhVJq.q9bEqpaF7OIYuOAFyfpf5uBNwMzz99jyhq85LTW1t2oK', '".$user[1]."','".$user[3]."', ".$user[2].", 1, null, '2016-06-06', ".$user[4].");<br>";$id_u++;
+            echo "insert into users(id, email, password, name, phone, role, status, token, date_created, address_id) values (".$id_u.", '".$user[0]."', '".$passwordHash."', '".$user[1]."','".$user[3]."', ".$user[2].", 1, null, '2016-06-06', ".$user[4].");<br>";$id_u++;
         }
         
     }
@@ -248,17 +280,17 @@ class SqlManager
             $count = $arr[$product]+1;
             for ($pci = 1; $pci < $count; $pci++) {
                 $int= rand(1452055681,1502055681);
-                $temp = $pci -1;$type = 1;
+                $temp = $pci -1;
                 $string = date("Y-m-d H:i:s",$int);
                 $sql_image = "insert into images(id,image,status,type,product_color_image_id,date_created) values (";
                 //insert product_color_images
                 echo "insert into product_color_images(id,product_id,color_id,date_created) values (".$id_pci.",".$product.",".$arr_color[$product][$temp].",'".$string."');<br>";
                 
                 //insert images
-                if ($temp != 0) $type = 2;
-                echo $sql_image.$id_image.",'/img/products/image_".$product.$temp.".jpg',1,".$type.",".$id_pci.",'".$string."');<br>";$id_image++;
-                echo $sql_image.$id_image.",'/img/products/image_".$product.$temp."_1.jpg',1,1,".$id_pci.",'".$string."');<br>";$id_image++;
-                echo $sql_image.$id_image.",'/img/products/image_".$product.$temp."_2.jpg',1,".$type.",".$id_pci.",'".$string."');<br>";$id_image++;
+                
+                echo $sql_image.$id_image.",'/img/products/image_".$product.$temp.".jpg',1,1,".$id_pci.",'".$string."');<br>";$id_image++;
+                echo $sql_image.$id_image.",'/img/products/image_".$product.$temp."_1.jpg',1,2,".$id_pci.",'".$string."');<br>";$id_image++;
+                echo $sql_image.$id_image.",'/img/products/image_".$product.$temp."_2.jpg',1,2,".$id_pci.",'".$string."');<br>";$id_image++;
                 //insert product_masters;
                 for ($size_id = 1;$size_id < 6; $size_id++) {
                     echo "insert into product_masters(id,product_id,color_id,size_id) values (".$id_pm.",".$product.",".$arr_color[$product][$temp].",".$size_id.");<br>";
@@ -273,18 +305,9 @@ class SqlManager
     public function sqlSaleProgram()
     {
         $count = 8;
-        $name = ['yama no hi','mizu no hi','keirou no hi','midori no hi','ganjitsu','taiiku no hi','syuumatsu no hi','sinnen'];
-        $sale = [10,20,25,15,50,30,35,40];
-        $arr_product = [
-            [11,1,4,6,7,8],
-            [15,14,10,2,7,8],
-            [16,17,11,6,7,12],
-            [1,8,9,6,4,3],
-            [16,15,14,13,12,8],
-            [4,5,6,7,8,11],
-            [3,8],
-            [1,4,6,12,13],
-        ];
+        $name = ['山の日','水の日','敬老の日','緑の日','元日','体育の日','週末の日','新年'];
+        $sale = $this->sale;
+        $arr_product = $this->arr_product;
         $id_sP = 1; $id_s = 1;
         for ($i = 0; $i < $count; $i++) {
             echo "insert into sale_programs(id,name,date_start,date_end,date_created,status) values (".$id_sP.",'".$name[$i]."','2017-09-09','2017-10-09','2017-09-08',0);<br>";
@@ -294,19 +317,55 @@ class SqlManager
             $id_sP++;
         }
         
+
+
     }
 
+    public function sqlUpdate() 
+    {
+        $products = $this->products;
+        $sale = $this->sale;
+        $arr_product = $this->arr_product;
+        for($p = 0; $p < count($products); $p++) {
+            $id = $p + 1;
+            for ($j = 0;$j < count($arr_product); $j++) {
+                if (in_array($id, $arr_product[$j])) $sales[$id][] = $sale[$j];
+            }
+            $max_sale = 0;
+            if ($sales[$id] == null) $max_sale = 0;
+            else $max_sale = max($sales[$id]);
+            
+            $current_price = (int)($products[$p][1]*(100-$max_sale)/100);
+            echo "update products set current_price = ".$current_price." where id = ".$id.";<br>";
+        }
+        echo "ALTER SEQUENCE addresses_id_seq RESTART WITH 100;<br>";
+        echo "ALTER SEQUENCE activities_id_seq RESTART WITH 1000;<br>";
+        echo "ALTER SEQUENCE categories_id_seq RESTART WITH 100;<br>";
+        echo "ALTER SEQUENCE comments_id_seq RESTART WITH 500;<br>";
+        echo "ALTER SEQUENCE districts_id_seq RESTART WITH 500;<br>";
+        echo "ALTER SEQUENCE images_id_seq RESTART WITH 500;<br>";
+        echo "ALTER SEQUENCE keywords_id_seq RESTART WITH 100;<br>";
+        echo "ALTER SEQUENCE order_items_id_seq RESTART WITH 1000;<br>";
+        echo "ALTER SEQUENCE orders_id_seq RESTART WITH 300;<br>";
+        echo "ALTER SEQUENCE product_color_images_id_seq RESTART WITH 100;<br>";
+        echo "ALTER SEQUENCE product_keywords_id_seq RESTART WITH 400;<br>";
+        echo "ALTER SEQUENCE product_masters_id_seq RESTART WITH 500;<br>";
+        echo "ALTER SEQUENCE products_id_seq RESTART WITH 70;<br>";
+        echo "ALTER SEQUENCE provinces_id_seq RESTART WITH 70;<br>";
+        echo "ALTER SEQUENCE reviews_id_seq RESTART WITH 200;<br>";
+        echo "ALTER SEQUENCE sale_programs_id_seq RESTART WITH 70;<br>";
+        echo "ALTER SEQUENCE sales_id_seq RESTART WITH 400;<br>";
+    }
     public function sqlKeyword() 
     {
         $keywords = ['man', 'woman', 'yasui', 'takai','new', 'fashion','best'];
         $product_keywords = [
-            [1,3,4,5,6,7,8,9,10],
-            [1,3,4,5,6,7,8,9,10],
-            [1,3,4,5,6,7,8,9,10],
-            [1,3,4,5,6,7,8,9,10],
-            [1,3,4,5,6,7,8,9,10],
-            [1,3,4,5,6,7,8,9,10],
-            [1,3,4,5,6,7,8,9,10]
+            [1,3,4,5,6,7,8,9,10,11,12,13],
+            [14,15,16,17,18,19,20,21,22,23,24,25,26],
+            [1,3,4,5,6,7,8,9,14,15,16,17,18,19,20,21,22,23,24,25,26],
+            [1,3,4,5,6,7,8,9,10,16,17,18,19,20,21,22,23,24,25,26],
+            [1,3,4,5,6,7,8,9,10,11,12,13,14,15,21,22,23,24,25,26],
+            [1,3,4,5,6,7,8,9,10,11,12,13,23,24,25,26],
         ];
         $id_k = 1; $id_pk = 1;
         for ($i = 0; $i < count($keywords); $i++) {
@@ -319,7 +378,7 @@ class SqlManager
         }
         
     }
-
+    static $id_activity = 1;
     public function sqlReview()
     {
         $reviews = [
@@ -336,10 +395,13 @@ class SqlManager
             $product[] = $i;
         };
         for($i = 1; $i <= $cout_user; $i++) {
-            $p = array_rand($product,5);
-            for ($j = 0; $j < 5; $j++) {
+            $p = array_rand($product,10);
+            for ($j = 0; $j < 10; $j++) {
                 $s = array_rand($score,1);$r = array_rand($reviews,1);
-                echo "insert into reviews(id,product_id,user_id,rate,content,date_created) values (".$id_r.",".$p[$j].",".$i.",".$s.",'".$reviews[$r]."','2017-09-09');<br>";$id_r++;
+                echo "insert into reviews(id,product_id,user_id,rate,content,date_created) values (".$id_r.",".$product[$p[$j]].",".$i.",".$score[$s].",'".$reviews[$r]."','2017-09-09');<br>";
+                echo "insert into activities(id, sender_id, target_id, receiver_id, type, date_created,status) values (".self::$id_activity.",".$i.",".$id_r.",1,3,'2017-09-09',1);<br>";$id_r++;
+                self::$id_activity++;
+                echo "update products set rate_sum = rate_sum + ".$score[$s]." , rate_count = rate_count + 1 where id = ".$product[$p[$j]].";<br>";
             }
         }
         
@@ -350,40 +412,56 @@ class SqlManager
             [
                 'content' => 'Does this product also sell?',
                 'reply' => [
-                    'Yes, you can buy it at all shop!',
-                    'Thank you!'
+                    0 => 'Yes, you can buy it at all shop!',
+                    1 => 'Thank you!'
                 ]
             ],
             [
-                'content' => 'Does this product also sell?',
+                'content' => 'I like it',
                 'reply' => [
-                    'Yes, you can buy it at all shop!',
-                    'Thank you!'
+                    
+                    0 => 'Thank you!'
                 ]
             ],
             [
-                'content' => 'Does this product also sell?',
+                'content' => 'it is so pretty',
                 'reply' => [
-                    'Yes, you can buy it at all shop!',
-                    'Thank you!'
+                    
+                     0 => 'Thank you!Thank you!'
                 ]
             ],
             [
-                'content' => 'Does this product also sell?',
+                'content' => 'it is sale ??',
                 'reply' => [
-                    'Yes, you can buy it at all shop!',
-                    'Thank you!'
+                    0 => 'Yes, you can find sale program in home page!',
+                    1 => 'Thank you!'
                 ]
             ],
             [
-                'content' => 'Does this product also sell?',
+                'content' => 'how to buy it online?',
                 'reply' => [
-                    'Yes, you can buy it at all shop!',
-                    'Thank you!'
+                    0 => 'You can checkout in right top menu, you enter information! We will send you mail, and ship to you',
+                    1 => 'Thank you!'
+                ]
+            ],
+            [
+                'content' => '綺麗ですね!',
+                'reply' => [
+                    
+                    0 => 'ありがとうございます。'
+                ]
+            ],
+            [
+                'content' => '綺麗ですね!',
+                'reply' => [
+                    
+                    0 => 'ありがとうございます。'
                 ]
             ],
         ];
-        $count_user = 5;$cout_product = 18;
+        $users = $this->users;
+        $products = $this->products;
+        $count_user = count($users);$cout_product = count($products);
         $id_c = 1;
         for($i = 1; $i <= $cout_product; $i++) {
             $product[] = $i;
@@ -399,13 +477,19 @@ class SqlManager
                 $r = array_rand($comments,1);
                 $comment = $comments[$r];$int = $int + 1000;
                 $date = date("Y-m-d H:i:s",$int);
-                echo "insert into comments(id,product_id,user_id,status,content,date_created) values (".$id_c.",".$p[$j].",".$i.",1,'".$comment['content']."','".$date."');<br>";$id_c++;
+                echo "insert into comments(id,product_id,user_id,status,content,date_created) values (".$id_c.",".$product[$p[$j]].",".$i.",1,'".$comment['content']."','".$date."');<br>";
+                echo "insert into activities(id, sender_id, target_id, receiver_id, type, date_created,status) values (".self::$id_activity.",".$i.",".$id_c.",1,2,'".$date."',1);<br>";self::$id_activity++;
+                $id_c++;
                 if (count($comment['reply']) > 0) {
                     $parent_id = $id_c - 1;
                     for ($k = 0; $k < count($comment['reply']); $k++) {
                     $int = $int + 1000;
                     $date = date("Y-m-d H:i:s",$int);
-                    echo "insert into comments(id,product_id,parent_id,user_id,status,content,date_created) values (".$id_c.",".$p[$j].",".$parent_id.",".$i.",1,'".$comment['reply'][$k]."','".$date."');<br>";$id_c++;
+                    if ($k == 0) $user_id = 1;
+                    else $user_id = $i;
+                    echo "insert into comments(id,product_id,parent_id,user_id,status,content,date_created) values (".$id_c.",".$product[$p[$j]].",".$parent_id.",".$user_id.",1,'".$comment['reply'][$k]."','".$date."');<br>";
+                    echo "insert into activities(id, sender_id, target_id, receiver_id, type, date_created,status) values (".self::$id_activity.",".$user_id.",".$id_c.",1,2,'".$date."',1);<br>";self::$id_activity++;
+                    $id_c++;
                     }
                 }
             }
@@ -446,15 +530,26 @@ class SqlManager
                 if ($type == 1) {
                     $string_sip = 'null';
                     $string_completed = 'null';
+                    $sender = $u;
+                    $receiver = 1;
+                    $o_type = 1;
                 } else if ($type == 2) {
                     $string_sip = "'".$date_sip."'";
                     $string_completed = 'null';
+                    $sender = 1;
+                    $receiver = $u;
+                    $o_type = 4;
                 } else {
                     $string_sip = "'".$date_sip."'";
                     $string_completed = "'".$date_complete."'";
+                    $sender = 1;
+                    $receiver = $u;
+                    $o_type = 5;
                 }
                 echo "insert into orders (id, user_id, name, phone, email, address_id, number_of_items, cost, status,ship_at,completed_at, date_created) values (".$id_o.", ".$u.", '".$users[$u_id][1]."','".$users[$u_id][3]."', '".$users[$u_id][0]."', ".$users[$u_id][4].",2,".$cost.",".$type.",".$string_sip.",".$string_completed.",'".$date."');<br>";
-
+                // add activities;
+                echo "insert into activities(id, sender_id, target_id, receiver_id, type, date_created,status) values (".self::$id_activity.",".$sender.",".$id_o.",".$receiver.",".$o_type.",'".$date."',1);<br>";self::$id_activity++;
+                //add order items;
                 echo "insert into order_items(id, order_id, product_master_id, quantity, status, cost, date_created) values (".$id_oi.", ".$id_o.",".$pcis[0].",".$q[0].",1,".$cost1.",'".$date."');<br>";$id_oi++;
                 echo "insert into order_items(id, order_id, product_master_id, quantity, status, cost, date_created) values (".$id_oi.", ".$id_o.",".$pcis[1].",".$q[1].",1,".$cost2.",'".$date."');<br>";$id_oi++;
                 $id_o++;

@@ -238,11 +238,11 @@ class HomeController extends AbstractActionController
     {
 
         $views = 0;
-
+        
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $views = $this->productManager->addView((int)($data['product_id']));
-
+            
         }
         $this->response->setContent(json_encode($views));
 
@@ -252,6 +252,7 @@ class HomeController extends AbstractActionController
 
     public function sqlTestAction()
     {
+        
         $this->sqlManager->sqlAddress();
         $this->sqlManager->sqlUser();
         $this->sqlManager->sqlCategory();
@@ -262,6 +263,7 @@ class HomeController extends AbstractActionController
         $this->sqlManager->sqlReview();
         $this->sqlManager->sqlComment();
         $this->sqlManager->sqlOrder();
+        $this->sqlManager->sqlUpdate();
         die();
     }
 
@@ -273,7 +275,7 @@ class HomeController extends AbstractActionController
         foreach ($unread_notifications as $un) {
             array_push($data, $un->getNotiContent());
         }
-
+        
         //$data['unread_count'] = number of unreadnoti
         //$data[0] Content of unread noti 1;
         //$data[1] Content of unread noti 2;

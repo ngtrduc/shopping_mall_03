@@ -48,11 +48,12 @@ class CartController extends AbstractActionController
             //     'phone_number' => '0999999999',
             //     'email' => 'truong@gmail.com',
             //     'address' => 'haaaaaaa', 
-            //     'district' => 'Quan 1 ',
-            //     'province' => 'Ho Chi Minh',
+            //     'district' => 'Quan 1',
+            //     'province' => 'Ho Chi Minh City',
             //     'total_price' => '10000',
+            //     'user_id' => 3,
             // ];
-
+            
         //view
        
         $cookie = $this->getRequest()->getCookie('Cart', 'default');

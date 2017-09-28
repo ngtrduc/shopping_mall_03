@@ -21,6 +21,7 @@ class Version20170712080551_province extends AbstractMigration
         $table->addColumn('name', 'text');
         $table->setPrimaryKey(['id']);
         $table->addOption('engine', 'InnoDB');
+        
     }
 
     /**

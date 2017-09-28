@@ -1,13 +1,22 @@
 <?php if ($this->pageCount): ?>
+<?php 
+    $query = [];
 
+    if ($params['sort'] != -1) $query['sort'] = $params['sort']; 
+    if ($params['color'] != -1) $query['color'] = $params['color'];
+    if ($params['sort'] != -1) $query['sort'] = $params['sort'];
+    if ($params['price_gte'] != -1) $query['price_gte'] = $params['price_gte'];
+    if ($params['price_lte'] != -1) $query['price_lte'] = $params['price_lte'];
+?>
 <nav>
 <ul class="pagination">
 
 <!-- Previous page link -->
 <?php if (isset($this->previous)): ?>
+    <?php $query['page'] = $this->previous;?>
     <li>
       <a href="<?= $this->url($this->route, ['action' => $this->action,'id' => $this->id], 
-                              ['query' => ['page'=>$this->previous]]); ?>" 
+                              ['query' => $query]); ?>" 
         aria-label="Previous">       
         <span aria-hidden="true">&laquo;</span>
       </a>
@@ -21,9 +30,10 @@
 <!-- Numbered page links -->
 <?php foreach ($this->pagesInRange as $page): ?>
   <?php if ($page != $this->current): ?>
+    <?php $query['page'] = $page;?>
     <li>
         <a href="<?= $this->url($this->route, ['action' => $this->action,'id' => $this->id], 
-                                ['query' => ['page'=>$page]]); ?>">
+                                ['query' => $query]); ?>">
             <?= $this->escapeHtml($page); ?>      
         </a>
     </li>    
@@ -36,9 +46,10 @@
 
 <!-- Next page link -->
 <?php if (isset($this->next)): ?>
+    <?php $query['page'] = $this->next;?>
     <li>
         <a href="<?php echo $this->url($this->route, ['action' => $this->action,'id' => $this->id],
-                            ['query'=>['page'=>$this->next]]); ?>
+                            ['query'=> $query]); ?>
             " aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
         </a>
