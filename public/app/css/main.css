@@ -793,3 +793,13 @@
     text-decoration: none;
     outline: none;
 }
+
+/*notification*/
+.notification-panel .md-list {
+    padding: 0 !important;
+}
+.notification-panel .panel-heading {
+    font-size: 16px !important;
+    font-weight: bold !important;
+    background-color: whitesmoke;
+}

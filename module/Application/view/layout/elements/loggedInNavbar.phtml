@@ -1,6 +1,6 @@
 <ul id="hlink" class="nav navbar-nav navbar-right hidden-xs hidden-sm">
     <?php if ($user["id"] == 1) { ?>
-    <li><a href="/admin">Admin</a></li>
+        <li><a href="/admin">Admin</a></li>
     <?php }; ?>
     <li><a href="/">Home</a></li>
     <li>
@@ -9,13 +9,40 @@
         </a>
     </li>
     <li class="cart_li text-center">
-        <a href="#"><i class="fa fa-globe fa-2x empty-notice"></i>
-            <!--                                <span class="cart-logo">Notice</span>-->
-        </a>
+        <div id="notification">
+            <md-menu md-size="7" md-direction="bottom left" :md-offset-x="0" md-offset-y="70">
+                <md-button class="md-icon-button"
+                           md-menu-trigger>
+                    <md-icon class="md-size-1x"
+                             v-show="!has_new_notice">notifications_none
+                    </md-icon>
+                    <md-icon class="md-size-1x"
+                             v-show="has_new_notice">notifications
+                    </md-icon>
+                </md-button>
+
+                <md-menu-content class="notification-panel">
+                    <div class="panel">
+                        <div class="panel-heading">Notification</div>
+                        <div v-for="(noti, index) in show_notice"
+                             :key="index">
+                            <md-divider></md-divider>
+                            <div class="panel-body">
+                                <div v-html="noti"></div>
+                            </div>
+                        </div>
+                        <md-divider></md-divider>
+                        <div class="panel-heading">
+                            <md-button class="btn-group-justified"
+                                       @click="seeMoreNotice">See more notify...
+                            </md-button>
+                        </div>
+                    </div
+                </md-menu-content>
+            </md-menu>
+        </div>
     </li>
     <li class="cart_li text-center profile_user">
-        <!--                            <img src="http://premium-templates.org/ecommerce/html5/curie/demo/images/00prof1f.jpg"-->
-        <!--                                 alt="img" />-->
         <button class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false" style="display:block;">
             <?php echo $user["name"] ?>
@@ -25,13 +52,8 @@
     </li>
 </ul>
 
-<button style="display:none;" type="button" class="btn btn-default dropdown-toggle"
-        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    You <span class="caret"></span>
-</button>
-
 <!--Dropdown user menu-->
-<ul class="dropdown-menu profile_dd" style="min-width:250px !important;">
+<ul class="dropdown-menu profile_dd" style="min-width:250px !important; padding: 10px;">
 
     <li><a href="/user/view" style="padding:5px;border-left:none;">View profile</a></li>
     <li role="separator" class="divider"></li>
