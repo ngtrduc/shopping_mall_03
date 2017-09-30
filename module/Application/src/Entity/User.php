@@ -22,20 +22,21 @@ class User
     /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\Activity", mappedBy="sender")
      * @ORM\JoinColumn(name="id", referencedColumnName="sender_id")
-     * @ORM\OrderBy({"date_created" = "DESC"})
+     * @ORM\OrderBy({"date_created"="DESC"})
      */
     protected $activities;
 
     /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\Activity", mappedBy="receiver")
      * @ORM\JoinColumn(name="id", referencedColumnName="receiver_id")
+     * @ORM\OrderBy({"date_created"="DESC"})
      */
     protected $notifications;
 
     /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\Comment", mappedBy="user")
      * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
-     * @ORM\OrderBy({"date_created" = "DESC"})
+     * @ORM\OrderBy({"date_created"="DESC"})
      */
     protected $comments;
 
@@ -48,7 +49,7 @@ class User
     /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\Order", mappedBy="user")
      * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
-     * @ORM\OrderBy({"status" = "ASC"})
+     * @ORM\OrderBy({"status"="ASC"})
      */
     protected $orders;
     /**
@@ -405,7 +406,7 @@ class User
         $activities_by_day = [];
 
         foreach ($activities as $a) {
-            if ($activities_by_day[$a->getDateCreated()] == null)
+            if (!isset($activities_by_day[$a->getDateCreated()]))
                 $activities_by_day[$a->getDateCreated()] = [];
             $item['time'] = $a->getTimeCreated();
             $item['icon-class'] = $a->getIconClass();

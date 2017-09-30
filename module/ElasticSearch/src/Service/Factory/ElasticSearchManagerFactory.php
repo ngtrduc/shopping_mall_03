@@ -11,8 +11,8 @@ use Zend\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 use Elasticsearch;
 
-define('PATH_APPLICATION', realpath(dirname(null)));
-define('PATH_CONFIG', PATH_APPLICATION . '/config');
+define('PATH_APPLICATION_1', realpath(dirname(null)));
+define('PATH_CONFIG_1', PATH_APPLICATION . '/config');
 
 class ElasticSearchManagerFactory implements FactoryInterface
 {
@@ -31,7 +31,7 @@ class ElasticSearchManagerFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $config = new \Zend\Config\Config(include PATH_CONFIG . '/autoload/local.php');
+        $config = new \Zend\Config\Config(include PATH_CONFIG_1 . '/autoload/local.php');
         $hosts = $config->elasticsearch->hosts->toArray();
 
         $clientBuilder = Elasticsearch\ClientBuilder::create();

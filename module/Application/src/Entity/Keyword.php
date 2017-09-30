@@ -4,6 +4,7 @@ namespace Application\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Application\Entity\Product;
+use Doctrine\Common\Collections\Criteria;
 /**
  * @ORM\Entity
  * @ORM\Table(name="keywords")
@@ -24,7 +25,10 @@ class Keyword
     // Returns products associated with this keyword.
     public function getproducts() 
     {
-        return $this->products;
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('status', Product::STATUS_PUBLISHED));
+        
+        return $this->products->matching($criteria);
     }
       
     // Adds a product into collection of products related to this keyword.
