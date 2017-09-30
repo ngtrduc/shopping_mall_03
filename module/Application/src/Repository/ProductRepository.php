@@ -17,7 +17,7 @@ class ProductRepository extends EntityRepository
      */
     public function findAll()
     {
-    	return $this->findBy(['status' => Product::STATUS_PUBLISHED], ['date_created' => 'ASC']);
+    	return $this->findBy(['status' => Product::STATUS_PUBLISHED], ['date_created' => 'DESC']);
     }
 
     public function find($id)

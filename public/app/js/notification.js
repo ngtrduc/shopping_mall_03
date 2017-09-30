@@ -33,7 +33,7 @@ $(function () {
         },
         mounted: function () {
             this.fetchNotify();
-            setInterval(this.fetchNotify, 10000);
+            //setInterval(this.fetchNotify, 10000);
         },
         methods: {
             fetchNotify: function () {

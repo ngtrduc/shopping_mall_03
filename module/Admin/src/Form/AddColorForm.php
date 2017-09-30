@@ -98,5 +98,12 @@ class AddColorForm extends Form
     }
     private function addInputFilter() 
     {
+        $inputFilter = new InputFilter();        
+        $this->setInputFilter($inputFilter);
+        
+        $inputFilter->add([
+            'name'     => 'size',
+            'required' => true
+        ]);
     }
 }

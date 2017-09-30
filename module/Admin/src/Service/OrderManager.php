@@ -30,25 +30,18 @@ class OrderManager
             if ($order->getUser() != null) {
                 $activity = new Activity();
                 $user = $order->getUser();
-                $admin = $this->entityManager
-                    ->getRepository(User::class)->find(1);
-                $activity->setSender($admin);
                 $activity->setReceiver($user);
                 $activity->setType(Activity::ORDER_SHIP);
                 $activity->setTarget($order);
                 $activity->setDateCreated($currentDate);
                 $this->entityManager->persist($activity);
             }
-
         }elseif ($order->getStatus() == Order::STATUS_SHIPPING) {
             $order->setStatus(Order::STATUS_COMPLETED);
             $order->setCompletedAt($currentDate);
             if ($order->getUser() != null) {
                 $activity = new Activity();
                 $user = $order->getUser();
-                $admin = $this->entityManager
-                    ->getRepository(User::class)->find(1);
-                $activity->setSender($admin);
                 $activity->setReceiver($user);
                 $activity->setType(Activity::ORDER_COMPLETE);
                 $activity->setTarget($order);

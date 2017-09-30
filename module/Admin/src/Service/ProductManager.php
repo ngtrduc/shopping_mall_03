@@ -115,10 +115,7 @@ class ProductManager
         if (!empty($data['image'])) {
             $product->setImage($data['image']);
         }
-        if (!empty($data['picture']['image_0_'])) {
-            $product->setImage($data['picture']['image_0_']);
-        }
-        if ($data['category'] != null)
+        if ($data['category'] != 0)
             $product->setCategory($data['category']);
 
         // remove keyword
@@ -141,7 +138,7 @@ class ProductManager
         $comments = $product->getComments();
         foreach ($comments as $comment) {
             $activity = $this->entityManager->getRepository(Activity::class)
-                ->findOneBy(['type' => Activity::COMMENT, 'target_id' => $comment->getId()]);
+                ->findOneBy(['comment_id' => $comment->getId()]);
             if($activity != null)
                 $this->entityManager->remove($activity);
             $this->entityManager->remove($comment);
@@ -151,7 +148,7 @@ class ProductManager
         $reviews = $product->getReviews();
         foreach ($reviews as $review) {
             $activity = $this->entityManager->getRepository(Activity::class)
-                ->findOneBy(['type' => Activity::REVIEW, 'target_id' => $review->getId()]);
+                ->findOneBy(['review_id' => $review->getId()]);
             if($activity != null)
                 $this->entityManager->remove($activity);
             $this->entityManager->remove($review);
@@ -202,11 +199,17 @@ class ProductManager
 
         foreach ($product_color_images as $pci) {
             if ($pci->getColorId() == $color_id)
+                // remove image
+                $images = $pci->getImages();
+                foreach ($images as $img) {
+                    $this->entityManager->remove($img);
+                }
                 $this->entityManager->remove($pci); 
         }
 
         foreach ($product_masters as $pm) {
             if ($pm->getColorId() == $color_id)
+                // remove orderitem
                 $order_items = $pm->getOrderItems();
                 foreach ($order_items as $o) {
                     $this->entityManager->remove($o);
