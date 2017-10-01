@@ -5,6 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Application\Entity\Sale;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\DateTimeType;
+use Doctrine\Common\Collections\Criteria;
 
 /**
  * @ORM\Entity
@@ -39,7 +40,10 @@ class SaleProgram
 
     public function getProducts() 
     {
-        return $this->products;
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('status', Product::STATUS_PUBLISHED));
+        
+        return $this->products->matching($criteria);
     }      
       
     // Adds a new product to this product.

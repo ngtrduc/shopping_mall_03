@@ -4,6 +4,7 @@ namespace Application\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Application\Entity\Product;
+use Doctrine\Common\Collections\Criteria;
 /**
  * @ORM\Entity
  * @ORM\Table(name="categories")
@@ -27,6 +28,7 @@ class Category
      * @ORM\JoinColumn(name="id", referencedColumnName="category_id")
      */
     protected $products;
+
     public function __construct() 
     {
         $this->products = new ArrayCollection();
@@ -60,7 +62,9 @@ class Category
      */
     public function getProducts() 
     {
-        $products = $this->products;
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('status', Product::STATUS_PUBLISHED));
+        $products = $this->products->matching($criteria);
 
         foreach ($this->getChildrens() as $cate) {
             $products = new ArrayCollection(

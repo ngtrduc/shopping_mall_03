@@ -1,6 +1,6 @@
 <aside class="main-sidebar">
   	<section class="sidebar">
-  		<ul class="sidebar-menu">
+  		<ul class="sidebar-menu tree" data-widget="tree">
   			<li class="active">
 		        <a href="/admin">
 		          	<i class="fa fa-link"></i>

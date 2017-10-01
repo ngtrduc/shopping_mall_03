@@ -122,6 +122,7 @@ class ProductController extends AbstractActionController
     public function addAction()
     {
         $categories = $this->categoryManager->categories_for_select();
+        unset($categories[0]);
 
         $form = new ProductForm('create', $categories, $this->entityManager);
 
@@ -169,14 +170,16 @@ class ProductController extends AbstractActionController
 
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
+            $form->setData($data);
+            if ($form->isValid()) {
+                $data['image-details'] = $this->imageManager->saveImages($_FILES);
 
-            $data['image-details'] = $this->imageManager->saveImages($_FILES);
+                $this->productManager->addNewColor($product, $data);
 
-            $this->productManager->addNewColor($product, $data);
+                $this->ProductElasticSearchManager->updateColor($product);
 
-            $this->ProductElasticSearchManager->updateColor($product);
-
-            return $this->redirect()->toRoute('products', ['action' => 'view', 'id' => $productId]);
+                return $this->redirect()->toRoute('products', ['action' => 'view', 'id' => $productId]);
+            }
         }
 
         return new ViewModel([
