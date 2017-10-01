@@ -63,9 +63,7 @@ class Category
     public function getProducts() 
     {
         $criteria = Criteria::create();
-        if ($showPending !== true) {
-            $criteria->where(Criteria::expr()->eq('status', Product::STATUS_PUBLISHED));
-        }
+        $criteria->where(Criteria::expr()->eq('status', Product::STATUS_PUBLISHED));
         $products = $this->products->matching($criteria);
 
         foreach ($this->getChildrens() as $cate) {
